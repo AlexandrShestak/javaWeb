@@ -2,9 +2,12 @@ package com.shestakam.dao;
 
 import org.apache.log4j.Logger;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 /**
@@ -16,20 +19,23 @@ public class JdbcConnection {
     private final static Logger logger = Logger.getLogger(JdbcConnection.class.getName());
 
     public  static synchronized Connection getConnection() {
+
         if (connection==null) {
-            ResourceBundle resource = ResourceBundle.getBundle("database.properties");
-            String url = resource.getString("url");
-            String driver = resource.getString("driver");
-            String user = resource.getString("user");
-            String pass = resource.getString("password");
 
             try {
+
+                ResourceBundle resource = ResourceBundle.getBundle("database");
+                String url = resource.getString("url");
+                String driver = resource.getString("driver");
+                String user = resource.getString("user");
+                String pass = resource.getString("password");
+
                 Class.forName(driver);
                 logger.debug("driver ok");
                 connection = DriverManager.getConnection(url, user, pass);
 
             } catch (Exception e) {
-                logger.error("get connection error",e);
+                logger.error("get connection error", e);
             }
         }
         return connection;

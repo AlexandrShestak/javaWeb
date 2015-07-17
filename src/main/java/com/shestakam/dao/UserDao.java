@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by alexandr on 17.7.15.
  */
-public class UserDao {
+public class UserDao{
 
     private final static Logger logger = Logger.getLogger(UserDao.class.getName());
     private Connection connection;
@@ -20,7 +20,7 @@ public class UserDao {
         logger.debug("user dao constructor");
     }
 
-    public String add(User user){
+    public void add(User user){
 
         PreparedStatement preparedStatement = null;
         try {
@@ -34,9 +34,8 @@ public class UserDao {
         }
         catch (SQLException e) {
             e.printStackTrace();
-            logger.error("add user error",e);
+            logger.error("add user error", e);
         }
-        return user.getLogin();
     }
 
     public void delete(String login) {
