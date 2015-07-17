@@ -38,7 +38,7 @@ public class Controller extends HttpServlet {
             User user = userDao.get(login);
 
             if (password.equals(user.getPassword())) {
-                RequestDispatcher view = request.getRequestDispatcher("users.jsp");
+                RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/pages/users.jsp");
                 request.setAttribute("users", userDao.getAll());
                 view.forward(request, response);
             } else{

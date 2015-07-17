@@ -90,7 +90,7 @@ public class UserDao{
         List<User> users = new ArrayList<User>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("select * from users");
+            ResultSet rs = statement.executeQuery("select * from user");
             while (rs.next()) {
                 User user = new User();
                 user.setLogin(rs.getString("login"));
