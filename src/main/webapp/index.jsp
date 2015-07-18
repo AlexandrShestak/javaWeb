@@ -8,26 +8,25 @@
 </header>
 <body>
 <form action="/controller" method="post">
-    <table class="login">
+    <table class="login" align="center" border="2">
         <tr>
-            <td>Enter login:</td>
+            <td>Введите логин:</td>
             <td><input type="text" name="login"> </td>
         </tr>
 
         <tr>
-            <td>Enter password:</td>
+            <td>Введите пароль:</td>
             <td><input type="text" name="password"> </td>
         </tr>
         <tr>
-            <td>
-                <input type="submit" name="action" value="login">
+            <td colspan="2"><c:out value="${errorMessage}"></c:out></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <button type="submit" name="action" value="login">Войти</button>
             </td>
         </tr>
     </table>
-
-
-    <%--${errorMessage}--%>
-    <c:out value="${errorMessage}"></c:out>
 
 </form>
 

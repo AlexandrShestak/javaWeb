@@ -45,6 +45,7 @@ public class JdbcConnection {
         if (connection != null) {
             try {
                 connection.close();
+                connection = null;
                 logger.debug("connection closed");
             } catch (SQLException e) {
                 logger.error("close connection error",e);
