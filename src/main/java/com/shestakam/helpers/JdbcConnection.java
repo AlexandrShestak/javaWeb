@@ -1,13 +1,10 @@
-package com.shestakam.dao;
+package com.shestakam.helpers;
 
 import org.apache.log4j.Logger;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 /**

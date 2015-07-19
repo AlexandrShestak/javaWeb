@@ -1,6 +1,6 @@
-package com.shestakam.dao;
+package com.shestakam.user;
 
-import com.shestakam.entity.User;
+import com.shestakam.helpers.JdbcConnection;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -10,18 +10,18 @@ import java.util.List;
 /**
  * Created by alexandr on 17.7.15.
  */
-public class UserDao{
+public class JdbcUserDao implements UserDao {
 
-    private final static Logger logger = Logger.getLogger(UserDao.class.getName());
-    private Connection connection;
+    private final static Logger logger = Logger.getLogger(JdbcUserDao.class.getName());
 
-    public UserDao() {
-        this.connection = JdbcConnection.getConnection();
+
+    public JdbcUserDao() {
         logger.debug("user dao constructor");
     }
 
     public void add(User user){
         PreparedStatement preparedStatement = null;
+        Connection connection = null;
         try {
             connection = JdbcConnection.getConnection();
             preparedStatement = connection.prepareStatement("insert into user (login,password,email) VALUES (?,?,?)");
@@ -42,6 +42,7 @@ public class UserDao{
     }
 
     public void delete(String login) {
+        Connection connection = null;
         try {
             connection = JdbcConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("delete from user where login=?");
@@ -58,7 +59,8 @@ public class UserDao{
         }
     }
 
-    public void update(User user) {
+    public void edit(User user) {
+        Connection connection = null;
         try {
             connection = JdbcConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("update user set password=?, email=?"
@@ -69,16 +71,17 @@ public class UserDao{
             preparedStatement.setString(3, user.getLogin());
             preparedStatement.executeUpdate();
             preparedStatement.close();
-            logger.debug("update user with login :"+user.getLogin());
+            logger.debug("edit user with login :"+user.getLogin());
         } catch (SQLException e) {
             e.printStackTrace();
-            logger.error("update user error",e);
+            logger.error("edit user error",e);
         }finally {
             JdbcConnection.closeConnection();
         }
     }
 
     public User get(String login) {
+        Connection connection = null;
         User user = new User();
         try {
             connection = JdbcConnection.getConnection();
@@ -106,6 +109,7 @@ public class UserDao{
 
 
     public List<User> getAll() {
+        Connection connection = null;
         List<User> users = new ArrayList<User>();
         try {
             connection = JdbcConnection.getConnection();

@@ -1,4 +1,4 @@
-package com.shestakam.dao;
+package com.shestakam.helpers;
 
 import java.util.List;
 
@@ -7,12 +7,9 @@ import java.util.List;
  */
 public interface GenericDao<Entity> {
     public abstract void  add(Entity entity);
-    public abstract Entity get(Long id);
     public abstract Entity get(String id);
     public abstract List<Entity> getAll();
-    public abstract void delete(Integer id);
     public abstract void delete(String id);
-    public abstract void edit(Integer id);
-    public abstract void edit(String id);
+    public abstract void edit(Entity entity);
 }
 

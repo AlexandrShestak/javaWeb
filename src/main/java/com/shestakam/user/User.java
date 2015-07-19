@@ -1,4 +1,4 @@
-package com.shestakam.entity;
+package com.shestakam.user;
 
 /**
  * Created by alexandr on 17.7.15.

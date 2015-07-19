@@ -2,18 +2,42 @@
  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
-<web-app>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+         version="2.4">
   <display-name>Archetype Created Web Application</display-name>
 
     <servlet>
-        <servlet-name>controllerServlet</servlet-name>
-        <servlet-class>com.shestakam.controller.Controller</servlet-class>
+        <servlet-name>authorizationServlet</servlet-name>
+        <servlet-class>com.shestakam.authorization.AuthorizationController</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>controllerServlet</servlet-name>
-        <url-pattern>/controller</url-pattern>
+        <servlet-name>authorizationServlet</servlet-name>
+        <url-pattern>/authorization</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>userServlet</servlet-name>
+        <servlet-class>com.shestakam.user.UserController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>userServlet</servlet-name>
+        <url-pattern>/user</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>AuthorizationFilter</filter-name>
+        <filter-class>com.shestakam.authorization.AuthorizationFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>AuthorizationFilter</filter-name>
+        <!-- <url-pattern></url-pattern>-->
+        <servlet-name>userServlet</servlet-name>
+    </filter-mapping>
 
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

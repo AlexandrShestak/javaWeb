@@ -1,7 +1,5 @@
-package com.shestakam.controller;
+package com.shestakam.user;
 
-import com.shestakam.dao.UserDao;
-import com.shestakam.entity.User;
 import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
@@ -12,15 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by alexandr on 17.7.15.
+ * Created by alexandr on 18.7.15.
  */
-public class Controller extends HttpServlet {
+public class UserController extends HttpServlet {
 
-    private final static Logger logger = Logger.getLogger(Controller.class.getName());
+    private final static Logger logger = Logger.getLogger(UserController.class.getName());
     private UserDao userDao;
 
-    public Controller() {
-        this.userDao = new UserDao();
+    public UserController() {
+        this.userDao = new JdbcUserDao();
     }
 
     @Override
@@ -28,13 +26,13 @@ public class Controller extends HttpServlet {
         String action = request.getParameter("action");
         if("getUserForm".equals(action)){
             logger.debug("get user from");
-            RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/pages/addUser.jsp");
+            RequestDispatcher view = request.getRequestDispatcher("//pages/addUser.jsp");
             view.forward(request, response);
         }else if("delete".equals(action)){
             logger.debug("delete user");
             String login = request.getParameter("login");
             userDao.delete(login);
-            RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/pages/users.jsp");
+            RequestDispatcher view = request.getRequestDispatcher("/pages/users.jsp");
             request.setAttribute("users", userDao.getAll());
             view.forward(request, response);
 
@@ -48,7 +46,7 @@ public class Controller extends HttpServlet {
             user.setPassword(password);
             user.setEmail(email);
             request.setAttribute("user",user);
-            RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/pages/editUser.jsp");
+            RequestDispatcher view = request.getRequestDispatcher("/pages/editUser.jsp");
             view.forward(request, response);
         }
     }
@@ -56,21 +54,7 @@ public class Controller extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        if("login".equalsIgnoreCase(action)){
-            logger.debug("login");
-            String login = request.getParameter("login");
-            String password = request.getParameter("password");
-            User user = userDao.get(login);
-            if (password.equals(user.getPassword())) {
-                RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/pages/users.jsp");
-                request.setAttribute("users", userDao.getAll());
-                view.forward(request, response);
-            } else{
-                RequestDispatcher view = request.getRequestDispatcher("index.jsp");
-                request.setAttribute("errorMessage","Incorrect login or password");
-                view.forward(request,response);
-            }
-        }else  if("add".equalsIgnoreCase(action)){
+       if("add".equalsIgnoreCase(action)){
             logger.debug("add user");
             String login = request.getParameter("login");
             String password = request.getParameter("password");
@@ -80,7 +64,7 @@ public class Controller extends HttpServlet {
             user.setPassword(password);
             user.setEmail(email);
             userDao.add(user);
-            RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/pages/users.jsp");
+            RequestDispatcher view = request.getRequestDispatcher("/pages/users.jsp");
             request.setAttribute("users", userDao.getAll());
             view.forward(request, response);
 
@@ -93,8 +77,8 @@ public class Controller extends HttpServlet {
             user.setLogin(login);
             user.setPassword(password);
             user.setEmail(email);
-            userDao.update(user);
-            RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/pages/users.jsp");
+            userDao.edit(user);
+            RequestDispatcher view = request.getRequestDispatcher("/pages/users.jsp");
             request.setAttribute("users", userDao.getAll());
             view.forward(request, response);
         }
