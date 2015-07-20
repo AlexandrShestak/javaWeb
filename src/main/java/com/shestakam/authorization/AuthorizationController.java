@@ -31,13 +31,32 @@ public class AuthorizationController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-
+        String requestUri = request.getRequestURI();
+        if(requestUri.equalsIgnoreCase("/login")){
+            RequestDispatcher view = request.getRequestDispatcher("index.jsp");
+            view.forward(request,response);
+        }else if(requestUri.equalsIgnoreCase("/logout")){
+            HttpSession session =  request.getSession(true);
+            session.removeAttribute("login");
+            RequestDispatcher view = request.getRequestDispatcher("index.jsp");
+            view.forward(request,response);
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        if("login".equalsIgnoreCase(action)){
+
+        String requestUri = request.getRequestURI();
+        if(requestUri.equalsIgnoreCase("/login")){
+            RequestDispatcher view = request.getRequestDispatcher("index.jsp");
+            view.forward(request,response);
+        }else if(requestUri.equalsIgnoreCase("/logout")){
+            HttpSession session =  request.getSession(true);
+            session.removeAttribute("login");
+            RequestDispatcher view = request.getRequestDispatcher("index.jsp");
+            view.forward(request,response);
+        }else if("login".equalsIgnoreCase(action)){
             logger.debug("login");
             String login = request.getParameter("login");
             String password = request.getParameter("password");
