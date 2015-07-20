@@ -17,7 +17,7 @@
   <title></title>
 </head>
 <body>
-<jsp:include page="hello.jsp"/>
+<jsp:include page="../hello.jsp"/>
 <form action="/user" method="post">
     <table class="user">
       <tr>

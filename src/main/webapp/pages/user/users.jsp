@@ -16,7 +16,7 @@
   <title></title>
 </head>
 <body>
-<jsp:include page="hello.jsp"/>
+<jsp:include page="../hello.jsp"/>
 <table class="user">
   <c:forEach items="${users}" var="user">
     <form action="/user" method="get">

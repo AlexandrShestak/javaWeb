@@ -1,8 +1,8 @@
 package com.shestakam.authorization;
 
-import com.shestakam.user.JdbcUserDao;
-import com.shestakam.user.User;
-import com.shestakam.user.UserDao;
+import com.shestakam.user.dao.JdbcUserDao;
+import com.shestakam.user.entity.User;
+import com.shestakam.user.dao.UserDao;
 import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
@@ -43,7 +43,7 @@ public class AuthorizationController extends HttpServlet {
 
                 HttpSession session =  request.getSession(true);
                 session.setAttribute("login",login);
-                RequestDispatcher view = request.getRequestDispatcher("/pages/users.jsp");
+                RequestDispatcher view = request.getRequestDispatcher("/pages/user/users.jsp");
                 request.setAttribute("users", userDao.getAll());
                 view.forward(request, response);
             } else{

@@ -20,7 +20,7 @@
 
     <servlet>
         <servlet-name>userServlet</servlet-name>
-        <servlet-class>com.shestakam.user.UserController</servlet-class>
+        <servlet-class>com.shestakam.user.controller.UserController</servlet-class>
     </servlet>
 
     <servlet-mapping>
