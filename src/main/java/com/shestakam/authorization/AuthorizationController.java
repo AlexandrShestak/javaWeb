@@ -49,14 +49,6 @@ public class AuthorizationController extends HttpServlet {
 
         String requestUri = request.getRequestURI();
         if(requestUri.equalsIgnoreCase("/login")){
-            RequestDispatcher view = request.getRequestDispatcher("index.jsp");
-            view.forward(request,response);
-        }else if(requestUri.equalsIgnoreCase("/logout")){
-            HttpSession session =  request.getSession(true);
-            session.removeAttribute("login");
-            RequestDispatcher view = request.getRequestDispatcher("index.jsp");
-            view.forward(request,response);
-        }else if("login".equalsIgnoreCase(action)){
             logger.debug("login");
             String login = request.getParameter("login");
             String password = request.getParameter("password");
@@ -73,7 +65,7 @@ public class AuthorizationController extends HttpServlet {
                 request.setAttribute("errorMessage","Incorrect login or password");
                 view.forward(request,response);
             }
-        }else if ("logout".equalsIgnoreCase(action)){
+        }else if(requestUri.equalsIgnoreCase("/logout")){
             HttpSession session =  request.getSession(true);
             session.removeAttribute("login");
             RequestDispatcher view = request.getRequestDispatcher("index.jsp");

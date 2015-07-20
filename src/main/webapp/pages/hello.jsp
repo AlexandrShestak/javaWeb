@@ -14,7 +14,7 @@
     <title></title>
 </head>
 <body>
-<form action="/authorization" method="post">
+<form action="/logout" method="post">
   <table width="100%">
     <tr>
       <td>

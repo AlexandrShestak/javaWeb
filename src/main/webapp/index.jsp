@@ -8,7 +8,7 @@
 
 </header>
 <body>
-<form action="/authorization" method="post">
+<form action="/login" method="post">
     <table class="login">
         <tr>
             <td>Введите логин:</td>
