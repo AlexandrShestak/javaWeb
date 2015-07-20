@@ -22,6 +22,9 @@ import java.io.IOException;
 public class AuthorizationController extends HttpServlet {
 
     private  final static Logger logger = LogManager.getLogger(AuthorizationController.class);
+    private static final String USERS_LIST = "/pages/user/users.jsp";
+    private static final String START_PAGE = "index.jsp";
+
     private UserDao userDao;
 
     public AuthorizationController() {
@@ -33,12 +36,12 @@ public class AuthorizationController extends HttpServlet {
         String action = request.getParameter("action");
         String requestUri = request.getRequestURI();
         if(requestUri.equalsIgnoreCase("/login")){
-            RequestDispatcher view = request.getRequestDispatcher("index.jsp");
+            RequestDispatcher view = request.getRequestDispatcher(START_PAGE);
             view.forward(request,response);
         }else if(requestUri.equalsIgnoreCase("/logout")){
             HttpSession session =  request.getSession(true);
             session.removeAttribute("login");
-            RequestDispatcher view = request.getRequestDispatcher("index.jsp");
+            RequestDispatcher view = request.getRequestDispatcher(START_PAGE);
             view.forward(request,response);
         }
     }
@@ -57,18 +60,18 @@ public class AuthorizationController extends HttpServlet {
 
                 HttpSession session =  request.getSession(true);
                 session.setAttribute("login",login);
-                RequestDispatcher view = request.getRequestDispatcher("/pages/user/users.jsp");
+                RequestDispatcher view = request.getRequestDispatcher(USERS_LIST);
                 request.setAttribute("users", userDao.getAll());
                 view.forward(request, response);
             } else{
-                RequestDispatcher view = request.getRequestDispatcher("index.jsp");
+                RequestDispatcher view = request.getRequestDispatcher(START_PAGE);
                 request.setAttribute("errorMessage","Incorrect login or password");
                 view.forward(request,response);
             }
         }else if(requestUri.equalsIgnoreCase("/logout")){
             HttpSession session =  request.getSession(true);
             session.removeAttribute("login");
-            RequestDispatcher view = request.getRequestDispatcher("index.jsp");
+            RequestDispatcher view = request.getRequestDispatcher(START_PAGE);
             view.forward(request,response);
         }
     }

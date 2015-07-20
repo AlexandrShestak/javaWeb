@@ -11,6 +11,8 @@ import java.io.IOException;
  */
 public class AuthorizationFilter implements Filter {
 
+    private static final String START_PAGE = "index.jsp";
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -24,13 +26,13 @@ public class AuthorizationFilter implements Filter {
 
         HttpSession session =  req.getSession();
         if(session==null){
-            res.sendRedirect("index.jsp");
+            res.sendRedirect(START_PAGE);
         }
         String login = (String)session.getAttribute("login");
         if (login!=null){
             filterChain.doFilter(servletRequest,servletResponse);
         }else{
-            res.sendRedirect("index.jsp");
+            res.sendRedirect(START_PAGE);
         }
 
 

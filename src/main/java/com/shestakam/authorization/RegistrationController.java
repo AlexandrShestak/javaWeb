@@ -18,6 +18,9 @@ import java.io.IOException;
  */
 public class RegistrationController extends HttpServlet {
 
+    private static final String REGISTRATION_PAGE= "/pages/user/registration.jsp";
+    private static final String START_PAGE = "index.jsp";
+
     private  final static Logger logger = LogManager.getLogger(RegistrationController.class);
     private UserDao userDao;
 
@@ -27,7 +30,7 @@ public class RegistrationController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher view = request.getRequestDispatcher("/pages/user/registration.jsp");
+        RequestDispatcher view = request.getRequestDispatcher(REGISTRATION_PAGE);
         view.forward(request, response);
     }
 
@@ -45,11 +48,11 @@ public class RegistrationController extends HttpServlet {
             user.setEmail(email);
             if(userDao.get(login).getLogin()!=null){
                 request.setAttribute("errorMessage","Пользователь с таким именем уже существует");
-                RequestDispatcher view = request.getRequestDispatcher("/pages/user/registration.jsp");
+                RequestDispatcher view = request.getRequestDispatcher(REGISTRATION_PAGE);
                 view.forward(request, response);
             }else {
                 userDao.add(user);
-                RequestDispatcher view = request.getRequestDispatcher("/index.jsp");
+                RequestDispatcher view = request.getRequestDispatcher(START_PAGE);
                 view.forward(request, response);
             }
 

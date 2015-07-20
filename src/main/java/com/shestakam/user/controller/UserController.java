@@ -20,6 +20,12 @@ import java.io.IOException;
  */
 public class UserController extends HttpServlet {
 
+    private static final String USERS_LIST = "/pages/user/users.jsp";
+    private static final String REGISTRATION_PAGE= "/pages/user/registration.jsp";
+    private static final String START_PAGE = "index.jsp";
+    private static final String ADD_USER_PAGE = "/pages/user/addUser.jsp";
+    private static final String EDIT_USER_PAGE = "/pages/user/editUser.jsp";
+
     private  final static Logger logger = LogManager.getLogger(UserController.class);
     private UserDao userDao;
 
@@ -32,13 +38,13 @@ public class UserController extends HttpServlet {
         String action = request.getParameter("action");
         if("getUserForm".equals(action)){
             logger.debug("get user form");
-            RequestDispatcher view = request.getRequestDispatcher("//pages/user/addUser.jsp");
+            RequestDispatcher view = request.getRequestDispatcher(ADD_USER_PAGE);
             view.forward(request, response);
         }else if("delete".equals(action)){
             logger.debug("delete user");
             String login = request.getParameter("login");
             userDao.delete(login);
-            RequestDispatcher view = request.getRequestDispatcher("/pages/user/users.jsp");
+            RequestDispatcher view = request.getRequestDispatcher(USERS_LIST);
             request.setAttribute("users", userDao.getAll());
             view.forward(request, response);
 
@@ -52,7 +58,7 @@ public class UserController extends HttpServlet {
             user.setPassword(password);
             user.setEmail(email);
             request.setAttribute("user",user);
-            RequestDispatcher view = request.getRequestDispatcher("/pages/user/editUser.jsp");
+            RequestDispatcher view = request.getRequestDispatcher(EDIT_USER_PAGE);
             view.forward(request, response);
         }
     }
@@ -70,7 +76,7 @@ public class UserController extends HttpServlet {
             user.setPassword(password);
             user.setEmail(email);
             userDao.add(user);
-            RequestDispatcher view = request.getRequestDispatcher("/pages/user/users.jsp");
+            RequestDispatcher view = request.getRequestDispatcher(USERS_LIST);
             request.setAttribute("users", userDao.getAll());
             view.forward(request, response);
 
@@ -84,7 +90,7 @@ public class UserController extends HttpServlet {
             user.setPassword(password);
             user.setEmail(email);
             userDao.edit(user);
-            RequestDispatcher view = request.getRequestDispatcher("/pages/user/users.jsp");
+            RequestDispatcher view = request.getRequestDispatcher(USERS_LIST);
             request.setAttribute("users", userDao.getAll());
             view.forward(request, response);
         }
