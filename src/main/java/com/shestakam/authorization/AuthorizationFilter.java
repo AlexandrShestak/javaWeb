@@ -10,6 +10,7 @@ import java.io.IOException;
  * Created by alexandr on 18.7.15.
  */
 public class AuthorizationFilter implements Filter {
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 

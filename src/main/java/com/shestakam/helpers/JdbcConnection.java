@@ -1,6 +1,7 @@
 package com.shestakam.helpers;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,7 +14,7 @@ import java.util.ResourceBundle;
 public class JdbcConnection {
 
     private static Connection connection= null;
-    private final static Logger logger = Logger.getLogger(JdbcConnection.class.getName());
+    private  final static Logger logger = LogManager.getLogger(JdbcConnection.class);
 
     public  static synchronized Connection getConnection() {
 

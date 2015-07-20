@@ -2,7 +2,9 @@ package com.shestakam.user.dao;
 
 import com.shestakam.helpers.JdbcConnection;
 import com.shestakam.user.entity.User;
-import org.apache.log4j.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,7 +15,7 @@ import java.util.List;
  */
 public class JdbcUserDao implements UserDao {
 
-    private final static Logger logger = Logger.getLogger(JdbcUserDao.class.getName());
+    private  final static Logger logger = LogManager.getLogger(JdbcUserDao.class);
 
 
     public JdbcUserDao() {

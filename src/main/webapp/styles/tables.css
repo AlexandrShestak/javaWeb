@@ -6,3 +6,8 @@ table.user {
 td {
     text-align: center; /* Выравниваем текст по центру ячейки */
 }
+table.login {
+    border: 2px solid green;
+    margin: auto;
+
+}

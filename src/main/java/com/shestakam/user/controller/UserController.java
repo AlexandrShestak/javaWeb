@@ -3,7 +3,9 @@ package com.shestakam.user.controller;
 import com.shestakam.user.dao.JdbcUserDao;
 import com.shestakam.user.dao.UserDao;
 import com.shestakam.user.entity.User;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,12 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
 /**
  * Created by alexandr on 18.7.15.
  */
 public class UserController extends HttpServlet {
 
-    private final static Logger logger = Logger.getLogger(UserController.class.getName());
+    private  final static Logger logger = LogManager.getLogger(UserController.class);
     private UserDao userDao;
 
     public UserController() {
@@ -28,7 +31,7 @@ public class UserController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if("getUserForm".equals(action)){
-            logger.debug("get user from");
+            logger.debug("get user form");
             RequestDispatcher view = request.getRequestDispatcher("//pages/user/addUser.jsp");
             view.forward(request, response);
         }else if("delete".equals(action)){
@@ -57,7 +60,7 @@ public class UserController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-       if("add".equalsIgnoreCase(action)){
+        if("add".equalsIgnoreCase(action)){
             logger.debug("add user");
             String login = request.getParameter("login");
             String password = request.getParameter("password");

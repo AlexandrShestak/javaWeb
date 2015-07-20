@@ -28,6 +28,18 @@
         <url-pattern>/user</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>registrationServlet</servlet-name>
+        <servlet-class>com.shestakam.authorization.RegistrationController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>registrationServlet</servlet-name>
+        <url-pattern>/registration</url-pattern>
+    </servlet-mapping>
+
+
+
     <filter>
         <filter-name>AuthorizationFilter</filter-name>
         <filter-class>com.shestakam.authorization.AuthorizationFilter</filter-class>

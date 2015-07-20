@@ -4,11 +4,12 @@
 <%@ page isELIgnored="false" %>
 <html>
 <header>
+    <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/styles/tables.css"/>
 
 </header>
 <body>
 <form action="/authorization" method="post">
-    <table class="login" align="center" border="2">
+    <table class="login">
         <tr>
             <td>Введите логин:</td>
             <td><input type="text" name="login"> </td>
@@ -29,6 +30,15 @@
     </table>
 
 </form>
-
+<form action="pages/user/registration.jsp">
+    <table class="login">
+        <tr>
+            <td>Или зарегистрируйтесь:</td>
+            <td>
+                <button type="submit" name="action" value="registration">Регистрация</button>
+            </td>
+        </tr>
+    </table>
+</form>
 </body>
 </html>
