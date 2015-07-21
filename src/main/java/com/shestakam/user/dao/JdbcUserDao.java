@@ -25,7 +25,7 @@ public class JdbcUserDao implements UserDao {
     public void add(User user){
         try(Connection connection = JdbcConnection.getConnection();
             PreparedStatement  preparedStatement = connection.prepareStatement("insert into user (login,password,email) VALUES (?,?,?)")) {
-             // Parameters start with 1
+            // Parameters start with 1
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, user.getEmail());
@@ -55,7 +55,7 @@ public class JdbcUserDao implements UserDao {
         try(Connection connection = JdbcConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("update user set password=?, email=?"
                     + "where login=?")) {
-               // Parameters start with 1
+            // Parameters start with 1
             preparedStatement.setString(1, user.getPassword());
             preparedStatement.setString(2, user.getEmail());
             preparedStatement.setString(3, user.getLogin());

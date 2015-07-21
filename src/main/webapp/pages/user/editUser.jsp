@@ -9,6 +9,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page isELIgnored="false" %>
+
+<fmt:setLocale value="${sessionScope.language}" />
+<fmt:setBundle   basename="messages/user"/>
+<%@ page isELIgnored="false" %>
+
+
 <html>
 <html>
 <head>
@@ -22,7 +28,7 @@
     <table class="user">
       <tr>
         <td>
-          Логин:
+          <fmt:message key="login"/>
         </td>
         <td>
           <input type="hidden" name="login" value="${user.login}">
@@ -31,7 +37,7 @@
       </tr>
       <tr>
         <td>
-          Пароль:
+          <fmt:message key="userPassword"/>
         </td>
         <td>
           <input type="text" name="password" value="${user.password}" >
@@ -39,7 +45,7 @@
       </tr>
       <tr>
         <td>
-          Электронная почта:
+          <fmt:message key="email"/>
         </td>
         <td>
           <input type="text" name="email" value="${user.email}" >

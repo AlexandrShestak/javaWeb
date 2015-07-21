@@ -49,6 +49,26 @@
         <url-pattern>/registration</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>newsServlet</servlet-name>
+        <servlet-class>com.shestakam.news.controller.NewsController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>newsServlet</servlet-name>
+        <url-pattern>/news/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>languageServlet</servlet-name>
+        <servlet-class>com.shestakam.helpers.LanguageController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>languageServlet</servlet-name>
+        <url-pattern>/language</url-pattern>
+    </servlet-mapping>
+
 
 
     <filter>
@@ -61,6 +81,13 @@
         <!-- <url-pattern></url-pattern>-->
         <servlet-name>userServlet</servlet-name>
     </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthorizationFilter</filter-name>
+        <servlet-name>newsServlet</servlet-name>
+    </filter-mapping>
+
+
 
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
