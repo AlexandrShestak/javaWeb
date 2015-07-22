@@ -22,23 +22,38 @@
   <title></title>
 </head>
 <body>
+<jsp:include page="../language.jsp"/>
 <jsp:include page="../hello.jsp"/>
 <table class="user">
   <c:forEach items="${users}" var="user">
-    <form action="/user" method="get">
+
     <tr>
-      <td><input hidden="hidden" name="login" value="${user.login}"/> <c:out value="${user.login}" /></td>
-      <td><input hidden="hidden" name="password" value="${user.password}"><c:out value="${user.password}" /></td>
-      <td><input hidden="hidden" name="email" value="${user.email}"><c:out value="${user.email}" /></td>
-      <td><button type="submit" name="action" value="edit"><fmt:message key="edit" /> </button></td>
-      <td><button type="submit" name="action" value="delete"><fmt:message key="delete"/> </button></td>
+      <td><c:out value="${user.login}" /></td>
+      <td><c:out value="${user.password}" /></td>
+      <td><c:out value="${user.email}" /></td>
+
+      <td>
+        <form action="/user" method="get">
+          <input type="hidden" name="action" value="edit">
+          <input type="hidden" name="username" value="${user.login}"/>
+          <button type="submit"<%-- name="action" value="edit"--%>><fmt:message key="edit"/> </button>
+       </form>
+      </td>
+
+      <td>
+        <form action="/user" method="get">
+          <input type="hidden" name="action" value="delete">
+          <input type="hidden" name="username" value="${user.login}"/>
+          <button type="submit" <%--name="action" value="delete"--%>><fmt:message key="delete"/> </button>
+       </form>
+      </td>
     </tr>
-    </form>
   </c:forEach>
 <tr>
   <td>
     <form action="/user" method="get">
-      <button type="submit" name="action" value="getUserForm"><fmt:message key="add"/> </button>
+      <input type="hidden" name="action" value="add">
+      <button type="submit"><fmt:message key="add"/> </button>
     </form>
   </td>
 </tr>

@@ -36,8 +36,16 @@ public class AuthorizationController extends HttpServlet {
         String action = request.getParameter("action");
         String requestUri = request.getRequestURI();
         if(requestUri.equalsIgnoreCase("/login")){
-            RequestDispatcher view = request.getRequestDispatcher(START_PAGE);
-            view.forward(request,response);
+            String login = (String) request.getSession().getAttribute("login");
+            if( login == null){
+                RequestDispatcher view = request.getRequestDispatcher(START_PAGE);
+                view.forward(request,response);
+            }else {
+                RequestDispatcher view = request.getRequestDispatcher(USERS_LIST);
+                request.setAttribute("users", userDao.getAll());
+                view.forward(request, response);
+            }
+
         }else if(requestUri.equalsIgnoreCase("/logout")){
             HttpSession session =  request.getSession(true);
             session.removeAttribute("login");

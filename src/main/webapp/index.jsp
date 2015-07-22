@@ -23,18 +23,10 @@
 </header>
 <body>
 
-
+<jsp:include page="pages/language.jsp"/>
 <%-- <jsp:include page="pages/hello.jsp"/>  --%>
 
-<form method="get" action="/language">
-  <table align="right" width="30%">
 
-    <tr>
-      <button type="submit" name="language" value="en">EN</button>
-      <button type="submit" name="language" value="ru">RU</button>
-    </tr>
-  </table>
-</form>
 <table>
 
 </table>

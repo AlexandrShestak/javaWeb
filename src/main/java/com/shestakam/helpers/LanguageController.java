@@ -22,8 +22,12 @@ public class LanguageController extends HttpServlet {
         }else  if ("ru".equalsIgnoreCase(language)){
             request.getSession().setAttribute("language","ru");
         }
-        RequestDispatcher view = request.getRequestDispatcher(START_PAGE);
-        view.forward(request,response);
+       /* String toRedirect = request.getHeader("referer");
+        String host = request.getHeader("host");
+        toRedirect = toRedirect.replace(host,"").replace("http://","").replace("language?language=en","").replace("language?language=ru","");
+        RequestDispatcher view = request.getRequestDispatcher(toRedirect);*/
+     //   view.forward(request,response);
+        response.sendRedirect( request.getHeader("referer"));
 
     }
 
@@ -36,10 +40,12 @@ public class LanguageController extends HttpServlet {
             request.getSession().setAttribute("language","ru");
             //response.setContentType("text/html;charset=UTF-8");
         }
-        RequestDispatcher view = request.getRequestDispatcher(START_PAGE);
-        view.forward(request,response);
-
-
+    /*    String toRedirect = request.getHeader("referer");
+        String host = request.getHeader("host");
+        toRedirect = toRedirect.replace(host,"").replace("http://","").replace("language?language=en","").replace("language?language=ru","");
+        RequestDispatcher view = request.getRequestDispatcher(toRedirect);
+     */  // view.forward(request,response);
+        response.sendRedirect( request.getHeader("referer"));
 
     }
 }

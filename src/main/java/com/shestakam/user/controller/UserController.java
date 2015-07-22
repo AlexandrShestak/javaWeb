@@ -36,27 +36,22 @@ public class UserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        if("getUserForm".equals(action)){
+        String login =  request.getParameter("username");
+
+        if("add".equals(action)){
             logger.debug("get user form");
             RequestDispatcher view = request.getRequestDispatcher(ADD_USER_PAGE);
             view.forward(request, response);
-        }else if("delete".equals(action)){
+        }else if("delete".equals(action) && login!=null){
             logger.debug("delete user");
-            String login = request.getParameter("login");
             userDao.delete(login);
             RequestDispatcher view = request.getRequestDispatcher(USERS_LIST);
             request.setAttribute("users", userDao.getAll());
             view.forward(request, response);
 
-        }else if("edit".equals(action)){
+        }else if("edit".equals(action) && login!=null){
             logger.debug("return edit user form");
-            String login = request.getParameter("login");
-            String password = request.getParameter("password");
-            String email = request.getParameter("email");
-            User user = new User();
-            user.setLogin(login);
-            user.setPassword(password);
-            user.setEmail(email);
+            User user  = userDao.get(login);
             request.setAttribute("user",user);
             RequestDispatcher view = request.getRequestDispatcher(EDIT_USER_PAGE);
             view.forward(request, response);
@@ -79,7 +74,6 @@ public class UserController extends HttpServlet {
             RequestDispatcher view = request.getRequestDispatcher(USERS_LIST);
             request.setAttribute("users", userDao.getAll());
             view.forward(request, response);
-
         }else if("edit".equals(action)){
             logger.debug("edit user");
             String login = request.getParameter("login");

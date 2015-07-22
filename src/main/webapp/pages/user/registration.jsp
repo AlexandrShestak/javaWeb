@@ -23,7 +23,7 @@
   <title></title>
 </head>
 <body>
-
+<jsp:include page="../language.jsp"/>
 <form action="/registration" method="post">
 
   <table class="user">

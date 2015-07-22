@@ -24,7 +24,7 @@ public class JdbcUserDao implements UserDao {
 
     public void add(User user){
         try(Connection connection = JdbcConnection.getConnection();
-            PreparedStatement  preparedStatement = connection.prepareStatement("insert into user (login,password,email) VALUES (?,?,?)")) {
+            PreparedStatement  preparedStatement = connection.prepareStatement("insert into users (username,password,email) VALUES (?,?,?)")) {
             // Parameters start with 1
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getPassword());
@@ -40,7 +40,7 @@ public class JdbcUserDao implements UserDao {
 
     public void delete(String login) {
         try(Connection connection = JdbcConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("delete from user where login=?")) {
+            PreparedStatement preparedStatement = connection.prepareStatement("delete from users where users.username=?")) {
             // Parameters start with 1
             preparedStatement.setString(1, login);
             preparedStatement.executeUpdate();
@@ -53,8 +53,8 @@ public class JdbcUserDao implements UserDao {
 
     public void edit(User user) {
         try(Connection connection = JdbcConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("update user set password=?, email=?"
-                    + "where login=?")) {
+            PreparedStatement preparedStatement = connection.prepareStatement("update users set password=?, email=?"
+                    + "where users.username=?")) {
             // Parameters start with 1
             preparedStatement.setString(1, user.getPassword());
             preparedStatement.setString(2, user.getEmail());
@@ -71,11 +71,11 @@ public class JdbcUserDao implements UserDao {
         User user = new User();
         try(Connection connection = JdbcConnection.getConnection();
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("select * from user where login=?")) {
+                    connection.prepareStatement("select * from users where users.username=?")) {
             preparedStatement.setString(1, login);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                user.setLogin(rs.getString("login"));
+                user.setLogin(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
             }
@@ -92,10 +92,10 @@ public class JdbcUserDao implements UserDao {
         List<User> users = new ArrayList<User>();
         try (Connection connection = JdbcConnection.getConnection();
              Statement statement = connection.createStatement()){
-            ResultSet rs = statement.executeQuery("select * from user");
+            ResultSet rs = statement.executeQuery("select * from users");
             while (rs.next()) {
                 User user = new User();
-                user.setLogin(rs.getString("login"));
+                user.setLogin(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
                 users.add(user);

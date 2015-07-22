@@ -23,6 +23,7 @@
   <title></title>
 </head>
 <body>
+<jsp:include page="../language.jsp"/>
 
   <form action="/user" method="post">
 
@@ -53,7 +54,8 @@
       </tr>
       <tr>
         <td>
-          <input type="submit" name="action" value="add">
+          <input type="hidden" name="action" value="add">
+          <input type="submit">
         </td>
       </tr>
 
