@@ -1,5 +1,7 @@
 package com.shestakam.user.controller;
 
+import com.shestakam.news.dao.JdbcNewsDao;
+import com.shestakam.news.dao.NewsDao;
 import com.shestakam.user.dao.JdbcUserDao;
 import com.shestakam.user.dao.UserDao;
 import com.shestakam.user.entity.User;
@@ -25,12 +27,15 @@ public class UserController extends HttpServlet {
     private static final String START_PAGE = "index.jsp";
     private static final String ADD_USER_PAGE = "/pages/user/addUser.jsp";
     private static final String EDIT_USER_PAGE = "/pages/user/editUser.jsp";
+    private static final String NEWS_LIST = "/pages/news/news.jsp";
 
     private  final static Logger logger = LogManager.getLogger(UserController.class);
     private UserDao userDao;
+    private NewsDao newsDao;
 
     public UserController() {
         this.userDao = new JdbcUserDao();
+        this.newsDao = new JdbcNewsDao();
     }
 
     @Override
@@ -45,8 +50,8 @@ public class UserController extends HttpServlet {
         }else if("delete".equals(action) && login!=null){
             logger.debug("delete user");
             userDao.delete(login);
-            RequestDispatcher view = request.getRequestDispatcher(USERS_LIST);
-            request.setAttribute("users", userDao.getAll());
+            RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
+            request.setAttribute("news",newsDao.getAll());
             view.forward(request, response);
 
         }else if("edit".equals(action) && login!=null){
@@ -71,8 +76,8 @@ public class UserController extends HttpServlet {
             user.setPassword(password);
             user.setEmail(email);
             userDao.add(user);
-            RequestDispatcher view = request.getRequestDispatcher(USERS_LIST);
-            request.setAttribute("users", userDao.getAll());
+            RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
+            request.setAttribute("news",newsDao.getAll());
             view.forward(request, response);
         }else if("edit".equals(action)){
             logger.debug("edit user");
@@ -84,8 +89,8 @@ public class UserController extends HttpServlet {
             user.setPassword(password);
             user.setEmail(email);
             userDao.edit(user);
-            RequestDispatcher view = request.getRequestDispatcher(USERS_LIST);
-            request.setAttribute("users", userDao.getAll());
+            RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
+            request.setAttribute("news",newsDao.getAll());
             view.forward(request, response);
         }
     }

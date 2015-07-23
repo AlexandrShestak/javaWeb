@@ -35,7 +35,7 @@
         </createTable>
 
         <createTable tableName="comments">
-            <column name="comment_id" type="int">
+            <column name="comment_id" type="int" >
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="comment_text" type="varchar(2000)">
@@ -53,7 +53,7 @@
         </createTable>
 
         <createTable tableName="tags">
-            <column name="tag_id" type="int">
+            <column name="tag_id" type="int" >
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="tag_name" type="varchar(20)">
@@ -62,7 +62,7 @@
         </createTable>
 
         <createTable tableName="news_tags">
-            <column name="news_tags_id" type="int">
+            <column name="news_tags_id" type="int" >
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="tag_id" type="int">

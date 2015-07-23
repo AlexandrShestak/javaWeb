@@ -56,7 +56,7 @@
 
     <servlet-mapping>
         <servlet-name>newsServlet</servlet-name>
-        <url-pattern>/news/*</url-pattern>
+        <url-pattern>/news</url-pattern>
     </servlet-mapping>
 
     <servlet>

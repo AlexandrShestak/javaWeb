@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+
+    <changeSet author="alexandr" id="addAutoIncrement-example">
+        <addAutoIncrement catalogName="helpBlog"
+                          columnDataType="int"
+                          columnName="news_id"
+                          incrementBy="1"
+                          schemaName="public"
+                          startWith="1"
+                          tableName="news"/>
+
+        <addAutoIncrement catalogName="helpBlog"
+                          columnDataType="int"
+                          columnName="tag_id"
+                          incrementBy="1"
+                          schemaName="public"
+                          startWith="1"
+                          tableName="tags"/>
+
+        <addAutoIncrement catalogName="helpBlog"
+                          columnDataType="int"
+                          columnName="news_tags_id"
+                          incrementBy="1"
+                          schemaName="public"
+                          startWith="1"
+                          tableName="news_tags"/>
+
+        <addAutoIncrement catalogName="helpBlog"
+                          columnDataType="int"
+                          columnName="comment_id"
+                          incrementBy="1"
+                          schemaName="public"
+                          startWith="1"
+                          tableName="comments"/>
+
+    </changeSet>
+
+</databaseChangeLog>

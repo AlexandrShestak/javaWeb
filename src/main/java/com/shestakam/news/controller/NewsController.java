@@ -3,8 +3,6 @@ package com.shestakam.news.controller;
 import com.shestakam.news.dao.JdbcNewsDao;
 import com.shestakam.news.dao.NewsDao;
 import com.shestakam.news.entity.News;
-import com.shestakam.user.dao.JdbcUserDao;
-import com.shestakam.user.dao.UserDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * Created by alexandr on 21.7.15.
@@ -54,6 +53,10 @@ public class NewsController extends HttpServlet {
                 RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
                 view.forward(request, response);
             }
+        }else if(action == null){
+            request.setAttribute("news",newsDao.getAll());
+            RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
+            view.forward(request, response);
         }
     }
 
@@ -61,13 +64,14 @@ public class NewsController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if ("add".equals(action)){
-            String newsId = request.getParameter("newsId");
+            //String newsId = request.getParameter("newsId");
             String newsText = request.getParameter("newsText");
-            Date newsCreationDate = Date.valueOf(request.getParameter("creationDate"));
+            Timestamp newsCreationDate = new Timestamp(System.currentTimeMillis());
+            //Date newsCreationDate = Date.valueOf(request.getParameter("creationDate"));
             String newsCommentator = (String) request.getSession().getAttribute("login");
             News news = new News();
-            news.setNewsId(Long.valueOf(newsId));
-            news.setUserLogin(newsCommentator);
+           // news.setNewsId(Long.valueOf(newsId));
+            news.setCreatorUsername(newsCommentator);
             news.setCreationDate(newsCreationDate);
             news.setNewsText(newsText);
             newsDao.add(news);
@@ -78,15 +82,14 @@ public class NewsController extends HttpServlet {
         }else if("edit".equals(action)){
             String newsId = request.getParameter("newsId");
             String newsText = request.getParameter("newsText");
-            Date newsCreationDate = Date.valueOf(request.getParameter("creationDate"));
+            Timestamp newsCreationDate = new Timestamp(System.currentTimeMillis());
             String newsCommentator = (String) request.getSession().getAttribute("login");
             News news = new News();
             news.setNewsId(Long.valueOf(newsId));
-            news.setUserLogin(newsCommentator);
+            news.setCreatorUsername(newsCommentator);
             news.setCreationDate(newsCreationDate);
             news.setNewsText(newsText);
             newsDao.edit(news);
-
             request.setAttribute("news",newsDao.getAll());
             RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
             view.forward(request, response);
