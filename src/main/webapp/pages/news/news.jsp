@@ -32,7 +32,7 @@
 
     <tr>
       <td colspan="5">
-        <textarea name="newsText" readonly="readonly" ><c:out value="${news.newsText}"/></textarea>
+        <textarea class="news" name="newsText" readonly="readonly" ><c:out value="${news.newsText}"/></textarea>
       </td>
     </tr>
     <tr>
@@ -60,6 +60,7 @@
       <td>
         <form action="/comments" method="get">
           <input type="hidden" name="newsId" value="${news.newsId}"/>
+          <input type="hidden" name="action" value="getForm">
           <button type="submit" ><fmt:message key="comments"/> </button>
         </form>
       </td>

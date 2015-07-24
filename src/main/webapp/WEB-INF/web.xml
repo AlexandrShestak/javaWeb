@@ -69,7 +69,15 @@
         <url-pattern>/language</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>commentsServlet</servlet-name>
+        <servlet-class>com.shestakam.comments.controller.CommentsController</servlet-class>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>commentsServlet</servlet-name>
+        <url-pattern>/comments</url-pattern>
+    </servlet-mapping>
 
     <filter>
         <filter-name>AuthorizationFilter</filter-name>
@@ -87,6 +95,10 @@
         <servlet-name>newsServlet</servlet-name>
     </filter-mapping>
 
+    <filter-mapping>
+        <filter-name>AuthorizationFilter</filter-name>
+        <servlet-name>commentsServlet</servlet-name>
+    </filter-mapping>
 
 
     <welcome-file-list>

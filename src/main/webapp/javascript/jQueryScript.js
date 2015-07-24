@@ -1,4 +1,36 @@
 
+/*ajax method to add comments*/
+$(document).ready(function(){
+    $('#addComment').click(function(){
+
+        $.ajax({
+            url: 'comments',
+            type: "POST",
+            data: {
+                newsId:$('#newsIdToAjax').val(),
+                action:$('#actionToAjax').val(),
+                commentText:$('#commentTextToAjax').val()
+            },
+
+            success: function (response) {
+                 obj =  response;
+                 $('#commentsTable')
+                     .append('<tr><td colspan="5"><textarea class="comments" name="commentText" readonly="readonly" >'+$('#commentTextToAjax').val()+'</textarea></td></tr>')
+                $('#commentsTable')
+                    .append('<tr><td align="left">'+obj.creationDate+'</td><td align="right">'+obj.commentatorUsername+'</td><td><form action="/comments" method="get"><input type="hidden" name="action" value="edit"><input type="hidden" name="commentId" value='+obj.commentId+'><button type="submit">Edit<fmt:message key="edit"/></button></form></td><td><form action="/comments" method="get"><input type="hidden" name="action" value="delete"><input type="hidden" name="commentId" value='+obj.commentId+'><button type="submit">Delete<fmt:message key="edit"/></button></form></td></tr>')
+            /*    $('#commentsTable').
+                    append('<td><form action="/comments" method="get"><input type="hidden" name="action" value="edit"><input type="hidden" name="commentId" value='+obj.commentId+'/><button type="submit"><fmt:message key="edit"/></button></form></td>')
+                $('#commentsTable').
+                    append('<td><form action="/comments" method="get"><input type="hidden" name="action" value="delete"><input type="hidden" name="commentId" value='+obj.commentId+'/><button type="submit"><fmt:message key="edit"/></button></form></td></tr>')
+ */               $('#commentsTable').
+                    append('<tr><td colspan="5"><hr align="right" width="40%" size="3" color="#0000dd" /> </td> </tr>')
+            }
+        });
+
+    })
+});
+
+
 $(document).ready(function(){
     $('textarea').autoResize()
 });
