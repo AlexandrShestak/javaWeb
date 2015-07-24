@@ -26,7 +26,7 @@ public class JdbcNewsDao implements NewsDao {
     public void add(News news) {
 
         try(Connection connection = JdbcConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("insert into news (news_text, creation_date, commentator_username) VALUES (?,?,?)")) {
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into news (news_text, creation_date, creator_username) VALUES (?,?,?)")) {
             // Parameters start with 1
             preparedStatement.setString(1, news.getNewsText());
             preparedStatement.setTimestamp(2, news.getCreationDate());
@@ -54,7 +54,7 @@ public class JdbcNewsDao implements NewsDao {
                 news.setNewsId(rs.getLong("news_id"));
                 news.setCreationDate(rs.getTimestamp("creation_date"));
                 news.setNewsText(rs.getString("news_text"));
-                news.setCreatorUsername(rs.getString("commentator_username"));
+                news.setCreatorUsername(rs.getString("creator_username"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -76,7 +76,7 @@ public class JdbcNewsDao implements NewsDao {
                 news.setNewsId(rs.getLong("news_id"));
                 news.setCreationDate(rs.getTimestamp("creation_date"));
                 news.setNewsText(rs.getString("news_text"));
-                news.setCreatorUsername(rs.getString("commentator_username"));
+                news.setCreatorUsername(rs.getString("creator_username"));
                 newsList.add(news);
             }
         } catch (SQLException e) {

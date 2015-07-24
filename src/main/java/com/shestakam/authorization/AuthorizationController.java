@@ -68,6 +68,7 @@ public class AuthorizationController extends HttpServlet {
         if(requestUri.equalsIgnoreCase("/login")){
             logger.debug("login");
             String login = request.getParameter("login");
+            login = new String(login.getBytes("iso-8859-1"), "UTF-8");
             String password = request.getParameter("password");
             User user = userDao.get(login);
             if (password.equals(user.getPassword())) {

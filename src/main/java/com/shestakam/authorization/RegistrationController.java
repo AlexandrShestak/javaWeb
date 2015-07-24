@@ -40,6 +40,7 @@ public class RegistrationController extends HttpServlet {
         if("registration".equalsIgnoreCase(action)){
             logger.debug("user registration");
             String login = request.getParameter("login");
+            login = new String(login.getBytes("iso-8859-1"), "UTF-8");
             String password = request.getParameter("password");
             String email = request.getParameter("email");
             User user = new User();

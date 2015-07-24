@@ -66,6 +66,7 @@ public class NewsController extends HttpServlet {
         if ("add".equals(action)){
             //String newsId = request.getParameter("newsId");
             String newsText = request.getParameter("newsText");
+            newsText = new String(newsText.getBytes("iso-8859-1"), "UTF-8");
             Timestamp newsCreationDate = new Timestamp(System.currentTimeMillis());
             //Date newsCreationDate = Date.valueOf(request.getParameter("creationDate"));
             String newsCommentator = (String) request.getSession().getAttribute("login");
@@ -82,6 +83,7 @@ public class NewsController extends HttpServlet {
         }else if("edit".equals(action)){
             String newsId = request.getParameter("newsId");
             String newsText = request.getParameter("newsText");
+            newsText = new String(newsText.getBytes("iso-8859-1"), "UTF-8");
             Timestamp newsCreationDate = new Timestamp(System.currentTimeMillis());
             String newsCommentator = (String) request.getSession().getAttribute("login");
             News news = new News();

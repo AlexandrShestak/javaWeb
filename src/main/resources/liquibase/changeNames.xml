@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet author="alexandr" id="5">
+        <renameColumn catalogName="helpBlog"
+                      columnDataType="varchar(20)"
+                      newColumnName="creator_username"
+                      oldColumnName="commentator_username"
+                      schemaName="public"
+                      tableName="news"/>
+
+        <renameColumn catalogName="helpBlog"
+                      columnDataType="varchar(20)"
+                      newColumnName="commentator_username"
+                      oldColumnName="creator_username"
+                      schemaName="public"
+                      tableName="comments"/>
+    </changeSet>
+
+</databaseChangeLog>
