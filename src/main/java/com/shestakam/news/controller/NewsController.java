@@ -35,9 +35,11 @@ public class NewsController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if ("add".equals(action)){
+            logger.debug("get news form to add");
             RequestDispatcher view = request.getRequestDispatcher(ADD_NEWS);
             view.forward(request, response);
         }else if("edit".equals(action)){
+            logger.debug("get news form to edit");
             String newsId = request.getParameter("newsId");
             if(newsId!=null){
                 News news = newsDao.get(newsId);
@@ -46,6 +48,7 @@ public class NewsController extends HttpServlet {
                 view.forward(request, response);
             }
         }else if("delete".equals(action)){
+            logger.debug("delete news");
             String newsId = request.getParameter("newsId");
             if(newsId!=null){
                 newsDao.delete(newsId);
@@ -54,6 +57,7 @@ public class NewsController extends HttpServlet {
                 view.forward(request, response);
             }
         }else if(action == null){
+            logger.debug("get news");
             request.setAttribute("news",newsDao.getAll());
             RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
             view.forward(request, response);
@@ -64,6 +68,7 @@ public class NewsController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if ("add".equals(action)){
+            logger.debug("add news");
             //String newsId = request.getParameter("newsId");
             String newsText = request.getParameter("newsText");
             newsText = new String(newsText.getBytes("iso-8859-1"), "UTF-8");
@@ -81,6 +86,7 @@ public class NewsController extends HttpServlet {
             RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
             view.forward(request, response);
         }else if("edit".equals(action)){
+            logger.debug("edit news");
             String newsId = request.getParameter("newsId");
             String newsText = request.getParameter("newsText");
             newsText = new String(newsText.getBytes("iso-8859-1"), "UTF-8");

@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class JdbcNewsDao implements NewsDao {
 
-    private  final static Logger logger = LogManager.getLogger(NewsDao.class);
+    private  final static Logger logger = LogManager.getLogger(JdbcNewsDao.class);
 
 
     public JdbcNewsDao() {
@@ -99,18 +99,16 @@ public class JdbcNewsDao implements NewsDao {
             e.printStackTrace();
             logger.error("delete news error",e);
         }
-
     }
 
     @Override
     public void edit(News news) {
-
         try(Connection connection = JdbcConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("update news set news_text=?,creation_date=?"
                     + "where news_id=?")) {
             // Parameters start with 1
             preparedStatement.setString(1, news.getNewsText());
-            preparedStatement.setDate(2,new Date(System.currentTimeMillis()));
+            preparedStatement.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
             preparedStatement.setLong(3, news.getNewsId());
             preparedStatement.executeUpdate();
             logger.debug("edit news with id :" + news.getNewsId());
