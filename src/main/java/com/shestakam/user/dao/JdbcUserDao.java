@@ -22,7 +22,7 @@ public class JdbcUserDao implements UserDao {
         logger.debug("user dao constructor");
     }
 
-    public void add(User user){
+    public String add(User user){
         try(Connection connection = JdbcConnection.getConnection();
             PreparedStatement  preparedStatement = connection.prepareStatement("insert into users (username,password,email) VALUES (?,?,?)")) {
             // Parameters start with 1
@@ -36,6 +36,7 @@ public class JdbcUserDao implements UserDao {
             e.printStackTrace();
             logger.error("add user error", e);
         }
+        return user.getLogin();
     }
 
     public void delete(String login) {

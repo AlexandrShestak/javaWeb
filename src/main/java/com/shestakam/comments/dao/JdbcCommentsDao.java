@@ -21,22 +21,27 @@ public class JdbcCommentsDao implements CommentsDao {
     }
 
     @Override
-    public void add(Comments comments) {
+    public String add(Comments comments) {
+        int key = 0;
         try(Connection connection = JdbcConnection.getConnection();
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("insert into comments (comment_text, creation_date, commentator_username , news_id) VALUES (?,?,?,?)")) {
+                    connection.prepareStatement("insert into comments (comment_text, creation_date, commentator_username , news_id) VALUES (?,?,?,?)",Statement.RETURN_GENERATED_KEYS)) {
             // Parameters start with 1
             preparedStatement.setString(1, comments.getCommentText());
             preparedStatement.setTimestamp(2, comments.getCreationDate());
             preparedStatement.setString(3, comments.getCommentatorUsername());
-            preparedStatement.setLong(4,comments.getNewsId());
+            preparedStatement.setLong(4, comments.getNewsId());
             preparedStatement.executeUpdate();
+            ResultSet keys = preparedStatement.getGeneratedKeys();
+            keys.next();
+            key = keys.getInt(1);
             logger.error("add comments ");
         }
         catch (SQLException e) {
             e.printStackTrace();
             logger.error("add comment error", e);
         }
+        return String.valueOf(key);
 
     }
 
@@ -87,10 +92,11 @@ public class JdbcCommentsDao implements CommentsDao {
         return commentsList;
     }
 
+
     @Override
     public void delete(String id) {
         try(Connection connection = JdbcConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("delete from comments where comment_id=?")) {
+            PreparedStatement preparedStatement = connection.prepareStatement("delete from comments where comments.comment_id=?")) {
             // Parameters start with 1
             preparedStatement.setString(1, id);
             preparedStatement.executeUpdate();
@@ -100,7 +106,6 @@ public class JdbcCommentsDao implements CommentsDao {
             logger.error("delete comment error",e);
         }
     }
-
     @Override
     public void edit(Comments comments) {
         try(Connection connection = JdbcConnection.getConnection();

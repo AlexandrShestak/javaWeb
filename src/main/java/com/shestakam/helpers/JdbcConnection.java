@@ -13,32 +13,28 @@ import java.util.ResourceBundle;
  */
 public class JdbcConnection {
 
-    private static Connection connection= null;
+    private static Connection connection = null;
     private  final static Logger logger = LogManager.getLogger(JdbcConnection.class);
 
-    public  static synchronized Connection getConnection() {
+    public  static synchronized Connection getConnection() throws SQLException {
 
-        try {
-            if (connection==null || connection.isClosed()) {
+        if (connection==null || connection.isClosed()) {
 
-                try {
+            try {
 
-                    ResourceBundle resource = ResourceBundle.getBundle("database");
-                    String url = resource.getString("url");
-                    String driver = resource.getString("driver");
-                    String user = resource.getString("user");
-                    String pass = resource.getString("password");
+                ResourceBundle resource = ResourceBundle.getBundle("database");
+                String url = resource.getString("url");
+                String driver = resource.getString("driver");
+                String user = resource.getString("user");
+                String pass = resource.getString("password");
 
-                    Class.forName(driver);
-                    logger.debug("driver ok");
-                    connection = DriverManager.getConnection(url, user, pass);
+                Class.forName(driver);
+                logger.debug("driver ok");
+                connection = DriverManager.getConnection(url, user, pass);
 
-                } catch (Exception e) {
-                    logger.error("get connection error", e);
-                }
+            } catch (Exception e) {
+                logger.error("get connection error", e);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return connection;
     }

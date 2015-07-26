@@ -23,22 +23,25 @@ public class JdbcNewsDao implements NewsDao {
     }
 
     @Override
-    public void add(News news) {
-
+    public String add(News news) {
+        int key = 0;
         try(Connection connection = JdbcConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("insert into news (news_text, creation_date, creator_username) VALUES (?,?,?)")) {
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into news (news_text, creation_date, creator_username) VALUES (?,?,?)",Statement.RETURN_GENERATED_KEYS)) {
             // Parameters start with 1
             preparedStatement.setString(1, news.getNewsText());
             preparedStatement.setTimestamp(2, news.getCreationDate());
             preparedStatement.setString(3,news.getCreatorUsername());
             preparedStatement.executeUpdate();
+            ResultSet keys = preparedStatement.getGeneratedKeys();
+            keys.next();
+            key = keys.getInt(1);
             logger.error("add news ");
         }
         catch (SQLException e) {
             e.printStackTrace();
             logger.error("add news error", e);
         }
-
+        return String.valueOf(key);
     }
 
     @Override

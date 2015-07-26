@@ -46,16 +46,18 @@ public class CommentsController extends HttpServlet {
             comment.setCreationDate(new Timestamp(System.currentTimeMillis()));
             comment.setNewsId(Long.valueOf(newsId));
             comment.setCommentatorUsername((String) request.getSession().getAttribute("login"));
-            commentsDao.add(comment);
+            String key = commentsDao.add(comment);
 
             JSONObject obj = new JSONObject();
             obj.put("creationDate",comment.getCreationDate().toString());
             obj.put("commentatorUsername",comment.getCommentatorUsername());
-            List<Comments> commentsList = commentsDao.getCommentsForNews(Long.valueOf(newsId));
-            obj.put("commentId",commentsList.get(commentsList.size()-1).getCommentId().toString());
+            obj.put("commentId",key);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(obj.toJSONString());
+        }else if("delete".equals(action)){
+            String commentId = request.getParameter("commentId");
+            commentsDao.delete(commentId);
         }
     }
 
