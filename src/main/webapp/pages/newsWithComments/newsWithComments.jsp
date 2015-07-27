@@ -25,6 +25,8 @@
 <body>
 <jsp:include page="../language.jsp"/>
 <jsp:include page="../hello.jsp"/>
+
+
 <table class="news"  id="commentsTable">
   <tr>
     <td colspan="5">
@@ -55,13 +57,13 @@
                     <%--<form action="/comments" method="get">--%>
                       <input type="hidden" name="action" value="edit">
                       <input type="hidden" name="commentId" value="${comments.commentId}"/>
-                      <button  id="editComment"><fmt:message key="edit"/> </button>
+                      <button class="editComment"><fmt:message key="edit"/> </button>
                   <%--  </form>--%>
                   </td>
                   <td>
                     <%--<form action="/comments" method="get">--%>
                       <input type="hidden" name="action" value="delete">
-                      <input type="hidden" name="commentId" id="commentId" value="${comments.commentId}"/>
+                      <input type="hidden" name="commentId"  value="${comments.commentId}"/>
                       <button class="deleteComment"><fmt:message key="delete"/></button>
                     <%--</form>--%>
                   </td>

@@ -28,6 +28,14 @@
 <jsp:include page="../language.jsp"/>
 <jsp:include page="../hello.jsp"/>
 <table class="news">
+  <tr>
+    <td>
+      <form action="/news" method="get">
+        <input type="hidden" name="action" value="add">
+        <button type="submit"><fmt:message key="add"/> </button>
+      </form>
+    </td>
+  </tr>
   <c:forEach items="${news}" var="news">
 
     <tr>

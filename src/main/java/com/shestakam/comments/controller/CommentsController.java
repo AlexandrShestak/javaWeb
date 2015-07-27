@@ -58,6 +58,12 @@ public class CommentsController extends HttpServlet {
         }else if("delete".equals(action)){
             String commentId = request.getParameter("commentId");
             commentsDao.delete(commentId);
+        }else if("edit".equals(action)){
+            String commentId = request.getParameter("commentId");
+            String commentText = request.getParameter("commentText");
+            Comments comment = commentsDao.get(commentId);
+            comment.setCommentText(commentText);
+            commentsDao.edit(comment);
         }
     }
 
