@@ -23,7 +23,7 @@ import java.io.IOException;
 public class UserController extends HttpServlet {
 
     private static final String USERS_LIST = "/pages/user/users.jsp";
-    private static final String REGISTRATION_PAGE= "/pages/user/registration.jsp";
+    private static final String REGISTRATION_PAGE= "/pages/authorization/registration.jsp";
     private static final String START_PAGE = "index.jsp";
     private static final String ADD_USER_PAGE = "/pages/user/addUser.jsp";
     private static final String EDIT_USER_PAGE = "/pages/user/editUser.jsp";
@@ -39,7 +39,8 @@ public class UserController extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request,
+                         HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         String login =  request.getParameter("username");
 
@@ -64,9 +65,10 @@ public class UserController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        if("add".equalsIgnoreCase(action)){
+        if ("add".equalsIgnoreCase(action)) {
             logger.debug("add user");
             String login = request.getParameter("login");
             String password = request.getParameter("password");
@@ -77,9 +79,9 @@ public class UserController extends HttpServlet {
             user.setEmail(email);
             userDao.add(user);
             RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
-            request.setAttribute("news",newsDao.getAll());
+            request.setAttribute("news", newsDao.getAll());
             view.forward(request, response);
-        }else if("edit".equals(action)){
+        } else if ("edit".equals(action)) {
             logger.debug("edit user");
             String login = request.getParameter("login");
             String password = request.getParameter("password");
@@ -88,9 +90,9 @@ public class UserController extends HttpServlet {
             user.setLogin(login);
             user.setPassword(password);
             user.setEmail(email);
-            userDao.edit(user);
+            userDao.update(user);
             RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
-            request.setAttribute("news",newsDao.getAll());
+            request.setAttribute("news", newsDao.getAll());
             view.forward(request, response);
         }
     }

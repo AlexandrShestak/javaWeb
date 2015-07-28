@@ -61,7 +61,7 @@
 
     <servlet>
         <servlet-name>languageServlet</servlet-name>
-        <servlet-class>com.shestakam.helpers.LanguageController</servlet-class>
+        <servlet-class>com.shestakam.language.LanguageController</servlet-class>
     </servlet>
 
     <servlet-mapping>

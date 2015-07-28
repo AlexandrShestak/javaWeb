@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
@@ -32,7 +31,8 @@ public class NewsController extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request,
+                         HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if ("add".equals(action)){
             logger.debug("get news form to add");
@@ -65,23 +65,20 @@ public class NewsController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if ("add".equals(action)){
             logger.debug("add news");
-            //String newsId = request.getParameter("newsId");
             String newsText = request.getParameter("newsText");
             newsText = new String(newsText.getBytes("iso-8859-1"), "UTF-8");
             Timestamp newsCreationDate = new Timestamp(System.currentTimeMillis());
-            //Date newsCreationDate = Date.valueOf(request.getParameter("creationDate"));
             String newsCommentator = (String) request.getSession().getAttribute("login");
             News news = new News();
-           // news.setNewsId(Long.valueOf(newsId));
             news.setCreatorUsername(newsCommentator);
             news.setCreationDate(newsCreationDate);
             news.setNewsText(newsText);
             newsDao.add(news);
-
             request.setAttribute("news",newsDao.getAll());
             RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
             view.forward(request, response);
@@ -97,7 +94,7 @@ public class NewsController extends HttpServlet {
             news.setCreatorUsername(newsCommentator);
             news.setCreationDate(newsCreationDate);
             news.setNewsText(newsText);
-            newsDao.edit(news);
+            newsDao.update(news);
             request.setAttribute("news",newsDao.getAll());
             RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
             view.forward(request, response);

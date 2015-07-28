@@ -1,11 +1,16 @@
 package com.shestakam.comments.dao;
 
 import com.shestakam.comments.entity.Comments;
-import com.shestakam.helpers.JdbcConnection;
+import com.shestakam.db.JdbcConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +30,9 @@ public class JdbcCommentsDao implements CommentsDao {
         int key = 0;
         try(Connection connection = JdbcConnection.getConnection();
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("insert into comments (comment_text, creation_date, commentator_username , news_id) VALUES (?,?,?,?)",Statement.RETURN_GENERATED_KEYS)) {
+                connection.prepareStatement("insert into comments " +
+                        "(comment_text, creation_date, commentator_username , news_id) VALUES (?,?,?,?)",
+                        Statement.RETURN_GENERATED_KEYS)) {
             // Parameters start with 1
             preparedStatement.setString(1, comments.getCommentText());
             preparedStatement.setTimestamp(2, comments.getCreationDate());
@@ -96,7 +103,8 @@ public class JdbcCommentsDao implements CommentsDao {
     @Override
     public void delete(String id) {
         try(Connection connection = JdbcConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("delete from comments where comments.comment_id=?")) {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("delete from comments where comments.comment_id=?")) {
             // Parameters start with 1
             preparedStatement.setString(1, id);
             preparedStatement.executeUpdate();
@@ -107,10 +115,10 @@ public class JdbcCommentsDao implements CommentsDao {
         }
     }
     @Override
-    public void edit(Comments comments) {
+    public void update(Comments comments) {
         try(Connection connection = JdbcConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("update comments set comment_text=?,creation_date=?"
-                    + "where comment_id=?")) {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("update comments set comment_text=?,creation_date=? where comment_id=?")) {
             // Parameters start with 1
             preparedStatement.setString(1, comments.getCommentText());
             preparedStatement.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
@@ -127,7 +135,8 @@ public class JdbcCommentsDao implements CommentsDao {
     public List<Comments> getCommentsForNews(Long newsId) {
         List<Comments> commentsList = new ArrayList<Comments>();
         try (Connection connection = JdbcConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("select * from comments where news_id=?")){
+             PreparedStatement preparedStatement =
+                     connection.prepareStatement("select * from comments where news_id=?")){
 
             preparedStatement.setLong(1,newsId);
             ResultSet rs = preparedStatement.executeQuery();

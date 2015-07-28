@@ -55,7 +55,7 @@
   </table>
 
 </form>
-<form action="pages/user/registration.jsp">
+<form action="pages/authorization/registration.jsp">
   <table class="login">
     <tr>
       <td><fmt:message key="registr"/> </td>

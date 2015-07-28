@@ -1,12 +1,16 @@
 package com.shestakam.news.dao;
 
-import com.shestakam.helpers.JdbcConnection;
+import com.shestakam.db.JdbcConnection;
 import com.shestakam.news.entity.News;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +30,9 @@ public class JdbcNewsDao implements NewsDao {
     public String add(News news) {
         int key = 0;
         try(Connection connection = JdbcConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("insert into news (news_text, creation_date, creator_username) VALUES (?,?,?)",Statement.RETURN_GENERATED_KEYS)) {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("insert into news (news_text, creation_date, creator_username) VALUES (?,?,?)",
+                            Statement.RETURN_GENERATED_KEYS)) {
             // Parameters start with 1
             preparedStatement.setString(1, news.getNewsText());
             preparedStatement.setTimestamp(2, news.getCreationDate());
@@ -93,7 +99,8 @@ public class JdbcNewsDao implements NewsDao {
     @Override
     public void delete(String id) {
         try(Connection connection = JdbcConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("delete from news where news_id=?")) {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("delete from news where news_id=?")) {
             // Parameters start with 1
             preparedStatement.setString(1, id);
             preparedStatement.executeUpdate();
@@ -105,10 +112,10 @@ public class JdbcNewsDao implements NewsDao {
     }
 
     @Override
-    public void edit(News news) {
+    public void update(News news) {
         try(Connection connection = JdbcConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("update news set news_text=?,creation_date=?"
-                    + "where news_id=?")) {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("update news set news_text=?,creation_date=? where news_id=?")){
             // Parameters start with 1
             preparedStatement.setString(1, news.getNewsText());
             preparedStatement.setTimestamp(2, new Timestamp(System.currentTimeMillis()));

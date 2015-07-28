@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.List;
 
 
 public class CommentsController extends HttpServlet {
@@ -63,7 +62,14 @@ public class CommentsController extends HttpServlet {
             String commentText = request.getParameter("commentText");
             Comments comment = commentsDao.get(commentId);
             comment.setCommentText(commentText);
-            commentsDao.edit(comment);
+            commentsDao.update(comment);
+        }else if ("getForm".equals(action)){
+            logger.debug("get news with comments form");
+            RequestDispatcher view = request.getRequestDispatcher(NEWS_WITH_COMMENTS);
+            String newsId = request.getParameter("newsId");
+            request.setAttribute("news",newsDao.get(newsId));
+            request.setAttribute("comments",commentsDao.getCommentsForNews(Long.valueOf(newsId)));
+            view.forward(request, response);
         }
     }
 

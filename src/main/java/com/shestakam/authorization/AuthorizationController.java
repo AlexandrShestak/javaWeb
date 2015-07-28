@@ -38,7 +38,8 @@ public class AuthorizationController extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request,
+                         HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         String requestUri = request.getRequestURI();
         if(requestUri.equalsIgnoreCase("/login")){
@@ -61,7 +62,8 @@ public class AuthorizationController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
 
         String requestUri = request.getRequestURI();

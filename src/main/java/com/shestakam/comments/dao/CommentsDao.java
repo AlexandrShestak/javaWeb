@@ -1,7 +1,7 @@
 package com.shestakam.comments.dao;
 
 import com.shestakam.comments.entity.Comments;
-import com.shestakam.helpers.GenericDao;
+import com.shestakam.db.GenericDao;
 
 import java.util.List;
 

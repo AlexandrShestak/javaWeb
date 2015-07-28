@@ -1,4 +1,4 @@
-package com.shestakam.helpers;
+package com.shestakam.db;
 
 import java.util.List;
 
@@ -10,6 +10,6 @@ public interface GenericDao<Entity> {
      Entity get(String id);
      List<Entity> getAll();
      void delete(String id);
-     void edit(Entity entity);
+     void update(Entity entity);
 }
 

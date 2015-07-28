@@ -1,12 +1,15 @@
 package com.shestakam.user.dao;
 
-import com.shestakam.helpers.JdbcConnection;
+import com.shestakam.db.JdbcConnection;
 import com.shestakam.user.entity.User;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +27,8 @@ public class JdbcUserDao implements UserDao {
 
     public String add(User user){
         try(Connection connection = JdbcConnection.getConnection();
-            PreparedStatement  preparedStatement = connection.prepareStatement("insert into users (username,password,email) VALUES (?,?,?)")) {
+            PreparedStatement  preparedStatement =
+                    connection.prepareStatement("insert into users (username,password,email) VALUES (?,?,?)")) {
             // Parameters start with 1
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getPassword());
@@ -41,7 +45,8 @@ public class JdbcUserDao implements UserDao {
 
     public void delete(String login) {
         try(Connection connection = JdbcConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("delete from users where users.username=?")) {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("delete from users where users.username=?")) {
             // Parameters start with 1
             preparedStatement.setString(1, login);
             preparedStatement.executeUpdate();
@@ -52,10 +57,10 @@ public class JdbcUserDao implements UserDao {
         }
     }
 
-    public void edit(User user) {
+    public void update(User user) {
         try(Connection connection = JdbcConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("update users set password=?, email=?"
-                    + "where users.username=?")) {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("update users set password=?, email=? where users.username=?")) {
             // Parameters start with 1
             preparedStatement.setString(1, user.getPassword());
             preparedStatement.setString(2, user.getEmail());

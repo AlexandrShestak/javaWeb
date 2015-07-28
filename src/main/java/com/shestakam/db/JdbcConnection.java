@@ -1,4 +1,4 @@
-package com.shestakam.helpers;
+package com.shestakam.db;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

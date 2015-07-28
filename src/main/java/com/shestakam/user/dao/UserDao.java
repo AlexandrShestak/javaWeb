@@ -1,6 +1,6 @@
 package com.shestakam.user.dao;
 
-import com.shestakam.helpers.GenericDao;
+import com.shestakam.db.GenericDao;
 import com.shestakam.user.entity.User;
 
 /**

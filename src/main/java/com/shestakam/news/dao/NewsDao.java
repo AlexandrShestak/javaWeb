@@ -1,6 +1,6 @@
 package com.shestakam.news.dao;
 
-import com.shestakam.helpers.GenericDao;
+import com.shestakam.db.GenericDao;
 import com.shestakam.news.entity.News;
 
 /**

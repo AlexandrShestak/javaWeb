@@ -18,7 +18,7 @@ import java.io.IOException;
  */
 public class RegistrationController extends HttpServlet {
 
-    private static final String REGISTRATION_PAGE= "/pages/user/registration.jsp";
+    private static final String REGISTRATION_PAGE= "/pages/authorization/registration.jsp";
     private static final String START_PAGE = "index.jsp";
 
     private  final static Logger logger = LogManager.getLogger(RegistrationController.class);
@@ -29,13 +29,15 @@ public class RegistrationController extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request,
+                         HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher view = request.getRequestDispatcher(REGISTRATION_PAGE);
         view.forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if("registration".equalsIgnoreCase(action)){
             logger.debug("user registration");
