@@ -54,7 +54,7 @@ public class RegistrationController extends HttpServlet {
                 RequestDispatcher view = request.getRequestDispatcher(REGISTRATION_PAGE);
                 view.forward(request, response);
             }else {
-                userDao.add(user);
+                userDao.save(user);
                 RequestDispatcher view = request.getRequestDispatcher(START_PAGE);
                 view.forward(request, response);
             }

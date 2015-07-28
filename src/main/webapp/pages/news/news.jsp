@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: alexandr
-  Date: 22.7.15
-  Time: 19.31
+  Date: 24.7.15
+  Time: 14.27
   To change this template use File | Settings | File Templates.
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -15,7 +15,6 @@
 
 <%@ page isELIgnored="false" %>
 
-
 <html>
 <head>
   <script type="text/javascript" src="${pageContext.servletContext.contextPath}/javascript/jquery-2.1.4.js"></script>
@@ -24,63 +23,86 @@
   <title></title>
 </head>
 <body>
-
 <jsp:include page="../language.jsp"/>
 <jsp:include page="../hello.jsp"/>
-<table class="news">
-  <c:forEach items="${news}" var="news">
 
-    <tr>
-      <td colspan="5">
-        <textarea class="news" name="newsText" readonly="readonly" ><c:out value="${news.newsText}"/></textarea>
-      </td>
-    </tr>
-    <tr>
-      <td align="left"><c:out value="${news.creationDate}" /></td>
-      <td align="right"><c:out value="${news.creatorUsername}" /></td>
-      <c:if test="${news.creatorUsername eq sessionScope.login}">
-        <td>
-          <form action="/news" method="get">
-            <input type="hidden" name="action" value="edit">
-            <input type="hidden" name="newsId" value="${news.newsId}"/>
-            <button type="submit"><fmt:message key="edit"/> </button>
-          </form>
-        </td>
-      </c:if>
-      <c:if test="${news.creatorUsername eq sessionScope.login}">
-        <td>
-          <form action="/news" method="get">
-            <input type="hidden" name="action" value="delete">
-            <input type="hidden" name="newsId" value="${news.newsId}"/>
-            <button type="submit" ><fmt:message key="delete"/> </button>
-          </form>
-        </td>
 
-      </c:if>
-      <td>
-        <form action="/comments" method="post">
-          <input type="hidden" name="newsId" value="${news.newsId}"/>
-          <input type="hidden" name="action" value="getForm">
-          <button type="submit" ><fmt:message key="comments"/> </button>
-        </form>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5">
-        <hr align="right" width="40%" size="3" color="#0000dd" />
-      </td>
-    </tr>
-  </c:forEach>
+<table class="news"  id="commentsTable">
   <tr>
-    <td>
-      <form action="/news" method="get">
-        <input type="hidden" name="action" value="add">
-        <button type="submit"><fmt:message key="add"/> </button>
-      </form>
+    <td colspan="5">
+      <textarea class="news" name="newsText" readonly="readonly" ><c:out value="${news.newsText}"/></textarea>
     </td>
   </tr>
+  <tr>
+    <td colspan="3" align="left"><c:out value="${news.creationDate}" /></td>
+    <td colspan="2" align="right"><c:out value="${news.creatorUsername}" /></td>
+  </tr>
+  <tr>
+  <c:forEach items="${newsTags}" var="tags">
+    <td>${tags.tagName}</td>
+  </c:forEach>
+  </tr>
+
+  <c:forEach items="${comments}" var="comments">
+
+    <tr>
+      <td colspan="5">
+        <table width="80%" >
+
+          <tr>
+            <td colspan="5">
+              <textarea class="comments" name="commentText" readonly="readonly" ><c:out value="${comments.commentText}"/></textarea>
+            </td>
+          </tr>
+          <tr>
+            <td align="left"><c:out value="${comments.creationDate}" /></td>
+            <td align="right"><c:out value="${comments.commentatorUsername}" /></td>
+            <c:if test="${comments.commentatorUsername eq sessionScope.login}">
+              <td>
+                  <%--<form action="/comments" method="get">--%>
+                <input type="hidden" name="action" value="edit">
+                <input type="hidden" name="commentId" value="${comments.commentId}"/>
+                <button class="editComment"><fmt:message key="edit"/> </button>
+                  <%--  </form>--%>
+              </td>
+              <td>
+                  <%--<form action="/comments" method="get">--%>
+                <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="commentId"  value="${comments.commentId}"/>
+                <button class="deleteComment"><fmt:message key="delete"/></button>
+                  <%--</form>--%>
+              </td>
+            </c:if>
+          </tr>
+          <tr>
+            <td colspan="5">
+              <hr align="right" width="40%" size="3" color="#0000dd" />
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+  </c:forEach>
 </table>
 
 
+<table class="news">
+  <tr>
+    <td>
+      <textarea class="comments"  name="commentText" id="commentTextToAjax"></textarea>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <input type="hidden" name="newsId" id="newsIdToAjax" value="${news.newsId}"/>
+      <input type="hidden" name="action" id="actionToAjax" value="add"/>
+
+      <button id="deleteAjax" style="display: none;"><fmt:message key="delete"/></button>
+      <button id="editAjax"style="display: none;"><fmt:message key="edit"/></button>
+      <button id="addComment"><fmt:message key="add"/> </button>
+    </td>
+  </tr>
+</table>
 </body>
 </html>

@@ -25,7 +25,7 @@ public class JdbcUserDao implements UserDao {
         logger.debug("user dao constructor");
     }
 
-    public String add(User user){
+    public String save(User user){
         try(Connection connection = JdbcConnection.getConnection();
             PreparedStatement  preparedStatement =
                     connection.prepareStatement("insert into users (username,password,email) VALUES (?,?,?)")) {
@@ -34,11 +34,11 @@ public class JdbcUserDao implements UserDao {
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.executeUpdate();
-            logger.error("add user error");
+            logger.error("save user error");
         }
         catch (SQLException e) {
             e.printStackTrace();
-            logger.error("add user error", e);
+            logger.error("save user error", e);
         }
         return user.getLogin();
     }

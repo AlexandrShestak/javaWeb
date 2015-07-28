@@ -12,6 +12,7 @@
 
 <fmt:setLocale value="${sessionScope.language}" />
 <fmt:setBundle   basename="messages/user"/>
+
 <%@ page isELIgnored="false" %>
 
 

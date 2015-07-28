@@ -22,12 +22,12 @@ import java.io.IOException;
  */
 public class UserController extends HttpServlet {
 
-    private static final String USERS_LIST = "/pages/user/users.jsp";
+    private static final String USERS_LIST = "/pages/user/list.jsp";
     private static final String REGISTRATION_PAGE= "/pages/authorization/registration.jsp";
     private static final String START_PAGE = "index.jsp";
-    private static final String ADD_USER_PAGE = "/pages/user/addUser.jsp";
-    private static final String EDIT_USER_PAGE = "/pages/user/editUser.jsp";
-    private static final String NEWS_LIST = "/pages/news/news.jsp";
+    private static final String ADD_USER_PAGE = "/pages/user/add.jsp";
+    private static final String EDIT_USER_PAGE = "/pages/user/edit.jsp";
+    private static final String NEWS_LIST = "/pages/news/list.jsp";
 
     private  final static Logger logger = LogManager.getLogger(UserController.class);
     private UserDao userDao;
@@ -69,7 +69,7 @@ public class UserController extends HttpServlet {
                           HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if ("add".equalsIgnoreCase(action)) {
-            logger.debug("add user");
+            logger.debug("save user");
             String login = request.getParameter("login");
             String password = request.getParameter("password");
             String email = request.getParameter("email");
@@ -77,7 +77,7 @@ public class UserController extends HttpServlet {
             user.setLogin(login);
             user.setPassword(password);
             user.setEmail(email);
-            userDao.add(user);
+            userDao.save(user);
             RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
             request.setAttribute("news", newsDao.getAll());
             view.forward(request, response);

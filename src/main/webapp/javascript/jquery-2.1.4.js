@@ -3077,7 +3077,7 @@ jQuery.Callbacks = function( options ) {
 		fired,
 		// Flag to know if list is currently firing
 		firing,
-		// First callback to fire (used internally by add and fireWith)
+		// First callback to fire (used internally by save and fireWith)
 		firingStart,
 		// End of the loop when firing
 		firingLength,
@@ -3097,7 +3097,7 @@ jQuery.Callbacks = function( options ) {
 			firing = true;
 			for ( ; list && firingIndex < firingLength; firingIndex++ ) {
 				if ( list[ firingIndex ].apply( data[ 0 ], data[ 1 ] ) === false && options.stopOnFalse ) {
-					memory = false; // To prevent further calls using add
+					memory = false; // To prevent further calls using save
 					break;
 				}
 			}
@@ -3134,7 +3134,7 @@ jQuery.Callbacks = function( options ) {
 							}
 						});
 					})( arguments );
-					// Do we need to add the callbacks to the
+					// Do we need to save the callbacks to the
 					// current firing batch?
 					if ( firing ) {
 						firingLength = list.length;
@@ -3232,7 +3232,7 @@ jQuery.extend({
 
 	Deferred: function( func ) {
 		var tuples = [
-				// action, add listener, listener list, final state
+				// action, save listener, listener list, final state
 				[ "resolve", "done", jQuery.Callbacks("once memory"), "resolved" ],
 				[ "reject", "fail", jQuery.Callbacks("once memory"), "rejected" ],
 				[ "notify", "progress", jQuery.Callbacks("memory") ]
@@ -3283,7 +3283,7 @@ jQuery.extend({
 			var list = tuple[ 2 ],
 				stateString = tuple[ 3 ];
 
-			// promise[ done | fail | progress ] = list.add
+			// promise[ done | fail | progress ] = list.save
 			promise[ tuple[1] ] = list.add;
 
 			// Handle state
@@ -4330,7 +4330,7 @@ jQuery.event = {
 				tmp = cur;
 			}
 
-			// Only add window if we got to document (e.g., not plain obj or detached DOM)
+			// Only save window if we got to document (e.g., not plain obj or detached DOM)
 			if ( tmp === (elem.ownerDocument || document) ) {
 				eventPath.push( tmp.defaultView || tmp.parentWindow || window );
 			}
@@ -5783,7 +5783,7 @@ function augmentWidthOrHeight( elem, name, extra, isBorderBox, styles ) {
 		val = 0;
 
 	for ( ; i < 4; i += 2 ) {
-		// Both box models exclude margin, so add it if we want it
+		// Both box models exclude margin, so save it if we want it
 		if ( extra === "margin" ) {
 			val += jQuery.css( elem, extra + cssExpand[ i ], true, styles );
 		}
@@ -5799,10 +5799,10 @@ function augmentWidthOrHeight( elem, name, extra, isBorderBox, styles ) {
 				val -= jQuery.css( elem, "border" + cssExpand[ i ] + "Width", true, styles );
 			}
 		} else {
-			// At this point, extra isn't content, so add padding
+			// At this point, extra isn't content, so save padding
 			val += jQuery.css( elem, "padding" + cssExpand[ i ], true, styles );
 
-			// At this point, extra isn't content nor padding, so add border
+			// At this point, extra isn't content nor padding, so save border
 			if ( extra !== "padding" ) {
 				val += jQuery.css( elem, "border" + cssExpand[ i ] + "Width", true, styles );
 			}
@@ -5844,7 +5844,7 @@ function getWidthOrHeight( elem, name, extra ) {
 		val = parseFloat( val ) || 0;
 	}
 
-	// Use the active box-sizing model to add/subtract irrelevant styles
+	// Use the active box-sizing model to save/subtract irrelevant styles
 	return ( val +
 		augmentWidthOrHeight(
 			elem,
@@ -5924,7 +5924,7 @@ jQuery.extend({
 		}
 	},
 
-	// Don't automatically add "px" to these possibly-unitless properties
+	// Don't automatically save "px" to these possibly-unitless properties
 	cssNumber: {
 		"columnCount": true,
 		"fillOpacity": true,
@@ -5980,7 +5980,7 @@ jQuery.extend({
 				return;
 			}
 
-			// If a number, add 'px' to the (except for certain CSS properties)
+			// If a number, save 'px' to the (except for certain CSS properties)
 			if ( type === "number" && !jQuery.cssNumber[ origName ] ) {
 				value += "px";
 			}
@@ -7705,7 +7705,7 @@ function ajaxHandleResponses( s, jqXHR, responses ) {
 	}
 
 	// If we found a dataType
-	// We add the dataType to the list if needed
+	// We save the dataType to the list if needed
 	// and return the corresponding response
 	if ( finalDataType ) {
 		if ( finalDataType !== dataTypes[ 0 ] ) {
@@ -7876,7 +7876,7 @@ jQuery.extend({
 		},
 
 		// For options that shouldn't be deep extended:
-		// you can add your own custom options here if
+		// you can save your own custom options here if
 		// and when you create one that shouldn't be
 		// deep extended (see ajaxExtend)
 		flatOptions: {
@@ -7995,7 +7995,7 @@ jQuery.extend({
 					if ( map ) {
 						if ( state < 2 ) {
 							for ( code in map ) {
-								// Lazy-add the new callback in a way that preserves old ones
+								// Lazy-save the new callback in a way that preserves old ones
 								statusCode[ code ] = [ statusCode[ code ], map[ code ] ];
 							}
 						} else {
@@ -8094,7 +8094,7 @@ jQuery.extend({
 					// If there is already a '_' parameter, set its value
 					cacheURL.replace( rts, "$1_=" + nonce++ ) :
 
-					// Otherwise add one to the end
+					// Otherwise save one to the end
 					cacheURL + ( rquery.test( cacheURL ) ? "&" : "?" ) + "_=" + nonce++;
 			}
 		}
@@ -8489,7 +8489,7 @@ jQuery.fn.extend({
 	},
 	serializeArray: function() {
 		return this.map(function() {
-			// Can add propHook for "elements" to filter or add form elements
+			// Can save propHook for "elements" to filter or save form elements
 			var elements = jQuery.prop( this, "elements" );
 			return elements ? jQuery.makeArray( elements ) : this;
 		})

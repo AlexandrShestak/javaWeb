@@ -2,6 +2,7 @@ package com.shestakam.news.dao;
 
 import com.shestakam.db.JdbcConnection;
 import com.shestakam.news.entity.News;
+import com.shestakam.tags.entity.Tags;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,7 +28,7 @@ public class JdbcNewsDao implements NewsDao {
     }
 
     @Override
-    public String add(News news) {
+    public String save(News news) {
         int key = 0;
         try(Connection connection = JdbcConnection.getConnection();
             PreparedStatement preparedStatement =
@@ -41,11 +42,11 @@ public class JdbcNewsDao implements NewsDao {
             ResultSet keys = preparedStatement.getGeneratedKeys();
             keys.next();
             key = keys.getInt(1);
-            logger.error("add news ");
+            logger.error("save news ");
         }
         catch (SQLException e) {
             e.printStackTrace();
-            logger.error("add news error", e);
+            logger.error("save news error", e);
         }
         return String.valueOf(key);
     }
@@ -126,5 +127,35 @@ public class JdbcNewsDao implements NewsDao {
             e.printStackTrace();
             logger.error("edit news error",e);
         }
+    }
+
+    @Override
+    public List<Tags> getTagsForNews(Long newsId) {
+        List<Tags> tagsList = new ArrayList<Tags>();
+        try (Connection connection = JdbcConnection.getConnection();
+             PreparedStatement psToFindTagsId =
+                     connection.prepareStatement("select * from news_tags where news_id=?");
+             PreparedStatement psToFindTags =
+                     connection.prepareStatement("select * from tags where tag_id=?")){
+
+            psToFindTagsId.setLong(1, newsId);
+            ResultSet rs = psToFindTagsId.executeQuery();
+
+            while (rs.next()) {
+                psToFindTags.setLong(1, rs.getLong("tag_id"));
+                ResultSet rsWithTags = psToFindTags.executeQuery();
+                while(rsWithTags.next()){
+                    Tags tag = new Tags();
+                    tag.setTagId(rsWithTags.getLong("tag_id"));
+                    tag.setTagName(rsWithTags.getString("tag_name"));
+                    tagsList.add(tag);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            logger.error("get get tags for news error.  news id: "+ newsId,e);
+        }
+        logger.debug("get tags for news. news id: "+ newsId);
+        return tagsList;
     }
 }

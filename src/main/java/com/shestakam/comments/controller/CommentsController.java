@@ -24,7 +24,7 @@ import java.sql.Timestamp;
 public class CommentsController extends HttpServlet {
 
     private  final static Logger logger = LogManager.getLogger(CommentsController.class);
-    private static final String NEWS_WITH_COMMENTS = "/pages/newsWithComments/newsWithComments.jsp";
+    private static final String NEWS_WITH_COMMENTS = "/pages/news/news.jsp";
 
     private CommentsDao commentsDao;
     private NewsDao newsDao;
@@ -45,7 +45,7 @@ public class CommentsController extends HttpServlet {
             comment.setCreationDate(new Timestamp(System.currentTimeMillis()));
             comment.setNewsId(Long.valueOf(newsId));
             comment.setCommentatorUsername((String) request.getSession().getAttribute("login"));
-            String key = commentsDao.add(comment);
+            String key = commentsDao.save(comment);
 
             JSONObject obj = new JSONObject();
             obj.put("creationDate",comment.getCreationDate().toString());
@@ -68,6 +68,7 @@ public class CommentsController extends HttpServlet {
             RequestDispatcher view = request.getRequestDispatcher(NEWS_WITH_COMMENTS);
             String newsId = request.getParameter("newsId");
             request.setAttribute("news",newsDao.get(newsId));
+            request.setAttribute("newsTags",newsDao.getTagsForNews(Long.valueOf(newsId)));
             request.setAttribute("comments",commentsDao.getCommentsForNews(Long.valueOf(newsId)));
             view.forward(request, response);
         }
@@ -81,6 +82,7 @@ public class CommentsController extends HttpServlet {
             RequestDispatcher view = request.getRequestDispatcher(NEWS_WITH_COMMENTS);
             String newsId = request.getParameter("newsId");
             request.setAttribute("news",newsDao.get(newsId));
+            request.setAttribute("newsTags",newsDao.getTagsForNews(Long.valueOf(newsId)));
             request.setAttribute("comments",commentsDao.getCommentsForNews(Long.valueOf(newsId)));
             view.forward(request, response);
         }

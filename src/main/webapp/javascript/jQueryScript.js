@@ -5,7 +5,7 @@ $(document).ready(
 $(document).ready(
     $(document).on("click", $('.editComment'), editComment())
 );
-/*ajax method to add comments*/
+/*ajax method to save comments*/
 $(document).ready(function(){
     $('#addComment').click(function(){
         $.ajax({
@@ -126,6 +126,26 @@ function editComment() {
     })
 }
 
+/*method tp add tag*/
+$(document).ready(function(){
+    $('#addTag').click(function(){
+        var tagNameText = $(this).parent().parent().children().children("input#addTagName").val()
+        var newsId = $('#newsIdToAddTag').val()
+        var tagsTable = $(this).parent().parent().parent()
+        $.ajax({
+            url: 'tags',
+            type: "POST",
+            data: {
+                action: 'add',
+                newsId: newsId,
+                tagName:tagNameText
+            },
+            success: function (response) {
+                tagsTable.append('<tr><td><input type="text" readonly value='+tagNameText+'></td></tr>')
+            }
+        });
+    })
+})
 
 $(document).ready(function(){
     $('textarea').autoResize()

@@ -19,9 +19,10 @@ import java.sql.Timestamp;
  */
 public class NewsController extends HttpServlet {
 
-    private static final String NEWS_LIST = "/pages/news/news.jsp";
-    private static final String EDIT_NEWS = "/pages/news/editNews.jsp";
-    private static final String ADD_NEWS = "/pages/news/addNews.jsp";
+    private static final String NEWS_LIST = "/pages/news/list.jsp";
+    private static final String EDIT_NEWS = "/pages/news/edit.jsp";
+    private static final String ADD_NEWS = "/pages/news/add.jsp";
+    private static final String ADD_TAGS = "/pages/tags/add.jsp";
 
     private  final static Logger logger = LogManager.getLogger(NewsController.class);
     private NewsDao newsDao;
@@ -35,7 +36,7 @@ public class NewsController extends HttpServlet {
                          HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if ("add".equals(action)){
-            logger.debug("get news form to add");
+            logger.debug("get news form to save");
             RequestDispatcher view = request.getRequestDispatcher(ADD_NEWS);
             view.forward(request, response);
         }else if("edit".equals(action)){
@@ -69,7 +70,7 @@ public class NewsController extends HttpServlet {
                           HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if ("add".equals(action)){
-            logger.debug("add news");
+            logger.debug("save news");
             String newsText = request.getParameter("newsText");
             newsText = new String(newsText.getBytes("iso-8859-1"), "UTF-8");
             Timestamp newsCreationDate = new Timestamp(System.currentTimeMillis());
@@ -78,9 +79,10 @@ public class NewsController extends HttpServlet {
             news.setCreatorUsername(newsCommentator);
             news.setCreationDate(newsCreationDate);
             news.setNewsText(newsText);
-            newsDao.add(news);
-            request.setAttribute("news",newsDao.getAll());
-            RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
+            String newsId = newsDao.save(news);
+            //request.setAttribute("news",newsDao.getAll());
+            request.setAttribute("newsId",newsId);
+            RequestDispatcher view = request.getRequestDispatcher(ADD_TAGS);
             view.forward(request, response);
         }else if("edit".equals(action)){
             logger.debug("edit news");

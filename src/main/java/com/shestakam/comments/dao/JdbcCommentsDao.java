@@ -2,6 +2,7 @@ package com.shestakam.comments.dao;
 
 import com.shestakam.comments.entity.Comments;
 import com.shestakam.db.JdbcConnection;
+import com.shestakam.tags.entity.Tags;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,7 +27,7 @@ public class JdbcCommentsDao implements CommentsDao {
     }
 
     @Override
-    public String add(Comments comments) {
+    public String save(Comments comments) {
         int key = 0;
         try(Connection connection = JdbcConnection.getConnection();
             PreparedStatement preparedStatement =
@@ -42,14 +43,13 @@ public class JdbcCommentsDao implements CommentsDao {
             ResultSet keys = preparedStatement.getGeneratedKeys();
             keys.next();
             key = keys.getInt(1);
-            logger.error("add comments ");
+            logger.error("save comments ");
         }
         catch (SQLException e) {
             e.printStackTrace();
-            logger.error("add comment error", e);
+            logger.error("save comment error", e);
         }
         return String.valueOf(key);
-
     }
 
     @Override
@@ -156,4 +156,6 @@ public class JdbcCommentsDao implements CommentsDao {
         logger.debug("get all comments for news. news id: "+ newsId);
         return commentsList;
     }
+
+
 }

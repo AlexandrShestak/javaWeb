@@ -24,9 +24,9 @@ import java.io.IOException;
 public class AuthorizationController extends HttpServlet {
 
     private  final static Logger logger = LogManager.getLogger(AuthorizationController.class);
-    private static final String USERS_LIST = "/pages/user/users.jsp";
+    private static final String USERS_LIST = "/pages/user/list.jsp";
     private static final String START_PAGE = "index.jsp";
-    private static final String NEWS_LIST = "/pages/news/news.jsp";
+    private static final String NEWS_LIST = "/pages/news/list.jsp";
 
     private UserDao userDao;
     private NewsDao newsDao;
@@ -56,6 +56,7 @@ public class AuthorizationController extends HttpServlet {
         }else if(requestUri.equalsIgnoreCase("/logout")){
             HttpSession session =  request.getSession(true);
             session.removeAttribute("login");
+            session.invalidate();
             RequestDispatcher view = request.getRequestDispatcher(START_PAGE);
             view.forward(request,response);
         }
@@ -88,6 +89,7 @@ public class AuthorizationController extends HttpServlet {
         }else if(requestUri.equalsIgnoreCase("/logout")){
             HttpSession session =  request.getSession(true);
             session.removeAttribute("login");
+            session.invalidate();
             RequestDispatcher view = request.getRequestDispatcher(START_PAGE);
             view.forward(request,response);
         }
