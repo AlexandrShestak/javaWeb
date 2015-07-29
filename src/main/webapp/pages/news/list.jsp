@@ -27,6 +27,18 @@
 
 <jsp:include page="../language.jsp"/>
 <jsp:include page="../hello.jsp"/>
+
+<table class="search">
+  <tr>
+    <td>
+      <form action="/news" method="get">
+        <input type="hidden" name="action" value="search">
+        <input type="text" name="tag">
+        <button type="submit"><fmt:message key="search"/></button>
+      </form>
+    </td>
+  </tr>
+</table>
 <table class="news">
   <c:forEach items="${news}" var="news">
 

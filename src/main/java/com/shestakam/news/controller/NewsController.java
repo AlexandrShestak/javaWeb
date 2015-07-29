@@ -57,6 +57,13 @@ public class NewsController extends HttpServlet {
                 RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
                 view.forward(request, response);
             }
+        }else if("search".equals(action)){
+            logger.debug("search news by tag");
+            String tag = request.getParameter("tag");
+            request.setAttribute("news",newsDao.searchNewsByTag(tag));
+            RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
+            view.forward(request, response);
+
         }else if(action == null){
             logger.debug("get news");
             request.setAttribute("news",newsDao.getAll());

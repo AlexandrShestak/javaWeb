@@ -158,4 +158,36 @@ public class JdbcNewsDao implements NewsDao {
         logger.debug("get tags for news. news id: "+ newsId);
         return tagsList;
     }
+
+    @Override
+    public List<News> searchNewsByTag(String tagName) {
+        List<News> newsList = new ArrayList<News>();
+        try (Connection connection = JdbcConnection.getConnection();
+             PreparedStatement psToFindNewsId =
+                     connection.prepareStatement("SELECT  news_id from news_tags INNER JOIN tags on news_tags.tag_id=tags.tag_id where tag_name=?");
+             PreparedStatement psToFindNews =
+                     connection.prepareStatement("select * from news where news_id=?")){
+
+            psToFindNewsId.setString(1,tagName);
+            ResultSet rs = psToFindNewsId.executeQuery();
+
+            while (rs.next()) {
+                psToFindNews.setLong(1, rs.getLong("news_id"));
+                ResultSet rsWithNews = psToFindNews.executeQuery();
+                while(rsWithNews.next()){
+                    News news = new News();
+                    news.setNewsId(rsWithNews.getLong("news_id"));
+                    news.setCreationDate(rsWithNews.getTimestamp("creation_date"));
+                    news.setNewsText(rsWithNews.getString("news_text"));
+                    news.setCreatorUsername(rsWithNews.getString("creator_username"));
+                    newsList.add(news);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            logger.error("get all news with tag: "+ tagName+" error",e);
+        }
+        logger.debug("get all news with tag: "+ tagName);
+        return newsList;
+    }
 }

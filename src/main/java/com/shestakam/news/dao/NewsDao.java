@@ -12,4 +12,6 @@ import java.util.List;
 public interface NewsDao extends GenericDao<News> {
 
     List<Tags> getTagsForNews(Long newsId);
+    List<News> searchNewsByTag(String tagName);
+
 }

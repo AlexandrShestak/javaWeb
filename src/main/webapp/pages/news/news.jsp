@@ -26,7 +26,6 @@
 <jsp:include page="../language.jsp"/>
 <jsp:include page="../hello.jsp"/>
 
-
 <table class="news"  id="commentsTable">
   <tr>
     <td colspan="5">
@@ -38,9 +37,11 @@
     <td colspan="2" align="right"><c:out value="${news.creatorUsername}" /></td>
   </tr>
   <tr>
+    <td colspan="5">
   <c:forEach items="${newsTags}" var="tags">
-    <td>${tags.tagName}</td>
+   #${tags.tagName}
   </c:forEach>
+    </td>
   </tr>
 
   <c:forEach items="${comments}" var="comments">
