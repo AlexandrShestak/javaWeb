@@ -10,6 +10,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page isELIgnored="false" %>
 
+<%@page buffer="50kb" autoFlush="false" %>
+
 <fmt:setLocale value="${sessionScope.language}" />
 <fmt:setBundle   basename="messages/news"/>
 
@@ -37,6 +39,11 @@
     <tr>
       <td colspan="5">
         <textarea class="news" name="newsText" readonly="readonly" ><c:out value="${news.newsText}"/></textarea>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" align="center" bgcolor="aqua">
+        ${news.tagsString}
       </td>
     </tr>
     <tr>

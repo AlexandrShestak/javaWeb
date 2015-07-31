@@ -10,6 +10,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page isELIgnored="false" %>
 
+
+
 <fmt:setLocale value="${sessionScope.language}" />
 <fmt:setBundle   basename="messages/users"/>
 <%@ page isELIgnored="false" %>

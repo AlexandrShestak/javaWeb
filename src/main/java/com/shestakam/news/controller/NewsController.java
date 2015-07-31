@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Created by alexandr on 21.7.15.
@@ -64,14 +65,32 @@ public class NewsController extends HttpServlet {
             }
         }else if("search".equals(action)){
             logger.debug("search news by tag");
-            String tag = request.getParameter("tag");
-            request.setAttribute("news",newsDao.searchNewsByTag(tag));
+            String tagName = request.getParameter("tag");
+            List<News> newsList = newsDao.searchNewsByTag(tagName);
+            request.setAttribute("news", newsList);
+            for (News elem: newsList){
+                List<Tags> tagsList = newsDao.getTagsForNews(elem.getNewsId());
+                String tagString = new String();
+                for(Tags tag: tagsList){
+                    tagString+= "#"+tag.getTagName();
+                }
+                elem.setTagsString(tagString);
+            }
             RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
             view.forward(request, response);
 
         }else if(action == null){
             logger.debug("get news");
-            request.setAttribute("news",newsDao.getAll());
+            List<News> newsList = newsDao.getAll();
+            request.setAttribute("news", newsList);
+            for (News elem: newsList){
+                List<Tags> tagsList = newsDao.getTagsForNews(elem.getNewsId());
+                String tagString = new String();
+                for(Tags tag: tagsList){
+                    tagString+= "#"+tag.getTagName();
+                }
+                elem.setTagsString(tagString);
+            }
             RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
             view.forward(request, response);
         }

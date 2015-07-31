@@ -34,15 +34,15 @@
     </td>
   </tr>
   <tr>
-    <td colspan="3" align="left"><c:out value="${news.creationDate}" /></td>
-    <td colspan="2" align="right"><c:out value="${news.creatorUsername}" /></td>
+    <td colspan="5" align="center" bgcolor="aqua">
+      <c:forEach items="${newsTags}" var="tags">
+        #${tags.tagName}
+      </c:forEach>
+    </td>
   </tr>
   <tr>
-    <td colspan="5">
-  <c:forEach items="${newsTags}" var="tags">
-   #${tags.tagName}
-  </c:forEach>
-    </td>
+    <td colspan="3" align="left"><c:out value="${news.creationDate}" /></td>
+    <td colspan="2" align="right"><c:out value="${news.creatorUsername}" /></td>
   </tr>
 
   <c:forEach items="${comments}" var="comments">

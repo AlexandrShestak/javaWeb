@@ -2,6 +2,8 @@ package com.shestakam.user.authorization;
 
 import com.shestakam.news.dao.JdbcNewsDao;
 import com.shestakam.news.dao.NewsDao;
+import com.shestakam.news.entity.News;
+import com.shestakam.news.tags.entity.Tags;
 import com.shestakam.user.dao.HibernateUserDao;
 import com.shestakam.user.dao.UserDao;
 import com.shestakam.user.entity.User;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 
 /**
@@ -48,7 +51,16 @@ public class AuthorizationController extends HttpServlet {
                 view.forward(request,response);
             }else {
                 RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
-                request.setAttribute("news", newsDao.getAll());
+                List<News> newsList = newsDao.getAll();
+                request.setAttribute("news", newsList);
+                for (News elem: newsList){
+                    List<Tags> tagsList = newsDao.getTagsForNews(elem.getNewsId());
+                    String tagString = new String();
+                    for(Tags tag: tagsList){
+                        tagString+= "#"+tag.getTagName();
+                    }
+                    elem.setTagsString(tagString);
+                }
                 view.forward(request, response);
             }
 
@@ -78,7 +90,16 @@ public class AuthorizationController extends HttpServlet {
                 HttpSession session =  request.getSession(true);
                 session.setAttribute("login",login);
                 RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
-                request.setAttribute("news",newsDao.getAll());
+                List<News> newsList = newsDao.getAll();
+                request.setAttribute("news", newsList);
+                for (News elem: newsList){
+                    List<Tags> tagsList = newsDao.getTagsForNews(elem.getNewsId());
+                    String tagString = new String();
+                    for(Tags tag: tagsList){
+                        tagString+= "#"+tag.getTagName();
+                    }
+                    elem.setTagsString(tagString);
+                }
                 view.forward(request, response);
             } else{
                 RequestDispatcher view = request.getRequestDispatcher(START_PAGE);

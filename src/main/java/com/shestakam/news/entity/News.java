@@ -1,6 +1,5 @@
 package com.shestakam.news.entity;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
@@ -12,8 +11,18 @@ public class News {
     private String newsText;
     private Timestamp creationDate;
     private String creatorUsername;
+    private String tagsString;
 
     public News() {
+        tagsString = new String();
+    }
+
+    public String getTagsString() {
+        return tagsString;
+    }
+
+    public void setTagsString(String tagsString) {
+        this.tagsString = tagsString;
     }
 
     public Long getNewsId() {
