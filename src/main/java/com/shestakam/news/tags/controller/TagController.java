@@ -1,8 +1,8 @@
-package com.shestakam.tags.controller;
+package com.shestakam.news.tags.controller;
 
-import com.shestakam.tags.dao.JdbcTagsDao;
-import com.shestakam.tags.dao.TagDao;
-import com.shestakam.tags.entity.Tags;
+import com.shestakam.news.tags.dao.JdbcTagsDao;
+import com.shestakam.news.tags.dao.TagDao;
+import com.shestakam.news.tags.entity.Tags;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

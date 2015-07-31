@@ -34,7 +34,7 @@ public class JdbcUserDao implements UserDao {
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.executeUpdate();
-            logger.error("save user error");
+            logger.debug("save user");
         }
         catch (SQLException e) {
             e.printStackTrace();

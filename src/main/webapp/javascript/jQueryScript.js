@@ -130,20 +130,12 @@ function editComment() {
 $(document).ready(function(){
     $('#addTag').click(function(){
         var tagNameText = $(this).parent().parent().children().children("input#addTagName").val()
-        var newsId = $('#newsIdToAddTag').val()
         var tagsTable = $(this).parent().parent().parent()
-        $.ajax({
-            url: 'tags',
-            type: "POST",
-            data: {
-                action: 'add',
-                newsId: newsId,
-                tagName:tagNameText
-            },
-            success: function (response) {
-                tagsTable.append('<tr><td><input type="text" readonly value='+tagNameText+'></td></tr>')
-            }
-        });
+        tagsTable.append('<tr><td><input type="text" readonly value='+tagNameText+'></td></tr>')
+        if($("#tagsToAddWithNews").val()==""){
+            $("#tagsToAddWithNews").val(tagNameText)
+        }else
+            $('#tagsToAddWithNews').val($('#tagsToAddWithNews').val()+';'+tagNameText)
     })
 })
 

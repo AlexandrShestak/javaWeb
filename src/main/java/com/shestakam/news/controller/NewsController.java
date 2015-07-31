@@ -3,6 +3,9 @@ package com.shestakam.news.controller;
 import com.shestakam.news.dao.JdbcNewsDao;
 import com.shestakam.news.dao.NewsDao;
 import com.shestakam.news.entity.News;
+import com.shestakam.news.tags.dao.JdbcTagsDao;
+import com.shestakam.news.tags.dao.TagDao;
+import com.shestakam.news.tags.entity.Tags;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,9 +29,11 @@ public class NewsController extends HttpServlet {
 
     private  final static Logger logger = LogManager.getLogger(NewsController.class);
     private NewsDao newsDao;
+    private TagDao tagDao;
 
     public NewsController() {
         this.newsDao= new JdbcNewsDao();
+        this.tagDao = new JdbcTagsDao();
     }
 
     @Override
@@ -87,9 +92,24 @@ public class NewsController extends HttpServlet {
             news.setCreationDate(newsCreationDate);
             news.setNewsText(newsText);
             String newsId = newsDao.save(news);
-            //request.setAttribute("news",newsDao.getAll());
-            request.setAttribute("newsId",newsId);
-            RequestDispatcher view = request.getRequestDispatcher(ADD_TAGS);
+            String[] tags  = request.getParameter("tags").split(";");
+            for(String tagName : tags) {
+                logger.debug("add tag");
+                Long tagId = tagDao.getTagIdByName(tagName);
+                if (tagId == null) {
+                    logger.debug("new tag");
+                    Tags tag = new Tags();
+                    tag.setTagName(tagName);
+                    tagId = Long.valueOf(tagDao.save(tag));
+                    tagDao.addTagToNews(Long.valueOf(newsId), tagId);
+                } else {
+                    logger.debug("old tag");
+                    tagDao.addTagToNews(Long.valueOf(newsId), tagId);
+                }
+            }
+            request.setAttribute("news",newsDao.getAll());
+            //request.setAttribute("newsId",newsId);
+            RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
             view.forward(request, response);
         }else if("edit".equals(action)){
             logger.debug("edit news");

@@ -1,11 +1,11 @@
 /**
  * Created by alexandr on 24.7.15.
  */
-package com.shestakam.comments.controller;
+package com.shestakam.news.comments.controller;
 
-import com.shestakam.comments.dao.CommentsDao;
-import com.shestakam.comments.dao.JdbcCommentsDao;
-import com.shestakam.comments.entity.Comments;
+import com.shestakam.news.comments.dao.CommentsDao;
+import com.shestakam.news.comments.dao.JdbcCommentsDao;
+import com.shestakam.news.comments.entity.Comments;
 import com.shestakam.news.dao.JdbcNewsDao;
 import com.shestakam.news.dao.NewsDao;
 import org.apache.logging.log4j.LogManager;

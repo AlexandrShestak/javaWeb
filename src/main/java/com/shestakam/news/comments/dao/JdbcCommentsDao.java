@@ -1,8 +1,7 @@
-package com.shestakam.comments.dao;
+package com.shestakam.news.comments.dao;
 
-import com.shestakam.comments.entity.Comments;
+import com.shestakam.news.comments.entity.Comments;
 import com.shestakam.db.JdbcConnection;
-import com.shestakam.tags.entity.Tags;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -43,7 +42,7 @@ public class JdbcCommentsDao implements CommentsDao {
             ResultSet keys = preparedStatement.getGeneratedKeys();
             keys.next();
             key = keys.getInt(1);
-            logger.error("save comments ");
+            logger.debug("save comments ");
         }
         catch (SQLException e) {
             e.printStackTrace();

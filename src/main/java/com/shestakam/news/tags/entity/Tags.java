@@ -1,4 +1,4 @@
-package com.shestakam.tags.entity;
+package com.shestakam.news.tags.entity;
 
 /**
  * Created by alexandr on 28.7.15.

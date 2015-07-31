@@ -25,6 +25,7 @@
 <body>
 <jsp:include page="../language.jsp"/>
 <jsp:include page="../hello.jsp"/>
+<jsp:include page="../menu.jsp"/>
 
 <table class="news"  id="commentsTable">
   <tr>
@@ -101,7 +102,7 @@
 
       <button id="deleteAjax" style="display: none;"><fmt:message key="delete"/></button>
       <button id="editAjax"style="display: none;"><fmt:message key="edit"/></button>
-      <button id="addComment"><fmt:message key="add"/> </button>
+      <button id="addComment"><fmt:message key="addComment"/> </button>
     </td>
   </tr>
 </table>

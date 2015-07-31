@@ -40,13 +40,25 @@
     <tr>
       <td>
         <input type="hidden" name="action" value="add">
-        <input type="submit">
+        <input type="hidden" name="tags" id="tagsToAddWithNews">
+        <button type="submit"><fmt:message key="addNews"/> </button>
       </td>
     </tr>
   </table>
 </form>
-
-
-
+<table class="tags">
+  <tr>
+    <td>
+      <fmt:message key="addTag"/>
+    </td>
+    <td>
+      <input type="hidden" name="newsId" value="${newsId}" id="newsIdToAddTag">
+      <input type="text" id="addTagName">
+    </td>
+    <td>
+      <button id="addTag" ><fmt:message key="add"/> </button>
+    </td>
+  </tr>
+</table>
 </body>
 </html>

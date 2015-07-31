@@ -1,7 +1,7 @@
-package com.shestakam.tags.dao;
+package com.shestakam.news.tags.dao;
 
 import com.shestakam.db.JdbcConnection;
-import com.shestakam.tags.entity.Tags;
+import com.shestakam.news.tags.entity.Tags;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,7 +38,7 @@ public class JdbcTagsDao implements TagDao {
             ResultSet keys = preparedStatement.getGeneratedKeys();
             keys.next();
             key = keys.getInt(1);
-            logger.error("save tag ");
+            logger.debug("save tag ");
         }
         catch (SQLException e) {
             e.printStackTrace();

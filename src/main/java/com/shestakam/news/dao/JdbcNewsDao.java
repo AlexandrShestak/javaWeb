@@ -2,7 +2,7 @@ package com.shestakam.news.dao;
 
 import com.shestakam.db.JdbcConnection;
 import com.shestakam.news.entity.News;
-import com.shestakam.tags.entity.Tags;
+import com.shestakam.news.tags.entity.Tags;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -1,7 +1,7 @@
-package com.shestakam.tags.dao;
+package com.shestakam.news.tags.dao;
 
 import com.shestakam.db.GenericDao;
-import com.shestakam.tags.entity.Tags;
+import com.shestakam.news.tags.entity.Tags;
 
 /**
  * Created by alexandr on 28.7.15.

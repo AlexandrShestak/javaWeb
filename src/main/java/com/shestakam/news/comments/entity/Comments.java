@@ -1,4 +1,4 @@
-package com.shestakam.comments.entity;
+package com.shestakam.news.comments.entity;
 
 import java.sql.Timestamp;
 

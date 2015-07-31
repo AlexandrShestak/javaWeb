@@ -27,6 +27,10 @@ table.news {
     border: 1px solid green; /* Рамка вокруг таблицы */
     margin: auto; /* Выравниваем таблицу по центру окна  */
 }
+table.tags{
+    width: 50%; /* Ширина таблицы */
+    margin: auto; /* Выравниваем таблицу по центру окна  */
+}
 
 table.search {
     width: 60%; /* Ширина таблицы */

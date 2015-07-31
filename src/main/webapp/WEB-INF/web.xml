@@ -71,7 +71,7 @@
 
     <servlet>
         <servlet-name>commentsServlet</servlet-name>
-        <servlet-class>com.shestakam.comments.controller.CommentsController</servlet-class>
+        <servlet-class>com.shestakam.news.comments.controller.CommentsController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -81,7 +81,7 @@
 
     <servlet>
         <servlet-name>tagsServlet</servlet-name>
-        <servlet-class>com.shestakam.tags.controller.TagController</servlet-class>
+        <servlet-class>com.shestakam.news.tags.controller.TagController</servlet-class>
     </servlet>
 
     <servlet-mapping>

@@ -3,9 +3,8 @@ package com.shestakam.authorization;
 import com.shestakam.news.dao.JdbcNewsDao;
 import com.shestakam.news.dao.NewsDao;
 import com.shestakam.user.dao.JdbcUserDao;
-import com.shestakam.user.entity.User;
 import com.shestakam.user.dao.UserDao;
-
+import com.shestakam.user.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
