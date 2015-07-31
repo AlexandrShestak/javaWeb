@@ -24,7 +24,8 @@ import java.sql.Timestamp;
 public class CommentsController extends HttpServlet {
 
     private  final static Logger logger = LogManager.getLogger(CommentsController.class);
-    private static final String NEWS_WITH_COMMENTS = "/pages/news/news.jsp";
+
+    private static final String NEWS_WITH_COMMENTS = "/WEB-INF/pages/news/news.jsp";
 
     private CommentsDao commentsDao;
     private NewsDao newsDao;

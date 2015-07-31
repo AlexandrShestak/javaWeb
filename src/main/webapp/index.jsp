@@ -8,7 +8,7 @@
 <%@ page isELIgnored="false" %>
 
 <%--
-<jsp:include page="pages/language.jsp"/>
+<jsp:include page="/WEB-INF/pages/language.jsp"/>
 --%>
 
 
@@ -23,7 +23,7 @@
 </header>
 <body>
 
-<jsp:include page="pages/language.jsp"/>
+<jsp:include page="/WEB-INF/pages/language.jsp"/>
 <%-- <jsp:include page="pages/hello.jsp"/>  --%>
 
 

@@ -1,6 +1,6 @@
-package com.shestakam.authorization;
+package com.shestakam.user.authorization;
 
-import com.shestakam.user.dao.JdbcUserDao;
+import com.shestakam.user.dao.HibernateUserDao;
 import com.shestakam.user.dao.UserDao;
 import com.shestakam.user.entity.User;
 import org.apache.logging.log4j.LogManager;
@@ -18,14 +18,14 @@ import java.io.IOException;
  */
 public class RegistrationController extends HttpServlet {
 
-    private static final String REGISTRATION_PAGE= "/pages/authorization/registration.jsp";
+    private static final String REGISTRATION_PAGE= "/WEB-INF/pages/authorization/registration.jsp";
     private static final String START_PAGE = "index.jsp";
 
     private  final static Logger logger = LogManager.getLogger(RegistrationController.class);
     private UserDao userDao;
 
     public RegistrationController() {
-        this.userDao = new JdbcUserDao();
+        this.userDao = new HibernateUserDao();
     }
 
     @Override
@@ -49,7 +49,7 @@ public class RegistrationController extends HttpServlet {
             user.setLogin(login);
             user.setPassword(password);
             user.setEmail(email);
-            if(userDao.get(login).getLogin()!=null){
+            if(userDao.get(login)!=null){
                 request.setAttribute("errorMessage","Пользователь с таким именем уже существует");
                 RequestDispatcher view = request.getRequestDispatcher(REGISTRATION_PAGE);
                 view.forward(request, response);
@@ -58,7 +58,6 @@ public class RegistrationController extends HttpServlet {
                 RequestDispatcher view = request.getRequestDispatcher(START_PAGE);
                 view.forward(request, response);
             }
-
         }
     }
 }

@@ -10,7 +10,7 @@
 
     <servlet>
         <servlet-name>authorizationServlet</servlet-name>
-        <servlet-class>com.shestakam.authorization.AuthorizationController</servlet-class>
+        <servlet-class>com.shestakam.user.authorization.AuthorizationController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -41,7 +41,7 @@
 
     <servlet>
         <servlet-name>registrationServlet</servlet-name>
-        <servlet-class>com.shestakam.authorization.RegistrationController</servlet-class>
+        <servlet-class>com.shestakam.user.authorization.RegistrationController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -79,7 +79,7 @@
         <url-pattern>/comments</url-pattern>
     </servlet-mapping>
 
-    <servlet>
+   <!-- <servlet>
         <servlet-name>tagsServlet</servlet-name>
         <servlet-class>com.shestakam.news.tags.controller.TagController</servlet-class>
     </servlet>
@@ -87,11 +87,11 @@
     <servlet-mapping>
         <servlet-name>tagsServlet</servlet-name>
         <url-pattern>/tags</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
 
     <filter>
         <filter-name>AuthorizationFilter</filter-name>
-        <filter-class>com.shestakam.authorization.AuthorizationFilter</filter-class>
+        <filter-class>com.shestakam.user.authorization.AuthorizationFilter</filter-class>
     </filter>
 
     <filter-mapping>

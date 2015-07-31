@@ -22,18 +22,19 @@
         <!-- Enable Hibernate's automatic session context management -->
         <property name="current_session_context_class">thread</property>
 
-      <!--  &lt;!&ndash; Disable the second-level cache  &ndash;&gt;
-        <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>-->
+        <!-- Disable the second-level cache  -->
+        <property name="cache.provider_class">org.hibernate.cache.internal.NoCachingRegionFactory</property>
 
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>
-
-      <!--  &lt;!&ndash; Drop and re-create the database schema on startup &ndash;&gt;
+<!--
+        &lt;!&ndash; Drop and re-create the database schema on startup &ndash;&gt;
         <property name="hbm2ddl.auto">update</property>-->
 <!--
         <mapping resource="org/hibernate/tutorial/domain/Event.hbm.xml"/>-->
 
+        <property name="hibernate.enable_lazy_load_no_trans">true</property>
+        
         <mapping class="com.shestakam.user.entity.User"/>
     </session-factory>
-
 </hibernate-configuration>

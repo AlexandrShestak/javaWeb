@@ -1,8 +1,8 @@
-package com.shestakam.authorization;
+package com.shestakam.user.authorization;
 
 import com.shestakam.news.dao.JdbcNewsDao;
 import com.shestakam.news.dao.NewsDao;
-import com.shestakam.user.dao.JdbcUserDao;
+import com.shestakam.user.dao.HibernateUserDao;
 import com.shestakam.user.dao.UserDao;
 import com.shestakam.user.entity.User;
 import org.apache.logging.log4j.LogManager;
@@ -23,16 +23,16 @@ import java.io.IOException;
 public class AuthorizationController extends HttpServlet {
 
     private  final static Logger logger = LogManager.getLogger(AuthorizationController.class);
-    private static final String USERS_LIST = "/pages/user/list.jsp";
+    private static final String USERS_LIST = "/WEB-INF/pages/user/list.jsp";
     private static final String START_PAGE = "index.jsp";
-    private static final String NEWS_LIST = "/pages/news/list.jsp";
+    private static final String NEWS_LIST = "/WEB-INF/pages/news/list.jsp";
 
     private UserDao userDao;
     private NewsDao newsDao;
 
     public AuthorizationController() {
 
-        this.userDao = new JdbcUserDao();
+        this.userDao = new HibernateUserDao();
         this.newsDao = new JdbcNewsDao();
     }
 

@@ -2,7 +2,7 @@ package com.shestakam.user.controller;
 
 import com.shestakam.news.dao.JdbcNewsDao;
 import com.shestakam.news.dao.NewsDao;
-import com.shestakam.user.dao.JdbcUserDao;
+import com.shestakam.user.dao.HibernateUserDao;
 import com.shestakam.user.dao.UserDao;
 import com.shestakam.user.entity.User;
 import org.apache.logging.log4j.LogManager;
@@ -21,19 +21,19 @@ import java.io.IOException;
  */
 public class UserController extends HttpServlet {
 
-    private static final String USERS_LIST = "/pages/user/list.jsp";
-    private static final String REGISTRATION_PAGE= "/pages/authorization/registration.jsp";
+    private static final String USERS_LIST = "/WEB-INF/pages/user/list.jsp";
+    private static final String REGISTRATION_PAGE= "/WEB-INF/pages/authorization/registration.jsp";
     private static final String START_PAGE = "index.jsp";
-    private static final String ADD_USER_PAGE = "/pages/user/add.jsp";
-    private static final String EDIT_USER_PAGE = "/pages/user/edit.jsp";
-    private static final String NEWS_LIST = "/pages/news/list.jsp";
+    private static final String ADD_USER_PAGE = "/WEB-INF/pages/user/add.jsp";
+    private static final String EDIT_USER_PAGE = "/WEB-INF/pages/user/edit.jsp";
+    private static final String NEWS_LIST = "/WEB-INF/pages/news/list.jsp";
 
     private  final static Logger logger = LogManager.getLogger(UserController.class);
     private UserDao userDao;
     private NewsDao newsDao;
 
     public UserController() {
-        this.userDao = new JdbcUserDao();
+        this.userDao = new HibernateUserDao();
         this.newsDao = new JdbcNewsDao();
     }
 

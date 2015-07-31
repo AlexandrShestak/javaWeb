@@ -1,4 +1,4 @@
-package com.shestakam.authorization;
+package com.shestakam.user.authorization;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;

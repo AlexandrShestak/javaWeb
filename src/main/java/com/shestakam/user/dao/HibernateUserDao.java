@@ -31,7 +31,7 @@ public class HibernateUserDao implements UserDao {
         logger.debug("get user");
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        User user = (User) session.load(User.class,id);
+        User user = (User) session.get(User.class,id);
         session.getTransaction().commit();
         return user;
     }

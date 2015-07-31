@@ -22,10 +22,10 @@ import java.sql.Timestamp;
  */
 public class NewsController extends HttpServlet {
 
-    private static final String NEWS_LIST = "/pages/news/list.jsp";
-    private static final String EDIT_NEWS = "/pages/news/edit.jsp";
-    private static final String ADD_NEWS = "/pages/news/add.jsp";
-    private static final String ADD_TAGS = "/pages/tags/add.jsp";
+    private static final String NEWS_LIST = "/WEB-INF/pages/news/list.jsp";
+    private static final String EDIT_NEWS = "/WEB-INF/pages/news/edit.jsp";
+    private static final String ADD_NEWS = "/WEB-INF/pages/news/add.jsp";
+    private static final String ADD_TAGS = "/WEB-INF/pages/tags/add.jsp";
 
     private  final static Logger logger = LogManager.getLogger(NewsController.class);
     private NewsDao newsDao;
