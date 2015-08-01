@@ -1,9 +1,16 @@
 package com.shestakam.user.entity;
 
+import com.shestakam.news.comments.entity.Comments;
+import com.shestakam.news.entity.News;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by alexandr on 17.7.15.
@@ -14,6 +21,8 @@ public class User {
     private String login;
     private String password;
     private String email;
+    private Set<News> newsSet = new HashSet<>(0);
+    private Set<Comments> commentsSet = new HashSet<>(0);
 
     public User() {
     }
@@ -28,6 +37,7 @@ public class User {
     }
 
     @Id
+    @GeneratedValue
     @Column(name="username",unique = true ,nullable = false)
     public String getLogin() {
         return login;
@@ -53,5 +63,24 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+
+    @OneToMany(mappedBy = "creator")
+    public Set<News> getNewsSet() {
+        return newsSet;
+    }
+
+    public void setNewsSet(Set<News> newsSet) {
+        this.newsSet = newsSet;
+    }
+
+    @OneToMany(mappedBy = "commentator")
+    public Set<Comments> getCommentsSet() {
+        return commentsSet;
+    }
+
+    public void setCommentsSet(Set<Comments> commentsSet) {
+        this.commentsSet = commentsSet;
     }
 }

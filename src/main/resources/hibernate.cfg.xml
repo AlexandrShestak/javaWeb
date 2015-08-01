@@ -33,7 +33,7 @@
 <!--
         <mapping resource="org/hibernate/tutorial/domain/Event.hbm.xml"/>-->
 
-        <property name="hibernate.enable_lazy_load_no_trans">true</property>
+      <!--  <property name="hibernate.enable_lazy_load_no_trans">true</property>-->
         
         <mapping class="com.shestakam.user.entity.User"/>
     </session-factory>
