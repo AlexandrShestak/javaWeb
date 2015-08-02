@@ -14,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,6 +30,7 @@ public class News {
     private String newsText;
     private Timestamp creationDate;
     private String creatorUsername;
+
     private String tagsString;
     private User creator;
     private Set<Tags> tagsSet = new HashSet<>(0);
@@ -38,6 +40,7 @@ public class News {
         tagsString = new String();
     }
 
+    @Transient
     public String getTagsString() {
         return tagsString;
     }
@@ -75,7 +78,7 @@ public class News {
         this.creationDate = creationDate;
     }
 
-
+    @Column(name="creator_username",nullable = false,length = 20)
     public String getCreatorUsername() {
         return creatorUsername;
     }
@@ -86,7 +89,7 @@ public class News {
 
 
     @ManyToOne()
-    @JoinColumn(name ="creator_username")
+    @JoinColumn(name ="creator_username",insertable=false, updatable=false)
     public User getCreator() {
         return creator;
     }
@@ -97,7 +100,7 @@ public class News {
 
     @ManyToMany
     @JoinTable(name="news_tags",
-            joinColumns={@JoinColumn(name="news_is")},
+            joinColumns={@JoinColumn(name="news_id")},
             inverseJoinColumns={@JoinColumn(name="tag_id")})
     public Set<Tags> getTagsSet() {
         return tagsSet;

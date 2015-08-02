@@ -68,7 +68,7 @@ public class Comments {
         this.commentatorUsername = commentatorUsername;
     }
 
-    @Column(name="news_id",nullable = false)
+
     public Long getNewsId() {
         return newsId;
     }
@@ -78,7 +78,7 @@ public class Comments {
     }
 
     @ManyToOne
-    @JoinColumn(name="creator_username")
+    @JoinColumn(name="commentator_username",insertable=false, updatable=false)
     public User getCommentator() {
         return commentator;
     }

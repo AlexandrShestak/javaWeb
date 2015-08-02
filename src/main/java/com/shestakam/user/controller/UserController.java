@@ -1,6 +1,6 @@
 package com.shestakam.user.controller;
 
-import com.shestakam.news.dao.JdbcNewsDao;
+import com.shestakam.news.dao.HibernateNewsDao;
 import com.shestakam.news.dao.NewsDao;
 import com.shestakam.user.dao.HibernateUserDao;
 import com.shestakam.user.dao.UserDao;
@@ -34,7 +34,7 @@ public class UserController extends HttpServlet {
 
     public UserController() {
         this.userDao = new HibernateUserDao();
-        this.newsDao = new JdbcNewsDao();
+        this.newsDao = new HibernateNewsDao();
     }
 
     @Override

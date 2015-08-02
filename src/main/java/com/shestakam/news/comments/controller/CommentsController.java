@@ -6,7 +6,7 @@ package com.shestakam.news.comments.controller;
 import com.shestakam.news.comments.dao.CommentsDao;
 import com.shestakam.news.comments.dao.JdbcCommentsDao;
 import com.shestakam.news.comments.entity.Comments;
-import com.shestakam.news.dao.JdbcNewsDao;
+import com.shestakam.news.dao.HibernateNewsDao;
 import com.shestakam.news.dao.NewsDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,7 +32,7 @@ public class CommentsController extends HttpServlet {
 
     public CommentsController() {
         this.commentsDao = new JdbcCommentsDao();
-        this.newsDao = new JdbcNewsDao();
+        this.newsDao = new HibernateNewsDao();
     }
 
     @Override

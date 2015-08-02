@@ -1,6 +1,6 @@
 package com.shestakam.user.authorization;
 
-import com.shestakam.news.dao.JdbcNewsDao;
+import com.shestakam.news.dao.HibernateNewsDao;
 import com.shestakam.news.dao.NewsDao;
 import com.shestakam.news.entity.News;
 import com.shestakam.news.tags.entity.Tags;
@@ -36,7 +36,7 @@ public class AuthorizationController extends HttpServlet {
     public AuthorizationController() {
 
         this.userDao = new HibernateUserDao();
-        this.newsDao = new JdbcNewsDao();
+        this.newsDao = new HibernateNewsDao();
     }
 
     @Override

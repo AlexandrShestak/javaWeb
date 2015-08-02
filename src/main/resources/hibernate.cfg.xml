@@ -36,5 +36,8 @@
       <!--  <property name="hibernate.enable_lazy_load_no_trans">true</property>-->
         
         <mapping class="com.shestakam.user.entity.User"/>
+        <mapping class="com.shestakam.news.entity.News"/>
+        <mapping class="com.shestakam.news.tags.entity.Tags"/>
+        <mapping class="com.shestakam.news.comments.entity.Comments"/>
     </session-factory>
 </hibernate-configuration>
