@@ -84,7 +84,11 @@ public class HibernateNewsDao implements NewsDao {
     public List<News> searchNewsByTag(String tagName) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        Tags tag = (Tags) session.load(Tags.class,tagName);
+        Tags tag = (Tags) session.createQuery("from Tags where tagName=?")
+                .setParameter(0,tagName)
+                .list()
+                .get(0);
+
         List<News> newsList = new ArrayList<>();
         newsList.addAll(tag.getNewsSet());
         session.getTransaction().commit();

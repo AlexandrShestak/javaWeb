@@ -1,6 +1,6 @@
 package com.shestakam.news.controller;
 
-import com.shestakam.news.dao.JdbcNewsDao;
+import com.shestakam.news.dao.HibernateNewsDao;
 import com.shestakam.news.dao.NewsDao;
 import com.shestakam.news.entity.News;
 import com.shestakam.news.tags.dao.JdbcTagsDao;
@@ -33,7 +33,7 @@ public class NewsController extends HttpServlet {
     private TagDao tagDao;
 
     public NewsController() {
-        this.newsDao= new JdbcNewsDao();
+        this.newsDao= new HibernateNewsDao();
         this.tagDao = new JdbcTagsDao();
     }
 
