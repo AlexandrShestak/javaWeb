@@ -55,7 +55,7 @@ public class HibernateNewsDao implements NewsDao {
         logger.debug("delete news with id: "+id);
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        News news = (News) session.load(News.class,id);
+        News news = (News) session.load(News.class,Long.valueOf(id));
         session.delete(news);
         session.getTransaction().commit();
     }

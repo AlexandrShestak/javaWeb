@@ -30,6 +30,40 @@ public class Comments {
     public Comments() {
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Comments comments = (Comments) o;
+
+        if (commentId != null ? !commentId.equals(comments.commentId) : comments.commentId != null) return false;
+        if (commentText != null ? !commentText.equals(comments.commentText) : comments.commentText != null)
+            return false;
+        if (commentator != null ? !commentator.equals(comments.commentator) : comments.commentator != null)
+            return false;
+        if (commentatorUsername != null ? !commentatorUsername.equals(comments.commentatorUsername) : comments.commentatorUsername != null)
+            return false;
+        if (creationDate != null ? !creationDate.equals(comments.creationDate) : comments.creationDate != null)
+            return false;
+        if (myNews != null ? !myNews.equals(comments.myNews) : comments.myNews != null) return false;
+        if (newsId != null ? !newsId.equals(comments.newsId) : comments.newsId != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = commentId != null ? commentId.hashCode() : 0;
+        result = 31 * result + (commentText != null ? commentText.hashCode() : 0);
+        result = 31 * result + (creationDate != null ? creationDate.hashCode() : 0);
+        result = 31 * result + (commentatorUsername != null ? commentatorUsername.hashCode() : 0);
+        result = 31 * result + (newsId != null ? newsId.hashCode() : 0);
+        result = 31 * result + (commentator != null ? commentator.hashCode() : 0);
+        result = 31 * result + (myNews != null ? myNews.hashCode() : 0);
+        return result;
+    }
+
     @Id
     @Column(name="comment_id",unique = true,nullable = false)
     @GeneratedValue
@@ -69,6 +103,7 @@ public class Comments {
     }
 
 
+    @Column(name="news_id",nullable = false)
     public Long getNewsId() {
         return newsId;
     }
@@ -88,7 +123,7 @@ public class Comments {
     }
 
     @ManyToOne
-    @JoinColumn(name="news_id")
+    @JoinColumn(name="news_id",insertable = false,updatable = false)
     public News getMyNews() {
         return myNews;
     }

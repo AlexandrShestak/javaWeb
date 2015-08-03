@@ -5,9 +5,9 @@ import com.shestakam.news.entity.News;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
@@ -37,7 +37,6 @@ public class User {
     }
 
     @Id
-    @GeneratedValue
     @Column(name="username",unique = true ,nullable = false)
     public String getLogin() {
         return login;
@@ -67,6 +66,7 @@ public class User {
 
 
     @OneToMany(mappedBy = "creator")
+    @OrderBy("creationDate")
     public Set<News> getNewsSet() {
         return newsSet;
     }
@@ -76,6 +76,7 @@ public class User {
     }
 
     @OneToMany(mappedBy = "commentator")
+    @OrderBy("creationDate")
     public Set<Comments> getCommentsSet() {
         return commentsSet;
     }

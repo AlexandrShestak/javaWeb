@@ -4,7 +4,7 @@
 package com.shestakam.news.comments.controller;
 
 import com.shestakam.news.comments.dao.CommentsDao;
-import com.shestakam.news.comments.dao.JdbcCommentsDao;
+import com.shestakam.news.comments.dao.HibernateCommentsDao;
 import com.shestakam.news.comments.entity.Comments;
 import com.shestakam.news.dao.HibernateNewsDao;
 import com.shestakam.news.dao.NewsDao;
@@ -31,7 +31,7 @@ public class CommentsController extends HttpServlet {
     private NewsDao newsDao;
 
     public CommentsController() {
-        this.commentsDao = new JdbcCommentsDao();
+        this.commentsDao = new HibernateCommentsDao();
         this.newsDao = new HibernateNewsDao();
     }
 

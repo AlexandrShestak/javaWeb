@@ -13,6 +13,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.sql.Timestamp;
@@ -102,6 +103,7 @@ public class News {
     @JoinTable(name="news_tags",
             joinColumns={@JoinColumn(name="news_id")},
             inverseJoinColumns={@JoinColumn(name="tag_id")})
+    @OrderBy("tagId")
     public Set<Tags> getTagsSet() {
         return tagsSet;
     }
@@ -111,6 +113,7 @@ public class News {
     }
 
     @OneToMany(mappedBy ="myNews")
+    @OrderBy("creationDate")
     public Set<Comments> getCommentsSet() {
         return commentsSet;
     }
