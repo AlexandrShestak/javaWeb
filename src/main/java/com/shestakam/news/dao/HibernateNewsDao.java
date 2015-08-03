@@ -33,11 +33,9 @@ public class HibernateNewsDao implements NewsDao {
         logger.debug("get news by id. id = "+id);
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-
         News news = (News) session.get(News.class,Long.valueOf(id));
         session.getTransaction().commit();
         return news;
-
     }
 
     @Override

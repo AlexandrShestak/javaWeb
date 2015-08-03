@@ -3,7 +3,7 @@ package com.shestakam.news.controller;
 import com.shestakam.news.dao.HibernateNewsDao;
 import com.shestakam.news.dao.NewsDao;
 import com.shestakam.news.entity.News;
-import com.shestakam.news.tags.dao.JdbcTagsDao;
+import com.shestakam.news.tags.dao.HibernateTagsDao;
 import com.shestakam.news.tags.dao.TagDao;
 import com.shestakam.news.tags.entity.Tags;
 import org.apache.logging.log4j.LogManager;
@@ -34,7 +34,7 @@ public class NewsController extends HttpServlet {
 
     public NewsController() {
         this.newsDao= new HibernateNewsDao();
-        this.tagDao = new JdbcTagsDao();
+        this.tagDao = new HibernateTagsDao();
     }
 
     @Override
@@ -126,8 +126,16 @@ public class NewsController extends HttpServlet {
                     tagDao.addTagToNews(Long.valueOf(newsId), tagId);
                 }
             }
-            request.setAttribute("news",newsDao.getAll());
-            //request.setAttribute("newsId",newsId);
+            List<News> newsList = newsDao.getAll();
+            request.setAttribute("news", newsList);
+            for (News elem: newsList){
+                List<Tags> tagsList = newsDao.getTagsForNews(elem.getNewsId());
+                String tagString = new String();
+                for(Tags tag: tagsList){
+                    tagString+= "#"+tag.getTagName();
+                }
+                elem.setTagsString(tagString);
+            }
             RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
             view.forward(request, response);
         }else if("edit".equals(action)){
