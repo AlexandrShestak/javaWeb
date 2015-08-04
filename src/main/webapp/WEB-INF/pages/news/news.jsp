@@ -8,6 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="helloTag" tagdir="/WEB-INF/tags" %>
 <%@ page isELIgnored="false" %>
 
 <fmt:setLocale value="${sessionScope.language}" />
@@ -24,7 +25,9 @@
 </head>
 <body>
 <jsp:include page="../language.jsp"/>
-<jsp:include page="../hello.jsp"/>
+
+<helloTag:myHelloTag />
+
 <jsp:include page="../menu.jsp"/>
 
 <table class="news"  id="commentsTable">

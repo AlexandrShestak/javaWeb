@@ -110,10 +110,10 @@
         <servlet-name>commentsServlet</servlet-name>
     </filter-mapping>
 
-    <filter-mapping>
+   <!-- <filter-mapping>
         <filter-name>AuthorizationFilter</filter-name>
         <servlet-name>tagsServlet</servlet-name>
-    </filter-mapping>
+    </filter-mapping>-->
 
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
