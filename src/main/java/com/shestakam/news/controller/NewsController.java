@@ -5,7 +5,7 @@ import com.shestakam.news.dao.NewsDao;
 import com.shestakam.news.entity.News;
 import com.shestakam.news.tags.dao.HibernateTagsDao;
 import com.shestakam.news.tags.dao.TagDao;
-import com.shestakam.news.tags.entity.Tags;
+import com.shestakam.news.tags.entity.Tag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -51,6 +51,12 @@ public class NewsController extends HttpServlet {
             if(newsId!=null){
                 News news = newsDao.get(newsId);
                 request.setAttribute("news",news);
+                List<Tag> tagList = newsDao.getTagsForNews(news.getNewsId());
+                String tagString = new String();
+                for(Tag tag: tagList){
+                    tagString+= "#"+tag.getTagName();
+                }
+                news.setTagsString(tagString);
                 RequestDispatcher view = request.getRequestDispatcher(EDIT_NEWS);
                 view.forward(request, response);
             }
@@ -59,23 +65,60 @@ public class NewsController extends HttpServlet {
             String newsId = request.getParameter("newsId");
             if(newsId!=null){
                 newsDao.delete(newsId);
-                request.setAttribute("news",newsDao.getAll());
+                List<News> newsList = newsDao.getAll();
+                request.setAttribute("news", newsList);
+                for (News elem: newsList){
+                    List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
+                    String tagString = new String();
+                    for(Tag tag: tagList){
+                        tagString+= "#"+tag.getTagName();
+                    }
+                    elem.setTagsString(tagString);
+                }
                 RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
                 view.forward(request, response);
             }
         }else if("search".equals(action)){
             logger.debug("search news by tag");
             String tagName = request.getParameter("tag");
-            List<News> newsList = newsDao.searchNewsByTag(tagName);
-            request.setAttribute("news", newsList);
-            for (News elem: newsList){
-                List<Tags> tagsList = newsDao.getTagsForNews(elem.getNewsId());
-                String tagString = new String();
-                for(Tags tag: tagsList){
-                    tagString+= "#"+tag.getTagName();
+            String username = request.getParameter("username");
+            if(!tagName.equals("")&&username.equals("")) {
+                List<News> newsList = newsDao.searchNewsByTag(tagName);
+                request.setAttribute("news", newsList);
+                for (News elem : newsList) {
+                    List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
+                    String tagString = new String();
+                    for (Tag tag : tagList) {
+                        tagString += "#" + tag.getTagName();
+                    }
+                    elem.setTagsString(tagString);
                 }
-                elem.setTagsString(tagString);
+            }else if (tagName.equals("")&&!username.equals("")){
+                List<News> newsList = newsDao.searchNewsByCreator(username);
+                request.setAttribute("news", newsList);
+                for (News elem : newsList) {
+                    List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
+                    String tagString = new String();
+                    for (Tag tag : tagList) {
+                        tagString += "#" + tag.getTagName();
+                    }
+                    elem.setTagsString(tagString);
+                }
+            }else if (!tagName.equals("")&&!username.equals("")){
+                List<News> newsList = newsDao.searchNewsByCreatorAndTag(username,tagName);
+                request.setAttribute("news", newsList);
+                for (News elem : newsList) {
+                    List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
+                    String tagString = new String();
+                    for (Tag tag : tagList) {
+                        tagString += "#" + tag.getTagName();
+                    }
+                    elem.setTagsString(tagString);
+                }
+            }else {
+                logger.error("error with search news");
             }
+
             RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
             view.forward(request, response);
 
@@ -84,9 +127,9 @@ public class NewsController extends HttpServlet {
             List<News> newsList = newsDao.getAll();
             request.setAttribute("news", newsList);
             for (News elem: newsList){
-                List<Tags> tagsList = newsDao.getTagsForNews(elem.getNewsId());
+                List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
                 String tagString = new String();
-                for(Tags tag: tagsList){
+                for(Tag tag: tagList){
                     tagString+= "#"+tag.getTagName();
                 }
                 elem.setTagsString(tagString);
@@ -117,7 +160,7 @@ public class NewsController extends HttpServlet {
                 Long tagId = tagDao.getTagIdByName(tagName);
                 if (tagId == null) {
                     logger.debug("new tag");
-                    Tags tag = new Tags();
+                    Tag tag = new Tag();
                     tag.setTagName(tagName);
                     tagId = Long.valueOf(tagDao.save(tag));
                     tagDao.addTagToNews(Long.valueOf(newsId), tagId);
@@ -129,9 +172,9 @@ public class NewsController extends HttpServlet {
             List<News> newsList = newsDao.getAll();
             request.setAttribute("news", newsList);
             for (News elem: newsList){
-                List<Tags> tagsList = newsDao.getTagsForNews(elem.getNewsId());
+                List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
                 String tagString = new String();
-                for(Tags tag: tagsList){
+                for(Tag tag: tagList){
                     tagString+= "#"+tag.getTagName();
                 }
                 elem.setTagsString(tagString);

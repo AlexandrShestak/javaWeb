@@ -2,10 +2,11 @@ package com.shestakam.news.dao;
 
 import com.shestakam.db.HibernateUtil;
 import com.shestakam.news.entity.News;
-import com.shestakam.news.tags.entity.Tags;
+import com.shestakam.news.tags.entity.Tag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,27 +69,51 @@ public class HibernateNewsDao implements NewsDao {
     }
 
     @Override
-    public List<Tags> getTagsForNews(Long newsId) {
+    public List<Tag> getTagsForNews(Long newsId) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         News news = (News) session.load(News.class,newsId);
-        List<Tags> tagsList = new ArrayList<>();
-        tagsList.addAll(news.getTagsSet());
+        List<Tag> tagList = new ArrayList<>();
+        tagList.addAll(news.getTagSet());
         session.getTransaction().commit();
-        return tagsList;
+        return tagList;
     }
 
     @Override
     public List<News> searchNewsByTag(String tagName) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        Tags tag = (Tags) session.createQuery("from Tags where tagName=?")
+        Tag tag = (Tag) session.createQuery("from Tag where tagName=?")
                 .setParameter(0,tagName)
                 .list()
                 .get(0);
 
         List<News> newsList = new ArrayList<>();
         newsList.addAll(tag.getNewsSet());
+        session.getTransaction().commit();
+        return newsList;
+    }
+
+    @Override
+    public List<News> searchNewsByCreator(String creator) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        List<News> newsList =  session.createQuery("from News where creatorUsername=?")
+                .setParameter(0, creator)
+                .list();
+        session.getTransaction().commit();
+        return newsList;
+    }
+
+    @Override
+    public List<News> searchNewsByCreatorAndTag(String creator, String tagName) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        List<News> newsList= session.createCriteria(News.class)
+                .add(Restrictions.like("creatorUsername",creator))
+                .createCriteria("tagSet")
+                .add(Restrictions.like("tagName",tagName))
+                .list();
         session.getTransaction().commit();
         return newsList;
     }

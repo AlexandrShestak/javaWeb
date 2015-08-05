@@ -1,7 +1,7 @@
 package com.shestakam.news.tags.dao;
 
 import com.shestakam.db.JdbcConnection;
-import com.shestakam.news.tags.entity.Tags;
+import com.shestakam.news.tags.entity.Tag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,14 +26,14 @@ public class JdbcTagsDao implements TagDao {
     }
 
     @Override
-    public String save(Tags tags) {
+    public String save(Tag tag) {
         int key = 0;
         try(Connection connection = JdbcConnection.getConnection();
             PreparedStatement preparedStatement =
                     connection.prepareStatement("insert into tags (tag_name) VALUES (?)",
                             Statement.RETURN_GENERATED_KEYS)) {
             // Parameters start with 1
-            preparedStatement.setString(1, tags.getTagName());
+            preparedStatement.setString(1, tag.getTagName());
             preparedStatement.executeUpdate();
             ResultSet keys = preparedStatement.getGeneratedKeys();
             keys.next();
@@ -48,8 +48,8 @@ public class JdbcTagsDao implements TagDao {
     }
 
     @Override
-    public Tags get(String id) {
-        Tags tag = new Tags();
+    public Tag get(String id) {
+        Tag tag = new Tag();
         try(Connection connection = JdbcConnection.getConnection();
             PreparedStatement preparedStatement =
                     connection.prepareStatement("select * from tags where tag_id=?")) {
@@ -69,23 +69,23 @@ public class JdbcTagsDao implements TagDao {
     }
 
     @Override
-    public List<Tags> getAll() {
-        List<Tags> tagsList = new ArrayList<Tags>();
+    public List<Tag> getAll() {
+        List<Tag> tagList = new ArrayList<Tag>();
         try (Connection connection = JdbcConnection.getConnection();
              Statement statement = connection.createStatement()){
             ResultSet rs = statement.executeQuery("select * from tags");
             while (rs.next()) {
-                Tags tag =  new Tags();
+                Tag tag =  new Tag();
                 tag.setTagId(rs.getLong("tag_id"));
                 tag.setTagName(rs.getString("tag_name"));
-                tagsList.add(tag);
+                tagList.add(tag);
             }
         } catch (SQLException e) {
             e.printStackTrace();
             logger.error("get all tags error",e);
         }
         logger.debug("get all tags");
-        return tagsList;
+        return tagList;
     }
 
     @Override
@@ -104,15 +104,15 @@ public class JdbcTagsDao implements TagDao {
     }
 
     @Override
-    public void update(Tags tags) {
+    public void update(Tag tag) {
         try(Connection connection = JdbcConnection.getConnection();
             PreparedStatement preparedStatement =
                     connection.prepareStatement("update tags set tag_name=? where tag_id=?")) {
             // Parameters start with 1
-            preparedStatement.setString(1, tags.getTagName());
-            preparedStatement.setLong(2,tags.getTagId());
+            preparedStatement.setString(1, tag.getTagName());
+            preparedStatement.setLong(2, tag.getTagId());
             preparedStatement.executeUpdate();
-            logger.debug("edit tag with id :" + tags.getTagId());
+            logger.debug("edit tag with id :" + tag.getTagId());
         } catch (SQLException e) {
             e.printStackTrace();
             logger.error("edit tag error",e);
@@ -130,7 +130,7 @@ public class JdbcTagsDao implements TagDao {
             preparedStatement.setString(1, tagName);
             ResultSet rs = preparedStatement.executeQuery();
 
-            Tags tag = new Tags();
+            Tag tag = new Tag();
             if (rs.next()) {
                 tag.setTagId(rs.getLong("tag_id"));
                 tag.setTagName(rs.getString("tag_name"));
@@ -147,7 +147,6 @@ public class JdbcTagsDao implements TagDao {
 
     @Override
     public void addTagToNews(Long newsId, Long tagId) {
-        int key = 0;
         try(Connection connection = JdbcConnection.getConnection();
             PreparedStatement preparedStatement =
                     connection.prepareStatement("insert into news_tags (news_id , tag_id) VALUES (?,?)")){
@@ -161,6 +160,24 @@ public class JdbcTagsDao implements TagDao {
         catch (SQLException e) {
             e.printStackTrace();
             logger.error("add tag to news error", e);
+        }
+    }
+
+    @Override
+    public void deleteTagFromNews(Long newsId, Long tagId) {
+        try(Connection connection = JdbcConnection.getConnection();
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("DELETE FROM news_tags WHERE news_id=? AND  tag_id=?")){
+            // Parameters start with 1
+            preparedStatement.setLong(1, newsId);
+            preparedStatement.setLong(2, tagId);
+            preparedStatement.executeUpdate();
+
+            logger.error("delete tag from news");
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            logger.error("delete tag from news error", e);
         }
     }
 }

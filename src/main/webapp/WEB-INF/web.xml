@@ -79,7 +79,7 @@
         <url-pattern>/comments</url-pattern>
     </servlet-mapping>
 
-   <!-- <servlet>
+    <servlet>
         <servlet-name>tagsServlet</servlet-name>
         <servlet-class>com.shestakam.news.tags.controller.TagController</servlet-class>
     </servlet>
@@ -87,7 +87,7 @@
     <servlet-mapping>
         <servlet-name>tagsServlet</servlet-name>
         <url-pattern>/tags</url-pattern>
-    </servlet-mapping>-->
+    </servlet-mapping>
 
     <filter>
         <filter-name>AuthorizationFilter</filter-name>
@@ -110,10 +110,10 @@
         <servlet-name>commentsServlet</servlet-name>
     </filter-mapping>
 
-   <!-- <filter-mapping>
+    <filter-mapping>
         <filter-name>AuthorizationFilter</filter-name>
         <servlet-name>tagsServlet</servlet-name>
-    </filter-mapping>-->
+    </filter-mapping>
 
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

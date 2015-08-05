@@ -22,18 +22,36 @@
 <body>
 <table class="search">
   <tr>
+    <c:if test="${sessionScope.login eq 'admin'}">
+      <td>
+        <form  method="get" action="/user">
+          <input type="submit" value="Users">
+        </form>
+      </td>
+    </c:if>
     <td>
       <form action="/news" method="get">
         <button type="submit"><fmt:message key="toNews"/> </button>
       </form>
     </td>
-    <td>
-      <form action="/news" method="get">
-        <input type="hidden" name="action" value="search">
-        <input type="text" name="tag">
+    <form action="/news" method="get">
+      <input type="hidden" name="action" value="search">
+      <td>
+        <fmt:message key="tag"/>
+      </td>
+      <td>
+      <input type="text" name="tag">
+      </td>
+      <td>
+        <fmt:message key="user"/>
+      </td>
+      <td>
+       <input type="text" name="username">
+      </td>
+      <td>
         <button type="submit"><fmt:message key="search"/></button>
-      </form>
-    </td>
+      </td>
+    </form>
   </tr>
 </table>
 

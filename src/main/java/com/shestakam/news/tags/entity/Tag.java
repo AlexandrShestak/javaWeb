@@ -17,13 +17,33 @@ import java.util.Set;
  */
 @Entity
 @Table(name="tags")
-public class Tags {
+public class Tag {
 
     private Long tagId;
     private String tagName;
     private Set<News> newsSet = new HashSet<>(0);
 
-    public Tags() {
+    public Tag() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Tag tag = (Tag) o;
+
+        if (tagId != null ? !tagId.equals(tag.tagId) : tag.tagId != null) return false;
+        if (tagName != null ? !tagName.equals(tag.tagName) : tag.tagName != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = tagId != null ? tagId.hashCode() : 0;
+        result = 31 * result + (tagName != null ? tagName.hashCode() : 0);
+        return result;
     }
 
     @Id
@@ -46,7 +66,7 @@ public class Tags {
         this.tagName = tagName;
     }
 
-    @ManyToMany(mappedBy="tagsSet")
+    @ManyToMany(mappedBy= "tagSet")
     @OrderBy("creationDate")
     public Set<News> getNewsSet() {
         return newsSet;

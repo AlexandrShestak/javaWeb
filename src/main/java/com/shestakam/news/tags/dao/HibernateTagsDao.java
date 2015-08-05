@@ -2,7 +2,7 @@ package com.shestakam.news.tags.dao;
 
 import com.shestakam.db.HibernateUtil;
 import com.shestakam.news.entity.News;
-import com.shestakam.news.tags.entity.Tags;
+import com.shestakam.news.tags.entity.Tag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -21,12 +21,14 @@ public class HibernateTagsDao implements TagDao {
         logger.debug("get tag id by name");
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        List result =  session.createQuery("from Tags where tagName=?")
+        List result =  session.createQuery("from Tag where tagName=?")
                 .setParameter(0,tagName)
                 .list();
-        if(result.size() == 0)
+        if(result.size() == 0) {
+            session.getTransaction().commit();
             return null;
-        Tags tag = (Tags) result.get(0);
+        }
+        Tag tag = (Tag) result.get(0);
         Long tagId  = tag.getTagId();
         session.getTransaction().commit();
         return tagId;
@@ -38,37 +40,37 @@ public class HibernateTagsDao implements TagDao {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         News news = (News) session.load(News.class,newsId);
-        Tags tag = (Tags) session.load(Tags.class,tagId);
-        news.getTagsSet().add(tag);
+        Tag tag = (Tag) session.load(Tag.class,tagId);
+        news.getTagSet().add(tag);
         session.getTransaction().commit();
     }
 
     @Override
-    public String save(Tags tags) {
+    public String save(Tag tag) {
         logger.debug("save tag");
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        session.saveOrUpdate(tags);
+        session.saveOrUpdate(tag);
         session.getTransaction().commit();
-        return String.valueOf(tags.getTagId());
+        return String.valueOf(tag.getTagId());
     }
 
     @Override
-    public Tags get(String id) {
+    public Tag get(String id) {
         logger.debug("get tag by id. id = "+id);
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        Tags tag = (Tags) session.get(Tags.class,Long.valueOf(id));
+        Tag tag = (Tag) session.get(Tag.class,Long.valueOf(id));
         session.getTransaction().commit();
         return tag;
     }
 
     @Override
-    public List<Tags> getAll() {
+    public List<Tag> getAll() {
         logger.debug("get all tags");
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        List result = session.createQuery("from Tags").list();
+        List result = session.createQuery("from Tag").list();
         session.getTransaction().commit();
         return result;
     }
@@ -78,17 +80,29 @@ public class HibernateTagsDao implements TagDao {
         logger.debug("delete tag with id: "+id);
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        Tags tag = (Tags) session.load(Tags.class,Long.valueOf(id));
+        Tag tag = (Tag) session.load(Tag.class,Long.valueOf(id));
         session.delete(tag);
         session.getTransaction().commit();
     }
 
     @Override
-    public void update(Tags tags) {
-        logger.debug("update tag with id : "+ tags.getTagId() );
+    public void update(Tag tag) {
+        logger.debug("update tag with id : "+ tag.getTagId() );
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        session.update(tags);
+        session.update(tag);
         session.getTransaction().commit();
+    }
+
+    @Override
+    public void deleteTagFromNews(Long newsId, Long tagId) {
+        logger.debug("delete tag from news");
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        News news = (News) session.load(News.class,newsId);
+        Tag tag = (Tag) session.load(Tag.class,tagId);
+        news.getTagSet().remove(tag);
+        session.getTransaction().commit();
+
     }
 }

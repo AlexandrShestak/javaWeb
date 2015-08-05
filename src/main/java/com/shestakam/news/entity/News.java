@@ -1,7 +1,7 @@
 package com.shestakam.news.entity;
 
 import com.shestakam.news.comments.entity.Comments;
-import com.shestakam.news.tags.entity.Tags;
+import com.shestakam.news.tags.entity.Tag;
 import com.shestakam.user.entity.User;
 
 import javax.persistence.Column;
@@ -34,7 +34,7 @@ public class News {
 
     private String tagsString;
     private User creator;
-    private Set<Tags> tagsSet = new HashSet<>(0);
+    private Set<Tag> tagSet = new HashSet<>(0);
     private Set<Comments> commentsSet = new HashSet<>(0);
 
     public News() {
@@ -104,12 +104,12 @@ public class News {
             joinColumns={@JoinColumn(name="news_id")},
             inverseJoinColumns={@JoinColumn(name="tag_id")})
     @OrderBy("tagId")
-    public Set<Tags> getTagsSet() {
-        return tagsSet;
+    public Set<Tag> getTagSet() {
+        return tagSet;
     }
 
-    public void setTagsSet(Set<Tags> tagsSet) {
-        this.tagsSet = tagsSet;
+    public void setTagSet(Set<Tag> tagSet) {
+        this.tagSet = tagSet;
     }
 
     @OneToMany(mappedBy ="myNews")

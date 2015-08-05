@@ -2,7 +2,7 @@ package com.shestakam.news.dao;
 
 import com.shestakam.db.JdbcConnection;
 import com.shestakam.news.entity.News;
-import com.shestakam.news.tags.entity.Tags;
+import com.shestakam.news.tags.entity.Tag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -130,8 +130,8 @@ public class JdbcNewsDao implements NewsDao {
     }
 
     @Override
-    public List<Tags> getTagsForNews(Long newsId) {
-        List<Tags> tagsList = new ArrayList<Tags>();
+    public List<Tag> getTagsForNews(Long newsId) {
+        List<Tag> tagList = new ArrayList<Tag>();
         try (Connection connection = JdbcConnection.getConnection();
              PreparedStatement psToFindTagsId =
                      connection.prepareStatement("select * from news_tags where news_id=?");
@@ -145,10 +145,10 @@ public class JdbcNewsDao implements NewsDao {
                 psToFindTags.setLong(1, rs.getLong("tag_id"));
                 ResultSet rsWithTags = psToFindTags.executeQuery();
                 while(rsWithTags.next()){
-                    Tags tag = new Tags();
+                    Tag tag = new Tag();
                     tag.setTagId(rsWithTags.getLong("tag_id"));
                     tag.setTagName(rsWithTags.getString("tag_name"));
-                    tagsList.add(tag);
+                    tagList.add(tag);
                 }
             }
         } catch (SQLException e) {
@@ -156,7 +156,7 @@ public class JdbcNewsDao implements NewsDao {
             logger.error("get get tags for news error.  news id: "+ newsId,e);
         }
         logger.debug("get tags for news. news id: "+ newsId);
-        return tagsList;
+        return tagList;
     }
 
     @Override
@@ -187,6 +187,64 @@ public class JdbcNewsDao implements NewsDao {
             e.printStackTrace();
             logger.error("get all news with tag: "+ tagName+" error",e);
         }
+        logger.debug("get all news with tag: "+ tagName);
+        return newsList;
+    }
+
+    @Override
+    public List<News> searchNewsByCreator(String creator) {
+        List<News> newsList = new ArrayList<News>();
+        try (Connection connection = JdbcConnection.getConnection();
+                    PreparedStatement psToFindNews =
+                     connection.prepareStatement("select * from news where creator_username=?")){
+                psToFindNews.setString(1, creator);
+                ResultSet rsWithNews = psToFindNews.executeQuery();
+                while(rsWithNews.next()){
+                    News news = new News();
+                    news.setNewsId(rsWithNews.getLong("news_id"));
+                    news.setCreationDate(rsWithNews.getTimestamp("creation_date"));
+                    news.setNewsText(rsWithNews.getString("news_text"));
+                    news.setCreatorUsername(rsWithNews.getString("creator_username"));
+                    newsList.add(news);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            logger.error("get all news with creator: "+ creator+" error",e);
+        }
+        logger.debug("get all news with creator: "+ creator);
+        return newsList;
+    }
+
+    @Override
+    public List<News> searchNewsByCreatorAndTag(String creator, String tagName) {
+        List<News> newsList = new ArrayList<News>();
+        try (Connection connection = JdbcConnection.getConnection();
+             PreparedStatement psToFindNewsId =
+                     connection.prepareStatement("SELECT  news_id from news_tags INNER JOIN tags on news_tags.tag_id=tags.tag_id where tag_name=?");
+             PreparedStatement psToFindNews =
+                     connection.prepareStatement("select * from news where news_id=? AND creator_username=?")){
+
+            psToFindNewsId.setString(1,tagName);
+            ResultSet rs = psToFindNewsId.executeQuery();
+            while (rs.next()) {
+                psToFindNews.setLong(1, rs.getLong("news_id"));
+                psToFindNews.setString(1, creator);
+                ResultSet rsWithNews = psToFindNews.executeQuery();
+                while(rsWithNews.next()){
+                    News news = new News();
+                    news.setNewsId(rsWithNews.getLong("news_id"));
+                    news.setCreationDate(rsWithNews.getTimestamp("creation_date"));
+                    news.setNewsText(rsWithNews.getString("news_text"));
+                    news.setCreatorUsername(rsWithNews.getString("creator_username"));
+                    newsList.add(news);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            logger.error("get all news with tag: "+ tagName+" error",e);
+        }
+
         logger.debug("get all news with tag: "+ tagName);
         return newsList;
     }

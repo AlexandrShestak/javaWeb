@@ -24,28 +24,57 @@
 <body>
 
 <jsp:include page="../language.jsp"/>
+<jsp:include page="../menu.jsp"/>
 
-  <form action="/news" method="post">
+
 
     <table class="news">
+      <form action="/news" method="post">
+        <tr>
+          <td>
+            <fmt:message key="messageText"/>
+          </td>
+          <td>
+            <textarea name="newsText">${news.newsText}</textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="hidden" name="newsId" value="${news.newsId}"/>
+            <input type="hidden" name="action" value="edit">
+            <input type="submit">
+          </td>
+        </tr>
+      </form>
       <tr>
         <td>
-          <fmt:message key="messageText"/>
-        </td>
-        <td>
-          <textarea name="newsText">${news.newsText}</textarea>
+          ${news.tagsString}
         </td>
       </tr>
       <tr>
         <td>
-          <input type="hidden" name="newsId" value="${news.newsId}"/>
-          <input type="hidden" name="action" value="edit">
-          <input type="submit">
+          <form method="post" action="/tags">
+            <input type="hidden" name="newsId" value="${news.newsId}"/>
+            <input type="hidden" name="action" value="add">
+            <button type="submit"><fmt:message key="addTag"/></button>
+            <input type="text" name="tagName">
+          </form>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <form method="post" action="/tags">
+            <input type="hidden" name="newsId" value="${news.newsId}"/>
+            <input type="hidden" name="action" value="delete">
+            <button type="submit"><fmt:message key="deleteTag"/></button>
+            <input type="text" name="tagName">
+          </form>
         </td>
       </tr>
 
     </table>
-  </form>
+
 
 
 </body>

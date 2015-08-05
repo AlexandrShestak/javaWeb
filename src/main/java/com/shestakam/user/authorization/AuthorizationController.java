@@ -3,7 +3,7 @@ package com.shestakam.user.authorization;
 import com.shestakam.news.dao.HibernateNewsDao;
 import com.shestakam.news.dao.NewsDao;
 import com.shestakam.news.entity.News;
-import com.shestakam.news.tags.entity.Tags;
+import com.shestakam.news.tags.entity.Tag;
 import com.shestakam.user.dao.HibernateUserDao;
 import com.shestakam.user.dao.UserDao;
 import com.shestakam.user.entity.User;
@@ -54,9 +54,9 @@ public class AuthorizationController extends HttpServlet {
                 List<News> newsList = newsDao.getAll();
                 request.setAttribute("news", newsList);
                 for (News elem: newsList){
-                    List<Tags> tagsList = newsDao.getTagsForNews(elem.getNewsId());
+                    List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
                     String tagString = new String();
-                    for(Tags tag: tagsList){
+                    for(Tag tag: tagList){
                         tagString+= "#"+tag.getTagName();
                     }
                     elem.setTagsString(tagString);
@@ -93,9 +93,9 @@ public class AuthorizationController extends HttpServlet {
                 List<News> newsList = newsDao.getAll();
                 request.setAttribute("news", newsList);
                 for (News elem: newsList){
-                    List<Tags> tagsList = newsDao.getTagsForNews(elem.getNewsId());
+                    List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
                     String tagString = new String();
-                    for(Tags tag: tagsList){
+                    for(Tag tag: tagList){
                         tagString+= "#"+tag.getTagName();
                     }
                     elem.setTagsString(tagString);

@@ -28,13 +28,14 @@
 </head>
 <body>
 
+
+
 <jsp:include page="../language.jsp"/>
 
 
 <helloTag:myHelloTag />
 
 <jsp:include page="../menu.jsp"/>
-
 
 <table class="news">
   <c:forEach items="${news}" var="news">
