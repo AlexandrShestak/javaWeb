@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.shestakam.news.comments.entity">
+    <class name="com.shestakam.news.comments.entity.Comments" table="comments">
+        <id name="commentId" column="comment_id" type="java.lang.Long">
+            <generator class="native"/>
+        </id>
+        <property name="commentatorUsername" type="java.lang.String">
+            <column name="commentator_username" length="20"/>
+        </property>
+        <property name="commentText" type="java.lang.String">
+            <column name="comment_text" length="2000"/>
+        </property>
+        <property name="creationDate" type="timestamp">
+            <column name="creation_date" not-null="true"/>
+        </property>
+        <property name="newsId" type="java.lang.Long">
+            <column name="news_id" not-null="true"/>
+        </property>
+        <many-to-one name="commentator"
+                     column="commentator_username" insert="false" update="false"/>
+        <many-to-one name="myNews"
+                     column="news_id" insert="false" update="false"/>
+
+    </class>
+
+</hibernate-mapping>

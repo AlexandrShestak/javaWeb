@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.shestakam.news.tags.entity">
+    <class name="com.shestakam.news.tags.entity.Tag" table="tags">
+        <id name="tagId" column="tag_id" type="java.lang.Long">
+            <generator class="native"/>
+        </id>
+       <property name="tagName" type="java.lang.String">
+           <column name="tag_name" length="20"/>
+       </property>
+        <set name="newsSet" table="news_tags" inverse="true">
+            <key column="tag_id" not-null="true"/>
+            <many-to-many class="com.shestakam.news.entity.News">
+                <column name="news_id" not-null="true" />
+
+            </many-to-many>
+        </set>
+
+    </class>
+
+</hibernate-mapping>

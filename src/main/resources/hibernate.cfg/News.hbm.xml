@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.shestakam.news.entity">
+    <class name="News" table="news">
+        <id name="newsId" column="news_id" type="java.lang.Long">
+            <generator class="native"/>
+        </id>
+        <property name="creatorUsername" type="java.lang.String">
+            <column name="creator_username" length="20" not-null="true"/>
+        </property>
+        <property name="creationDate" type="timestamp">
+            <column name="creation_date" not-null="true"/>
+        </property>
+        <property name="newsText" type="java.lang.String">
+            <column name="news_text" length="2000" not-null="true"/>
+        </property>
+        <many-to-one name="creator"
+                column="creator_username" insert="false" update="false"/>
+        <set name="tagSet" table="news_tags" inverse="false" order-by="tag_id">
+            <key column="news_id"/>
+            <many-to-many column="tag_id" class="com.shestakam.news.tags.entity.Tag"/>
+        </set>
+
+        <set name="commentsSet"
+             inverse="true" order-by="creation_date">
+            <key column="news_id"/>
+            <one-to-many class="com.shestakam.news.comments.entity.Comments"/>
+        </set>
+
+    </class>
+
+</hibernate-mapping>

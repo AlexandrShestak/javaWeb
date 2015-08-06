@@ -34,10 +34,13 @@
         <mapping resource="org/hibernate/tutorial/domain/Event.hbm.xml"/>-->
 
       <!--  <property name="hibernate.enable_lazy_load_no_trans">true</property>-->
-        
-        <mapping class="com.shestakam.user.entity.User"/>
+        <mapping resource="hibernate.cfg/News.hbm.xml"/>
+        <mapping resource="hibernate.cfg/User.hbm.xml"/>
+        <mapping resource="hibernate.cfg/Tag.hbm.xml"/>
+        <mapping resource="hibernate.cfg/Comments.hbm.xml"/>
+        <!--<mapping class="com.shestakam.user.entity.User"/>
         <mapping class="com.shestakam.news.entity.News"/>
         <mapping class="com.shestakam.news.tags.entity.Tag"/>
-        <mapping class="com.shestakam.news.comments.entity.Comments"/>
+        <mapping class="com.shestakam.news.comments.entity.Comments"/>-->
     </session-factory>
 </hibernate-configuration>
