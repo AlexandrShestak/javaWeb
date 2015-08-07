@@ -1,5 +1,7 @@
 package com.shestakam.db;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -7,7 +9,9 @@ import org.hibernate.service.ServiceRegistry;
 
 public class HibernateUtil {
 
-    private static final SessionFactory sessionFactory = buildSessionFactory();
+    private static  SessionFactory sessionFactory = null;
+    private  final static Logger logger = LogManager.getLogger(HibernateUtil.class);
+
 
     private static SessionFactory buildSessionFactory() {
         try {
@@ -24,13 +28,14 @@ public class HibernateUtil {
         }
         catch (Throwable ex) {
             // Make sure you log the exception, as it might be swallowed
-            System.err.println("Initial SessionFactory creation failed." + ex);
+            logger.error("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
         }
     }
 
-    public static SessionFactory getSessionFactory() {
+    public static synchronized SessionFactory getSessionFactory() {
+        if (sessionFactory == null)
+            sessionFactory = buildSessionFactory();
         return sessionFactory;
     }
-
 }
