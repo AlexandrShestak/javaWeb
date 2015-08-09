@@ -17,43 +17,39 @@
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/styles/tables.css"/>
+  <link href="${pageContext.servletContext.contextPath}/bootstrap-3.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="${pageContext.servletContext.contextPath}/styles/main.css" rel="stylesheet">
   <title></title>
 </head>
 <body>
-<table class="search">
-  <tr>
-    <c:if test="${sessionScope.login eq 'admin'}">
-      <td>
-        <form  method="get" action="/user">
-          <input type="submit" value="Users">
+<nav class="navbar navbar-default col-md-10 col-md-offset-1">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <c:if test="${sessionScope.login eq 'admin'}">
+        <form  method="get" action="/user"  class="navbar-form navbar-left" role="menu">
+          <input type="submit" value="Users"  class="form-control" >
         </form>
-      </td>
-    </c:if>
-    <td>
-      <form action="/news" method="get">
-        <button type="submit"><fmt:message key="toNews"/> </button>
+      </c:if>
+
+      <form action="/news" method="get" class="navbar-form navbar-left" role="menu">
+        <button type="submit" class="btn btn-default"><fmt:message key="toNews"/> </button>
       </form>
-    </td>
-    <form action="/news" method="get">
-      <input type="hidden" name="action" value="search">
-      <td>
+
+      <form action="/news" method="get" class="navbar-form navbar-left" role="search">
+        <input type="hidden" name="action" value="search">
         <fmt:message key="tag"/>
-      </td>
-      <td>
-      <input type="text" name="tag">
-      </td>
-      <td>
+        <div class="form-group">
+          <input type="text" class="form-control" name="tag">
+        </div>
         <fmt:message key="user"/>
-      </td>
-      <td>
-       <input type="text" name="username">
-      </td>
-      <td>
-        <button type="submit"><fmt:message key="search"/></button>
-      </td>
-    </form>
-  </tr>
-</table>
+        <div class="form-group">
+          <input type="text" class="form-control" name="username">
+        </div>
+        <button type="submit" class="btn btn-default"><fmt:message key="search"/></button>
+      </form>
+    </div>
+  </div>
+</nav>
 
 </body>
 </html>

@@ -7,9 +7,8 @@ td {
     text-align: center; /* Выравниваем текст по центру ячейки */
 }
 table.login {
-    border: 2px solid green;
     margin: auto;
-
+    width: 40%;
 }
 
 textarea.news{
@@ -24,7 +23,6 @@ textarea.comments{
 
 table.news {
     width: 60%; /* Ширина таблицы */
-    border: 1px solid green; /* Рамка вокруг таблицы */
     margin: auto; /* Выравниваем таблицу по центру окна  */
 }
 table.tags{

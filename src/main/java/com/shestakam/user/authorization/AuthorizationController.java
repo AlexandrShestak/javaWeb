@@ -85,6 +85,11 @@ public class AuthorizationController extends HttpServlet {
             login = new String(login.getBytes("iso-8859-1"), "UTF-8");
             String password = request.getParameter("password");
             User user = userDao.get(login);
+            if (user==null){
+                RequestDispatcher view = request.getRequestDispatcher(START_PAGE);
+                request.setAttribute("errorMessage","Incorrect login or password");
+                view.forward(request,response);
+            }
             if (password.equals(user.getPassword())) {
 
                 HttpSession session =  request.getSession(true);

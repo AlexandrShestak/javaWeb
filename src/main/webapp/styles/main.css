@@ -1,0 +1,13 @@
+body {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #eee;
+}
+
+hr {
+    height: 2px;
+    background-color: #828282;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 75%;
+}

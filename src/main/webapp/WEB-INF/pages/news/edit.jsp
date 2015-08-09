@@ -34,15 +34,17 @@
           <td>
             <fmt:message key="messageText"/>
           </td>
+        </tr>
+        <tr>
           <td>
-            <textarea name="newsText">${news.newsText}</textarea>
+            <textarea class="news" name="newsText">${news.newsText}</textarea>
           </td>
         </tr>
         <tr>
           <td>
             <input type="hidden" name="newsId" value="${news.newsId}"/>
             <input type="hidden" name="action" value="edit">
-            <input type="submit">
+            <button type="submit"><fmt:message key="edit"/></button>
           </td>
         </tr>
       </form>

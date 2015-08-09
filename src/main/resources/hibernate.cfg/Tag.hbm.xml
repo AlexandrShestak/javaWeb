@@ -15,7 +15,6 @@
             <key column="tag_id" not-null="true"/>
             <many-to-many class="com.shestakam.news.entity.News">
                 <column name="news_id" not-null="true" />
-
             </many-to-many>
         </set>
 

@@ -5,6 +5,7 @@
   Time: 19.31
   To change this template use File | Settings | File Templates.
 --%>
+<!DOCTYPE html>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -21,80 +22,69 @@
 
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script type="text/javascript" src="${pageContext.servletContext.contextPath}/javascript/jquery-2.1.4.js"></script>
   <script type="text/javascript" src="${pageContext.servletContext.contextPath}/javascript/jQueryScript.js"></script>
   <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/styles/tables.css"/>
+  <link href="${pageContext.servletContext.contextPath}/bootstrap-3.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="${pageContext.servletContext.contextPath}/styles/main.css" rel="stylesheet">
   <title></title>
 </head>
 <body>
 
-
-
 <jsp:include page="../language.jsp"/>
-
-
 <helloTag:myHelloTag />
-
 <jsp:include page="../menu.jsp"/>
+<div class="container">
+<c:forEach items="${news}" var="news">
+  <div class="row col-md-8 col-md-offset-2">
+    <div class="span8">
+      <div class="row">
+        <div class="span6">
+          <p>
+            <c:out value="${news.newsText}"/>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span8">
+          <p></p>
+          <p>
+            <i class="glyphicon glyphicon-user"></i> by <c:out value="${news.creatorUsername}" />
+            | <i class="glyphicon glyphicon-calendar"></i> <c:out value="${news.creationDate}" />
+            | <i class="glyphicon glyphicon-comment"></i> <a href="/comments?action=getForm&newsId=${news.newsId}"><fmt:message key="comments"/></a>
+          <c:if test="${news.creatorUsername eq sessionScope.login}">
+            | <i class="glyphicon glyphicon-edit"></i><a href="/news?action=edit&newsId=${news.newsId}"><fmt:message key="edit"/></a>
+            | <i class="glyphicon glyphicon-trash"></i><a  href="/news?action=delete&newsId=${news.newsId}"><fmt:message key="delete"/></a>
+          </c:if>
+            |<i class="glyphicon glyphicon-tag"></i> Tags : <span class="label label-info">${news.tagsString}</span>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span8">
+          <hr>
+        </div>
+      </div>
+    </div>
+    </div>
 
-<table class="news">
-  <c:forEach items="${news}" var="news">
 
-    <tr>
-      <td colspan="5">
-        <textarea class="news" name="newsText" readonly="readonly" ><c:out value="${news.newsText}"/></textarea>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" align="center" bgcolor="aqua">
-        ${news.tagsString}
-      </td>
-    </tr>
-    <tr>
-      <td align="left"><c:out value="${news.creationDate}" /></td>
-      <td align="right"><c:out value="${news.creatorUsername}" /></td>
-      <c:if test="${news.creatorUsername eq sessionScope.login}">
-        <td>
-          <form action="/news" method="get">
-            <input type="hidden" name="action" value="edit">
-            <input type="hidden" name="newsId" value="${news.newsId}"/>
-            <button type="submit"><fmt:message key="edit"/> </button>
-          </form>
-        </td>
-      </c:if>
-      <c:if test="${news.creatorUsername eq sessionScope.login}">
-        <td>
-          <form action="/news" method="get">
-            <input type="hidden" name="action" value="delete">
-            <input type="hidden" name="newsId" value="${news.newsId}"/>
-            <button type="submit" ><fmt:message key="delete"/> </button>
-          </form>
-        </td>
-
-      </c:if>
-      <td>
-        <form action="/comments" method="get">
-          <input type="hidden" name="newsId" value="${news.newsId}"/>
-          <input type="hidden" name="action" value="getForm">
-          <button type="submit" ><fmt:message key="comments"/> </button>
-        </form>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5">
-        <hr align="right" width="40%" size="3" color="#0000dd" />
-      </td>
-    </tr>
-  </c:forEach>
-  <tr>
-    <td>
+</c:forEach>
+  <div class="row col-md-2 col-md-offset-5">
+  <div class="span8">
+  <div class="row">
+    <div class="span8">
       <form action="/news" method="get">
         <input type="hidden" name="action" value="add">
-        <button type="submit"><fmt:message key="addNews"/> </button>
+        <button class="btn btn-warning" type="submit"><fmt:message key="addNews"/> </button>
       </form>
-    </td>
-  </tr>
-</table>
+    </div>
+  </div>
+  </div>
+    </div>
+</div>
+
 
 
 </body>

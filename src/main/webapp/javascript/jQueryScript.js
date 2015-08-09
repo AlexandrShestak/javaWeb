@@ -19,10 +19,32 @@ $(document).ready(function(){
             success: function (response) {
                 obj =  response;
                 str1 = $('#commentsTable').html()
-                str2 = str1+'<tr><td colspan="5"><table width="80%"><tr><td colspan="5"><textarea class="comments" name="commentText" readonly="readonly" >'+$('#commentTextToAjax').val()+'</textarea></td></tr><tr><td align="left">'+obj.creationDate+'</td><td align="right">'+obj.commentatorUsername+'</td><td><input type="hidden" name="action" value="edit"><input type="hidden" name="commentId" id="commentId" value='+obj.commentId+'><button class="editComment">'+$('#editAjax').text()+'</button></td><td><input type="hidden" name="action" value="delete"><input type="hidden" name="commentId" id="commentId" value='+obj.commentId+'><button  class="deleteComment">'+$('#deleteAjax').text()+'</button></td></tr><tr><td colspan="5"><hr align="right" width="40%" size="3" color="#0000dd" /> </td> </tr>  </table> </td> </tr>'
-                /*     $('#commentsTable')
+               /* str2 = str1+'<tr><td colspan="5"><table width="80%"><tr><td colspan="5"><textarea class="comments" name="commentText" readonly="readonly" >'+$('#commentTextToAjax').val()+'</textarea></td></tr><tr><td align="left">'+obj.creationDate+'</td><td align="right">'+obj.commentatorUsername+'</td><td><input type="hidden" name="action" value="edit"><input type="hidden" name="commentId" id="commentId" value='+obj.commentId+'><button class="editComment">'+$('#editAjax').text()+'</button></td><td><input type="hidden" name="action" value="delete"><input type="hidden" name="commentId" id="commentId" value='+obj.commentId+'><button  class="deleteComment">'+$('#deleteAjax').text()+'</button></td></tr><tr><td colspan="5"><hr align="right" width="40%" size="3" color="#0000dd" /> </td> </tr>  </table> </td> </tr>'
+             */   /*     $('#commentsTable')
                  .append('<tr><td colspan="5"><table width="80%"><tr><td colspan="5"><textarea class="comments" name="commentText" readonly="readonly" >'+$('#commentTextToAjax').val()+'</textarea></td></tr><tr><td align="left">'+obj.creationDate+'</td><td align="right">'+obj.commentatorUsername+'</td><td><input type="hidden" name="action" value="edit"><input type="hidden" name="commentId" id="commentId" value='+obj.commentId+'><button class="editComment">'+$('#editAjax').text()+'</button></td><td><input type="hidden" name="action" value="delete"><input type="hidden" name="commentId" id="commentId" value='+obj.commentId+'><button  class="deleteComment">'+$('#deleteAjax').text()+'</button></td></tr><tr><td colspan="5"><hr align="right" width="40%" size="3" color="#0000dd" /> </td> </tr>  </table> </td> </tr>')
                  */
+                str2 = str1+' <div class="media">'+
+
+                '<div class="media-body">'+
+                '<h4 class="media-heading">'+obj.commentatorUsername+
+                '<small>'+obj.creationDate+'</small>'+
+                '<td>'+
+                '<input type="hidden" name="action" value="edit">'+
+                '<input type="hidden" name="commentId" value='+obj.commentId+'>'+
+                '<button class="editComment">'+$('#editAjax').text()+' </button>'+
+                '</td>'+
+                '<td>'+
+                '<input type="hidden" name="action" value="delete">'+
+                '<input type="hidden" name="commentId"  value='+obj.commentId+'>'+
+                '<button class="deleteComment">'+$('#deleteAjax').text()+'</button>'+
+                '</td>'+
+                '</h4>'+
+                '<textarea class="comments" hidden="hidden" name="commentText">'+$('#commentTextToAjax').val()+'</textarea>'+
+                '<p name="commentText">'+
+                $('#commentTextToAjax').val()+
+                '</p>'+
+                '</div>'+
+                '</div>'
                 $('#commentsTable').html(str2);
                 $(document).ready(
                     $(document).on("click", $('.deleteComment'), functionDelete())
@@ -105,9 +127,12 @@ function editComment() {
     $(document).ready(function () {
         $('.editComment').click(function () {
             commentId = $(this).parent().children("input[name='commentId']").val()
-            var textAreaCommentText = $(this).parent().parent().parent().children().children().children("textarea[name='commentText']")
-            if(textAreaCommentText.is('[readonly]')){
-                textAreaCommentText.removeAttr("readonly")
+            var textAreaCommentText = $(this).parent().parent().children("textarea[name='commentText']")
+            var commentText = $(this).parent().parent().children("p[name='commentText']")
+
+            if(!textAreaCommentText.is(":visible")){
+                textAreaCommentText.show()
+                commentText.hide()
             }else{
                 $.ajax({
                     url: 'comments',
@@ -115,10 +140,12 @@ function editComment() {
                     data: {
                         action: 'edit',
                         commentId: commentId,
-                        commentText: textAreaCommentText.text()
+                        commentText: textAreaCommentText.val()
                     },
                     success: function (response) {
-                        textAreaCommentText.attr('readonly','readonly');
+                        textAreaCommentText.hide()
+                        commentText.text( textAreaCommentText.val())
+                        commentText.show()
                     }
                 });
             }
