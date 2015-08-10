@@ -44,27 +44,45 @@ public class UserController extends HttpServlet {
         String login =  request.getParameter("username");
 
         if("add".equals(action)){
-            logger.debug("get user form");
-            RequestDispatcher view = request.getRequestDispatcher(ADD_USER_PAGE);
-            view.forward(request, response);
+            getAddUserForm(request,response);
         }else if("delete".equals(action) && login!=null){
-            logger.debug("delete user");
-            userDao.delete(login);
-            RequestDispatcher view = request.getRequestDispatcher(USERS_LIST);
-            request.setAttribute("users", userDao.getAll());
-            view.forward(request, response);
+           deleteUser(request,response);
 
         }else if("edit".equals(action) && login!=null){
-            logger.debug("return edit user form");
-            User user  = userDao.get(login);
-            request.setAttribute("user",user);
-            RequestDispatcher view = request.getRequestDispatcher(EDIT_USER_PAGE);
-            view.forward(request, response);
+           getEditUserForm(request, response);
         }else if(action == null){
-            RequestDispatcher view = request.getRequestDispatcher(USERS_LIST);
-            request.setAttribute("users", userDao.getAll());
-            view.forward(request, response);
+          getAllUsers(request,response);
         }
+    }
+
+    private void getAllUsers(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher view = request.getRequestDispatcher(USERS_LIST);
+        request.setAttribute("users", userDao.getAll());
+        view.forward(request, response);
+    }
+
+    private void getEditUserForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        logger.debug("return edit user form");
+        String login =  request.getParameter("username");
+        User user  = userDao.get(login);
+        request.setAttribute("user",user);
+        RequestDispatcher view = request.getRequestDispatcher(EDIT_USER_PAGE);
+        view.forward(request, response);
+    }
+
+    private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        logger.debug("delete user");
+        String login =  request.getParameter("username");
+        userDao.delete(login);
+        RequestDispatcher view = request.getRequestDispatcher(USERS_LIST);
+        request.setAttribute("users", userDao.getAll());
+        view.forward(request, response);
+    }
+
+    private void getAddUserForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        logger.debug("get user form");
+        RequestDispatcher view = request.getRequestDispatcher(ADD_USER_PAGE);
+        view.forward(request, response);
     }
 
     @Override
@@ -72,31 +90,39 @@ public class UserController extends HttpServlet {
                           HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if ("add".equalsIgnoreCase(action)) {
-            logger.debug("add user");
-            String login = request.getParameter("login");
-            String password = request.getParameter("password");
-            String email = request.getParameter("email");
-            User user = new User();
-            user.setLogin(login);
-            user.setPassword(password);
-            user.setEmail(email);
-            userDao.save(user);
-            RequestDispatcher view = request.getRequestDispatcher(USERS_LIST);
-            request.setAttribute("users", userDao.getAll());
-            view.forward(request, response);
+           addUser(request, response);
         } else if ("edit".equals(action)) {
-            logger.debug("edit user");
-            String login = request.getParameter("login");
-            String password = request.getParameter("password");
-            String email = request.getParameter("email");
-            User user = new User();
-            user.setLogin(login);
-            user.setPassword(password);
-            user.setEmail(email);
-            userDao.update(user);
-            RequestDispatcher view = request.getRequestDispatcher(USERS_LIST);
-            request.setAttribute("users", userDao.getAll());
-            view.forward(request, response);
+            editUser(request,response);
         }
+    }
+
+    private void editUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        logger.debug("edit user");
+        String login = request.getParameter("login");
+        String password = request.getParameter("password");
+        String email = request.getParameter("email");
+        User user = new User();
+        user.setLogin(login);
+        user.setPassword(password);
+        user.setEmail(email);
+        userDao.update(user);
+        RequestDispatcher view = request.getRequestDispatcher(USERS_LIST);
+        request.setAttribute("users", userDao.getAll());
+        view.forward(request, response);
+    }
+
+    private void addUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        logger.debug("add user");
+        String login = request.getParameter("login");
+        String password = request.getParameter("password");
+        String email = request.getParameter("email");
+        User user = new User();
+        user.setLogin(login);
+        user.setPassword(password);
+        user.setEmail(email);
+        userDao.save(user);
+        RequestDispatcher view = request.getRequestDispatcher(USERS_LIST);
+        request.setAttribute("users", userDao.getAll());
+        view.forward(request, response);
     }
 }

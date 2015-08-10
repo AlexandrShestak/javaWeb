@@ -39,53 +39,63 @@ public class CommentsController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if ("add".equals(action)) {
-            String commentText = request.getParameter("commentText");
-            String newsId = request.getParameter("newsId");
-            Comments comment = new Comments();
-            comment.setCommentText(commentText);
-            comment.setCreationDate(new Timestamp(System.currentTimeMillis()));
-            comment.setNewsId(Long.valueOf(newsId));
-            comment.setCommentatorUsername((String) request.getSession().getAttribute("login"));
-            String key = commentsDao.save(comment);
-
-            JSONObject obj = new JSONObject();
-            obj.put("creationDate",comment.getCreationDate().toString());
-            obj.put("commentatorUsername",comment.getCommentatorUsername());
-            obj.put("commentId",key);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(obj.toJSONString());
+            addComment(request,response);
         }else if("delete".equals(action)){
-            String commentId = request.getParameter("commentId");
-            commentsDao.delete(commentId);
+            deleteComment(request,response);
         }else if("edit".equals(action)){
-            String commentId = request.getParameter("commentId");
-            String commentText = request.getParameter("commentText");
-            Comments comment = commentsDao.get(commentId);
-            comment.setCommentText(commentText);
-            commentsDao.update(comment);
+            editComment(request,response);
         }else if ("getForm".equals(action)){
-            logger.debug("get news with comments form");
-            RequestDispatcher view = request.getRequestDispatcher(NEWS_WITH_COMMENTS);
-            String newsId = request.getParameter("newsId");
-            request.setAttribute("news",newsDao.get(newsId));
-            request.setAttribute("newsTags",newsDao.getTagsForNews(Long.valueOf(newsId)));
-            request.setAttribute("comments",commentsDao.getCommentsForNews(Long.valueOf(newsId)));
-            view.forward(request, response);
+            getNewsWithCommentsForm(request, response);
         }
+    }
+
+    private void editComment(HttpServletRequest request, HttpServletResponse response) {
+        String commentId = request.getParameter("commentId");
+        String commentText = request.getParameter("commentText");
+        Comments comment = commentsDao.get(commentId);
+        comment.setCommentText(commentText);
+        commentsDao.update(comment);
+    }
+
+    private void deleteComment(HttpServletRequest request, HttpServletResponse response) {
+        String commentId = request.getParameter("commentId");
+        commentsDao.delete(commentId);
+    }
+
+    private void addComment(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String commentText = request.getParameter("commentText");
+        String newsId = request.getParameter("newsId");
+        Comments comment = new Comments();
+        comment.setCommentText(commentText);
+        comment.setCreationDate(new Timestamp(System.currentTimeMillis()));
+        comment.setNewsId(Long.valueOf(newsId));
+        comment.setCommentatorUsername((String) request.getSession().getAttribute("login"));
+        String key = commentsDao.save(comment);
+
+        JSONObject obj = new JSONObject();
+        obj.put("creationDate",comment.getCreationDate().toString());
+        obj.put("commentatorUsername",comment.getCommentatorUsername());
+        obj.put("commentId",key);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(obj.toJSONString());
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if ("getForm".equals(action)){
-            logger.debug("get news with comments form");
-            RequestDispatcher view = request.getRequestDispatcher(NEWS_WITH_COMMENTS);
-            String newsId = request.getParameter("newsId");
-            request.setAttribute("news",newsDao.get(newsId));
-            request.setAttribute("newsTags",newsDao.getTagsForNews(Long.valueOf(newsId)));
-            request.setAttribute("comments",commentsDao.getCommentsForNews(Long.valueOf(newsId)));
-            view.forward(request, response);
+            getNewsWithCommentsForm(request,response);
         }
+    }
+
+    private void getNewsWithCommentsForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        logger.debug("get news with comments form");
+        RequestDispatcher view = request.getRequestDispatcher(NEWS_WITH_COMMENTS);
+        String newsId = request.getParameter("newsId");
+        request.setAttribute("news",newsDao.get(newsId));
+        request.setAttribute("newsTags",newsDao.getTagsForNews(Long.valueOf(newsId)));
+        request.setAttribute("comments",commentsDao.getCommentsForNews(Long.valueOf(newsId)));
+        view.forward(request, response);
     }
 }
