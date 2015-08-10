@@ -22,8 +22,8 @@
   <title></title>
 </head>
 <body>
-<nav class="navbar navbar-default col-md-10 col-md-offset-1">
-  <div class="container-fluid">
+<%--<nav class="navbar navbar-default col-md-10 col-md-offset-1">--%>
+  <div class="container-fluid col-md-10 col-md-offset-2">
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <c:if test="${sessionScope.login eq 'admin'}">
         <form  method="get" action="/user"  class="navbar-form navbar-left" role="menu">
@@ -49,7 +49,7 @@
       </form>
     </div>
   </div>
-</nav>
+<%--</nav>--%>
 
 </body>
 </html>

@@ -120,8 +120,8 @@ public class JdbcTagsDao implements TagDao {
     }
 
     @Override
-    public Long getTagIdByName(String tagName) {
-        Long tagId = null;
+    public Tag getTagByName(String tagName) {
+        Tag tag = new Tag();
         try(Connection connection = JdbcConnection.getConnection();
             PreparedStatement preparedStatement =
                     connection.prepareStatement("SELECT * from tags where tag_name=?)",
@@ -129,55 +129,18 @@ public class JdbcTagsDao implements TagDao {
             // Parameters start with 1
             preparedStatement.setString(1, tagName);
             ResultSet rs = preparedStatement.executeQuery();
-
-            Tag tag = new Tag();
             if (rs.next()) {
                 tag.setTagId(rs.getLong("tag_id"));
                 tag.setTagName(rs.getString("tag_name"));
             }
-            tagId = tag.getTagId();
-            logger.error("get tag id by tag name ");
+            logger.error("get tag  by tag name ");
         }
         catch (SQLException e) {
             e.printStackTrace();
-            logger.error("get tag id by tag name error", e);
+            logger.error("get tag  by tag name error", e);
         }
-        return tagId;
+        return tag;
     }
 
-    @Override
-    public void addTagToNews(Long newsId, Long tagId) {
-        try(Connection connection = JdbcConnection.getConnection();
-            PreparedStatement preparedStatement =
-                    connection.prepareStatement("insert into news_tags (news_id , tag_id) VALUES (?,?)")){
-            // Parameters start with 1
-            preparedStatement.setLong(1, newsId);
-            preparedStatement.setLong(2, tagId);
-            preparedStatement.executeUpdate();
 
-            logger.error("add tag to news");
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            logger.error("add tag to news error", e);
-        }
-    }
-
-    @Override
-    public void deleteTagFromNews(Long newsId, Long tagId) {
-        try(Connection connection = JdbcConnection.getConnection();
-            PreparedStatement preparedStatement =
-                    connection.prepareStatement("DELETE FROM news_tags WHERE news_id=? AND  tag_id=?")){
-            // Parameters start with 1
-            preparedStatement.setLong(1, newsId);
-            preparedStatement.setLong(2, tagId);
-            preparedStatement.executeUpdate();
-
-            logger.error("delete tag from news");
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            logger.error("delete tag from news error", e);
-        }
-    }
 }

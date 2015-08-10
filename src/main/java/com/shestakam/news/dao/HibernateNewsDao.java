@@ -117,4 +117,26 @@ public class HibernateNewsDao implements NewsDao {
         session.getTransaction().commit();
         return newsList;
     }
+
+    @Override
+    public void addTagToNews(Long newsId, Long tagId) {
+        logger.debug("add tag to news");
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        News news = (News) session.load(News.class,newsId);
+        Tag tag = (Tag) session.load(Tag.class,tagId);
+        news.getTagSet().add(tag);
+        session.getTransaction().commit();
+    }
+
+    @Override
+    public void deleteTagFromNews(Long newsId, Long tagId) {
+        logger.debug("delete tag from news");
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        News news = (News) session.load(News.class,newsId);
+        Tag tag = (Tag) session.load(Tag.class,tagId);
+        news.getTagSet().remove(tag);
+        session.getTransaction().commit();
+    }
 }

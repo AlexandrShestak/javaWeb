@@ -27,7 +27,7 @@
 <jsp:include page="../language.jsp"/>
 <helloTag:myHelloTag />
 <jsp:include page="../menu.jsp"/>
-<div class="container col-md-8 col-md-offset-2">
+<div class="container col-md-7 col-md-offset-3">
 
   <div class="row">
 

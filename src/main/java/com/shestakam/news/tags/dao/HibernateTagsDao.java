@@ -1,7 +1,6 @@
 package com.shestakam.news.tags.dao;
 
 import com.shestakam.db.HibernateUtil;
-import com.shestakam.news.entity.News;
 import com.shestakam.news.tags.entity.Tag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,7 +16,7 @@ public class HibernateTagsDao implements TagDao {
     private  final static Logger logger = LogManager.getLogger(HibernateTagsDao.class);
 
     @Override
-    public Long getTagIdByName(String tagName) {
+    public Tag getTagByName(String tagName) {
         logger.debug("get tag id by name");
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -29,21 +28,11 @@ public class HibernateTagsDao implements TagDao {
             return null;
         }
         Tag tag = (Tag) result.get(0);
-        Long tagId  = tag.getTagId();
         session.getTransaction().commit();
-        return tagId;
+        return tag;
     }
 
-    @Override
-    public void addTagToNews(Long newsId, Long tagId) {
-        logger.debug("add tag to news");
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        News news = (News) session.load(News.class,newsId);
-        Tag tag = (Tag) session.load(Tag.class,tagId);
-        news.getTagSet().add(tag);
-        session.getTransaction().commit();
-    }
+
 
     @Override
     public String save(Tag tag) {
@@ -92,17 +81,5 @@ public class HibernateTagsDao implements TagDao {
         session.beginTransaction();
         session.update(tag);
         session.getTransaction().commit();
-    }
-
-    @Override
-    public void deleteTagFromNews(Long newsId, Long tagId) {
-        logger.debug("delete tag from news");
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        News news = (News) session.load(News.class,newsId);
-        Tag tag = (Tag) session.load(Tag.class,tagId);
-        news.getTagSet().remove(tag);
-        session.getTransaction().commit();
-
     }
 }

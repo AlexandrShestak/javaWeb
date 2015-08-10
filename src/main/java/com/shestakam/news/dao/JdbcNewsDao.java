@@ -248,4 +248,40 @@ public class JdbcNewsDao implements NewsDao {
         logger.debug("get all news with tag: "+ tagName);
         return newsList;
     }
+
+    @Override
+    public void addTagToNews(Long newsId, Long tagId) {
+        try(Connection connection = JdbcConnection.getConnection();
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("insert into news_tags (news_id , tag_id) VALUES (?,?)")){
+            // Parameters start with 1
+            preparedStatement.setLong(1, newsId);
+            preparedStatement.setLong(2, tagId);
+            preparedStatement.executeUpdate();
+
+            logger.error("add tag to news");
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            logger.error("add tag to news error", e);
+        }
+    }
+
+    @Override
+    public void deleteTagFromNews(Long newsId, Long tagId) {
+        try(Connection connection = JdbcConnection.getConnection();
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("DELETE FROM news_tags WHERE news_id=? AND  tag_id=?")){
+            // Parameters start with 1
+            preparedStatement.setLong(1, newsId);
+            preparedStatement.setLong(2, tagId);
+            preparedStatement.executeUpdate();
+
+            logger.error("delete tag from news");
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            logger.error("delete tag from news error", e);
+        }
+    }
 }

@@ -15,5 +15,7 @@ public interface NewsDao extends GenericDao<News> {
     List<News> searchNewsByTag(String tagName);
     List<News> searchNewsByCreator(String creator);
     List<News> searchNewsByCreatorAndTag(String creator,String tagName);
+    void addTagToNews(Long newsId, Long tagId);
+    void deleteTagFromNews(Long newsId, Long tagId);
 
 }

@@ -60,7 +60,7 @@ public class NewsController extends HttpServlet {
         request.setAttribute("news", newsList);
         for (News elem: newsList){
             List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
-            String tagString = new String();
+            String tagString = "";
             for(Tag tag: tagList){
                 tagString+= "#"+tag.getTagName();
             }
@@ -79,7 +79,7 @@ public class NewsController extends HttpServlet {
             request.setAttribute("news", newsList);
             for (News elem : newsList) {
                 List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
-                String tagString = new String();
+                String tagString = "";
                 for (Tag tag : tagList) {
                     tagString += "#" + tag.getTagName();
                 }
@@ -90,7 +90,7 @@ public class NewsController extends HttpServlet {
             request.setAttribute("news", newsList);
             for (News elem : newsList) {
                 List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
-                String tagString = new String();
+                String tagString = "";
                 for (Tag tag : tagList) {
                     tagString += "#" + tag.getTagName();
                 }
@@ -101,7 +101,7 @@ public class NewsController extends HttpServlet {
             request.setAttribute("news", newsList);
             for (News elem : newsList) {
                 List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
-                String tagString = new String();
+                String tagString = "";
                 for (Tag tag : tagList) {
                     tagString += "#" + tag.getTagName();
                 }
@@ -124,7 +124,7 @@ public class NewsController extends HttpServlet {
             request.setAttribute("news", newsList);
             for (News elem: newsList){
                 List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
-                String tagString = new String();
+                String tagString = "";
                 for(Tag tag: tagList){
                     tagString+= "#"+tag.getTagName();
                 }
@@ -142,7 +142,7 @@ public class NewsController extends HttpServlet {
             News news = newsDao.get(newsId);
             request.setAttribute("news",news);
             List<Tag> tagList = newsDao.getTagsForNews(news.getNewsId());
-            String tagString = new String();
+            String tagString = "";
             for(Tag tag: tagList){
                 tagString+= "#"+tag.getTagName();
             }
@@ -201,23 +201,23 @@ public class NewsController extends HttpServlet {
         String[] tags  = request.getParameter("tags").split(";");
         for(String tagName : tags) {
             logger.debug("add tag");
-            Long tagId = tagDao.getTagIdByName(tagName);
+            Long tagId = tagDao.getTagByName(tagName).getTagId();
             if (tagId == null) {
                 logger.debug("new tag");
                 Tag tag = new Tag();
                 tag.setTagName(tagName);
                 tagId = Long.valueOf(tagDao.save(tag));
-                tagDao.addTagToNews(Long.valueOf(newsId), tagId);
+                newsDao.addTagToNews(Long.valueOf(newsId), tagId);
             } else {
                 logger.debug("old tag");
-                tagDao.addTagToNews(Long.valueOf(newsId), tagId);
+                newsDao.addTagToNews(Long.valueOf(newsId), tagId);
             }
         }
         List<News> newsList = newsDao.getAll();
         request.setAttribute("news", newsList);
         for (News elem: newsList){
             List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
-            String tagString = new String();
+            String tagString = "";
             for(Tag tag: tagList){
                 tagString+= "#"+tag.getTagName();
             }

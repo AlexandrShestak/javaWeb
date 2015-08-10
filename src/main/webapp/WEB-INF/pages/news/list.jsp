@@ -35,6 +35,15 @@
 <jsp:include page="../language.jsp"/>
 <helloTag:myHelloTag />
 <jsp:include page="../menu.jsp"/>
+
+
+<br>
+<br>
+<br>
+<div class="col-md 1 col-md-offset-5">
+<h2>         <fmt:message key="problems"/> </h2>
+</div>
+<br>
 <div class="container">
 <c:forEach items="${news}" var="news">
   <div class="row col-md-8 col-md-offset-2">
