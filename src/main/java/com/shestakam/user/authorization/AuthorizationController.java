@@ -28,7 +28,6 @@ import java.util.List;
 public class AuthorizationController extends HttpServlet {
 
     private  final static Logger logger = LogManager.getLogger(AuthorizationController.class);
-    private static final String USERS_LIST = "/WEB-INF/pages/user/list.jsp";
     private static final String START_PAGE = "index.jsp";
     private static final String NEWS_LIST = "/WEB-INF/pages/news/list.jsp";
 
