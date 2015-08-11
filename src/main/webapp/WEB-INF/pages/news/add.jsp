@@ -26,8 +26,8 @@
   <title></title>
 </head>
 <body>
-
 <jsp:include page="../language.jsp"/>
+<jsp:include page="../menu.jsp"/>
 <div class="container col-md-8 col-md-offset-2">
   <form action="/news" method="post">
     <table class="table ">

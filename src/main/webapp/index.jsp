@@ -46,12 +46,13 @@
       <td><fmt:message key="enterPassword"/> </td>
       <td><input type="password" name="password" id="inputPassword" class="form-control"  required> </td>
     </tr>
-    <tr>
-      <td colspan="2"><c:if test="${not empty errorMessage}">
-        <div class="alert alert-warning" role="alert"><fmt:message key="incorrectData"/></div>
-      </td>
-      </c:if>
-    </tr>
+    <c:if test="${not empty errorMessage}">
+      <tr>
+        <td colspan="2">
+          <div class="alert alert-warning" role="alert"><fmt:message key="incorrectData"/></div>
+        </td>
+      </tr>
+    </c:if>
     <tr>
       <td colspan="2" align="center">
         <button type="submit" name="action"  class="btn btn-lg btn-primary btn-block" type="submit"><fmt:message key="login"/> </button>

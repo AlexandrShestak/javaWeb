@@ -46,6 +46,7 @@ public class HibernateNewsDao implements NewsDao {
         session.beginTransaction();
         List result = session.createQuery("from News ").list();
         session.getTransaction().commit();
+
         return result;
     }
 

@@ -14,7 +14,8 @@
 <%@ page isELIgnored="false" %>
 <html>
 <head>
-    <title></title>
+  <link href="${pageContext.servletContext.contextPath}/bootstrap-3.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title></title>
 </head>
 <body>
 <form action="/logout" method="post">
@@ -24,7 +25,7 @@
         <h4><fmt:message key="welcome"/> ${sessionScope.login}</h4>
       </td>
       <td>
-        <button type="submit" name="action" value="logout"><fmt:message key="out"/> </button>
+        <button type="submit" class="btn" name="action" value="logout"><fmt:message key="out"/> </button>
       </td>
     </tr>
 

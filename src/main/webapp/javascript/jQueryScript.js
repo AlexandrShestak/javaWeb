@@ -23,7 +23,39 @@ $(document).ready(function(){
              */   /*     $('#commentsTable')
                  .append('<tr><td colspan="5"><table width="80%"><tr><td colspan="5"><textarea class="comments" name="commentText" readonly="readonly" >'+$('#commentTextToAjax').val()+'</textarea></td></tr><tr><td align="left">'+obj.creationDate+'</td><td align="right">'+obj.commentatorUsername+'</td><td><input type="hidden" name="action" value="edit"><input type="hidden" name="commentId" id="commentId" value='+obj.commentId+'><button class="editComment">'+$('#editAjax').text()+'</button></td><td><input type="hidden" name="action" value="delete"><input type="hidden" name="commentId" id="commentId" value='+obj.commentId+'><button  class="deleteComment">'+$('#deleteAjax').text()+'</button></td></tr><tr><td colspan="5"><hr align="right" width="40%" size="3" color="#0000dd" /> </td> </tr>  </table> </td> </tr>')
                  */
-                str2 = str1+' <div class="media">'+
+                str2 = str1+ '<div class="panel panel-default">'+
+                '<div class="media">'+
+                '<div class="panel-body">'+
+                '<textarea class="comments" hidden="hidden" name="commentText"  >'+$('#commentTextToAjax').val()+'</textarea>'+
+                '<p name="commentText">'+
+                $('#commentTextToAjax').val()+
+                '</p>'+
+                '</div>'+
+                '<div class="panel-footer">'+
+                '<div class="container">'+
+                '<div class="col-md-2">'+
+                '<h4 class="media-heading">'+obj.commentatorUsername+'</h4>'+
+                '</div>'+
+                '<div class="col-md-2">'+
+                '<small>'+obj.creationDate+'</small>'+
+                '</div>'+
+                '<div class="col-md-2">'+
+                '<input type="hidden" name="action" value="edit">'+
+                '<input type="hidden" name="commentId" value='+obj.commentId+'>'+
+                '<button class="editComment">'+$('#editAjax').text()+'</button>'+
+                '</div>'+
+                '<div class="col-md-2">'+
+                '<input type="hidden" name="action" value="delete">'+
+                '<input type="hidden" name="commentId"  value='+obj.commentId+'>'+
+                '<button class="deleteComment">'+$('#deleteAjax').text()+'</button>'+
+                '</div>'+
+                '</div>'+
+                '</div>'+
+                '</div>'+
+                '</div>'
+
+
+              /*  ' <div class="media">'+
 
                 '<div class="media-body">'+
                 '<h4 class="media-heading">'+obj.commentatorUsername+
@@ -44,7 +76,7 @@ $(document).ready(function(){
                 $('#commentTextToAjax').val()+
                 '</p>'+
                 '</div>'+
-                '</div>'
+                '</div>'*/
                 $('#commentsTable').html(str2);
                 $(document).ready(
                     $(document).on("click", $('.deleteComment'), functionDelete())
@@ -82,7 +114,7 @@ function functionDelete()
         $('.deleteComment').click(function () {
             commentId = $(this).parent().children("input[name='commentId']").val()
             str = '#' + commentId
-            row = $(this).parent().parent().parent()
+            row = $(this).parent().parent().parent().parent().parent()
             $.ajax({
                 url: 'comments',
                 type: "POST",
@@ -127,8 +159,8 @@ function editComment() {
     $(document).ready(function () {
         $('.editComment').click(function () {
             commentId = $(this).parent().children("input[name='commentId']").val()
-            var textAreaCommentText = $(this).parent().parent().children("textarea[name='commentText']")
-            var commentText = $(this).parent().parent().children("p[name='commentText']")
+            var textAreaCommentText = $(this).parent().parent().parent().parent().children().children("textarea[name='commentText']")
+            var commentText = $(this).parent().parent().parent().parent().children().children("p[name='commentText']")
 
             if(!textAreaCommentText.is(":visible")){
                 textAreaCommentText.show()

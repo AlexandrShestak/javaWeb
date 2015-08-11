@@ -46,16 +46,18 @@
 <br>
 <div class="container">
 <c:forEach items="${news}" var="news">
-  <div class="row col-md-8 col-md-offset-2">
+  <div class="panel panel-default col-md-8 col-md-offset-2">
     <div class="span8">
-      <div class="row">
+      <div class="panel-body">
         <div class="span6">
           <p>
+            <a href="/comments?action=getForm&newsId=${news.newsId}"></a>
             <c:out value="${news.newsText}"/>
           </p>
         </div>
       </div>
-      <div class="row">
+
+      <div class="panel-footer">
         <div class="span8">
           <p></p>
           <p>
@@ -67,15 +69,14 @@
             | <i class="glyphicon glyphicon-trash"></i><a  href="/news?action=delete&newsId=${news.newsId}"><fmt:message key="delete"/></a>
           </c:if>
             |<i class="glyphicon glyphicon-tag"></i> Tags : <span class="label label-info">${news.tagsString}</span>
+           <%-- <c:forEach items="${news.tagSet}" var="tag">
+              |<i class="glyphicon glyphicon-tag"></i> Tags : <span class="label label-info">${tag.tagName}</span>
+            </c:forEach>--%>
           </p>
         </div>
       </div>
-      <div class="row">
-        <div class="span8">
-          <hr>
-        </div>
-      </div>
     </div>
+
     </div>
 
 
