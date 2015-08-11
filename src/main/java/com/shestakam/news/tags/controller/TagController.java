@@ -1,15 +1,16 @@
 package com.shestakam.news.tags.controller;
 
-import com.shestakam.news.dao.HibernateNewsDao;
 import com.shestakam.news.dao.NewsDao;
 import com.shestakam.news.entity.News;
-import com.shestakam.news.tags.dao.HibernateTagsDao;
 import com.shestakam.news.tags.dao.TagDao;
 import com.shestakam.news.tags.entity.Tag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,9 +32,20 @@ public class TagController extends HttpServlet {
     private NewsDao newsDao;
     private TagDao tagDao;
 
-    public TagController() {
-        this.newsDao= new HibernateNewsDao();
-        this.tagDao = new HibernateTagsDao();
+    public void setTagDao(TagDao tagDao) {
+        this.tagDao = tagDao;
+    }
+
+    public void setNewsDao(NewsDao newsDao) {
+        this.newsDao = newsDao;
+    }
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        ApplicationContext ac = (ApplicationContext) config.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+        tagDao = (TagDao) ac.getBean("hibernateTagsDao");
+        newsDao = (NewsDao) ac.getBean("hibernateNewsDao");
     }
 
     @Override

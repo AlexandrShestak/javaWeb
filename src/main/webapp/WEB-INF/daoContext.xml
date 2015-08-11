@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="jdbcNewsDao" class="com.shestakam.news.dao.JdbcNewsDao"/>
+    <bean id="hibernateNewsDao" class="com.shestakam.news.dao.HibernateNewsDao"/>
+
+    <bean id="jdbcTagsDao" class="com.shestakam.news.tags.dao.JdbcTagsDao"/>
+    <bean id="hibernateTagsDao" class="com.shestakam.news.tags.dao.HibernateTagsDao"/>
+
+    <bean id="jdbcCommentsDao" class="com.shestakam.news.comments.dao.JdbcCommentsDao"/>
+    <bean id="hibernateCommentsDao" class="com.shestakam.news.comments.dao.HibernateCommentsDao"/>
+
+    <bean id="jdbcUsersDao" class="com.shestakam.user.dao.JdbcUserDao"/>
+    <bean id="hibernateUsersDao" class="com.shestakam.user.dao.HibernateUserDao"/>
+
+
+  <!--  <bean id="newsController" class="com.shestakam.news.controller.NewsController">
+        <property name="newsDao" ref="hibernateNewsDao"/>
+        <property name="tagDao" ref="hibernateTagsDao"/>
+    </bean>
+
+    <bean id="userController" class="com.shestakam.user.controller.UserController">
+        <property name="userDao" ref="hibernateUsersDao"/>
+    </bean>
+
+    <bean id="commentsController" class="com.shestakam.news.comments.controller.CommentsController">
+        <property name="newsDao" ref="hibernateNewsDao"/>
+        <property name="commentsDao" ref="hibernateCommentsDao"/>
+    </bean>
+
+    <bean id="tagsController" class="com.shestakam.news.tags.controller.TagController">
+        <property name="newsDao" ref="hibernateNewsDao"/>
+        <property name="tagDao" ref="hibernateTagsDao"/>
+    </bean>
+
+    <bean id="authorizationComtroller" class="com.shestakam.user.authorization.AuthorizationController">
+        <property name="userDao" ref="hibernateUsersDao"/>
+        <property name="newsDao" ref="hibernateNewsDao"/>
+    </bean>
+
+    <bean id="registrationController" class="com.shestakam.user.authorization.RegistrationController">
+        <property name="userDao" ref="hibernateUsersDao"/>
+    </bean>-->
+
+    <!-- more bean definitions go here -->
+
+</beans>

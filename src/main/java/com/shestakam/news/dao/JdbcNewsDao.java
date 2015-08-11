@@ -161,7 +161,8 @@ public class JdbcNewsDao implements NewsDao {
 
     @Override
     public List<News> searchNewsByTag(String tagName) {
-        List<News> newsList = new ArrayList<News>();
+        return searchNewsByCreatorAndTag(null,tagName);
+        /*List<News> newsList = new ArrayList<News>();
         try (Connection connection = JdbcConnection.getConnection();
              PreparedStatement psToFindNewsId =
                      connection.prepareStatement("SELECT  news_id from news_tags INNER JOIN tags on news_tags.tag_id=tags.tag_id where tag_name=?");
@@ -188,12 +189,13 @@ public class JdbcNewsDao implements NewsDao {
             logger.error("get all news with tag: "+ tagName+" error",e);
         }
         logger.debug("get all news with tag: "+ tagName);
-        return newsList;
+        return newsList;*/
     }
 
     @Override
     public List<News> searchNewsByCreator(String creator) {
-        List<News> newsList = new ArrayList<News>();
+        return searchNewsByCreatorAndTag(creator,null);
+        /*List<News> newsList = new ArrayList<News>();
         try (Connection connection = JdbcConnection.getConnection();
                     PreparedStatement psToFindNews =
                      connection.prepareStatement("select * from news where creator_username=?")){
@@ -213,7 +215,7 @@ public class JdbcNewsDao implements NewsDao {
             logger.error("get all news with creator: "+ creator+" error",e);
         }
         logger.debug("get all news with creator: "+ creator);
-        return newsList;
+        return newsList;*/
     }
 
     @Override

@@ -1,12 +1,14 @@
 package com.shestakam.user.authorization;
 
-import com.shestakam.user.dao.HibernateUserDao;
 import com.shestakam.user.dao.UserDao;
 import com.shestakam.user.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,8 +26,14 @@ public class RegistrationController extends HttpServlet {
     private  final static Logger logger = LogManager.getLogger(RegistrationController.class);
     private UserDao userDao;
 
-    public RegistrationController() {
-        this.userDao = new HibernateUserDao();
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        ApplicationContext ac = (ApplicationContext) config.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+        userDao = (UserDao) ac.getBean("hibernateUsersDao");
     }
 
     @Override

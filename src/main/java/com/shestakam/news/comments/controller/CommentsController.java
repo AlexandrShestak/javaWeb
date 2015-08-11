@@ -4,15 +4,16 @@
 package com.shestakam.news.comments.controller;
 
 import com.shestakam.news.comments.dao.CommentsDao;
-import com.shestakam.news.comments.dao.HibernateCommentsDao;
 import com.shestakam.news.comments.entity.Comments;
-import com.shestakam.news.dao.HibernateNewsDao;
 import com.shestakam.news.dao.NewsDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,9 +31,20 @@ public class CommentsController extends HttpServlet {
     private CommentsDao commentsDao;
     private NewsDao newsDao;
 
-    public CommentsController() {
-        this.commentsDao = new HibernateCommentsDao();
-        this.newsDao = new HibernateNewsDao();
+    public void setCommentsDao(CommentsDao commentsDao) {
+        this.commentsDao = commentsDao;
+    }
+
+    public void setNewsDao(NewsDao newsDao) {
+        this.newsDao = newsDao;
+    }
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        ApplicationContext ac = (ApplicationContext) config.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+        commentsDao = (CommentsDao) ac.getBean("hibernateCommentsDao");
+        newsDao = (NewsDao) ac.getBean("hibernateNewsDao");
     }
 
     @Override
