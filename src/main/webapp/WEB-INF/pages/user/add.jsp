@@ -33,7 +33,7 @@
           <fmt:message key="login"/>
         </td>
         <td>
-          <input type="text" name="login">
+          <input type="text" name="username">
         </td>
       </tr>
       <tr>

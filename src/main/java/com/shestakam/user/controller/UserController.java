@@ -22,11 +22,8 @@ import java.io.IOException;
 public class UserController extends HttpServlet {
 
     private static final String USERS_LIST = "/WEB-INF/pages/user/list.jsp";
-    private static final String REGISTRATION_PAGE= "/WEB-INF/pages/authorization/registration.jsp";
-    private static final String START_PAGE = "index.jsp";
     private static final String ADD_USER_PAGE = "/WEB-INF/pages/user/add.jsp";
     private static final String EDIT_USER_PAGE = "/WEB-INF/pages/user/edit.jsp";
-    private static final String NEWS_LIST = "/WEB-INF/pages/news/list.jsp";
 
     private  final static Logger logger = LogManager.getLogger(UserController.class);
     private UserDao userDao;
@@ -104,7 +101,7 @@ public class UserController extends HttpServlet {
 
     private void editUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.debug("edit user");
-        String login = request.getParameter("login");
+        String login = request.getParameter("username");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
         User user = new User();
@@ -119,7 +116,7 @@ public class UserController extends HttpServlet {
 
     private void addUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.debug("add user");
-        String login = request.getParameter("login");
+        String login = request.getParameter("username");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
         User user = new User();

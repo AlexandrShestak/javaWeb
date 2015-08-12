@@ -29,7 +29,7 @@
     </servlet-mapping>-->
 
 
-    <servlet>
+   <!-- <servlet>
         <servlet-name>userServlet</servlet-name>
         <servlet-class>com.shestakam.user.controller.UserController</servlet-class>
     </servlet>
@@ -37,7 +37,7 @@
     <servlet-mapping>
         <servlet-name>userServlet</servlet-name>
         <url-pattern>/user</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
 
     <!--<servlet>
         <servlet-name>registrationServlet</servlet-name>
@@ -142,6 +142,11 @@
     <servlet-mapping>
         <servlet-name>dispatcherServlet</servlet-name>
         <url-pattern>/registration</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>dispatcherServlet</servlet-name>
+        <url-pattern>/user</url-pattern>
     </servlet-mapping>
 
 
