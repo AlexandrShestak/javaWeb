@@ -32,14 +32,14 @@
   <c:forEach items="${users}" var="user">
 
     <tr>
-      <td><c:out value="${user.login}" /></td>
+      <td><c:out value="${user.username}" /></td>
       <td><c:out value="${user.password}" /></td>
       <td><c:out value="${user.email}" /></td>
 
       <td>
         <form action="/user" method="get">
           <input type="hidden" name="action" value="edit">
-          <input type="hidden" name="username" value="${user.login}"/>
+          <input type="hidden" name="username" value="${user.username}"/>
           <button type="submit"<%-- name="action" value="edit"--%>><fmt:message key="edit"/> </button>
        </form>
       </td>
@@ -47,7 +47,7 @@
       <td>
         <form action="/user" method="get">
           <input type="hidden" name="action" value="delete">
-          <input type="hidden" name="username" value="${user.login}"/>
+          <input type="hidden" name="username" value="${user.username}"/>
           <button type="submit" <%--name="action" value="delete"--%>><fmt:message key="delete"/> </button>
        </form>
       </td>

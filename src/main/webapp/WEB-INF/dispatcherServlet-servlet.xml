@@ -9,7 +9,9 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.shestakam.user.authorization"/>
+
+
+    <import resource="daoContext.xml"/>
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
@@ -17,20 +19,5 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <bean id="jdbcNewsDao" class="com.shestakam.news.dao.JdbcNewsDao"/>
-    <bean id="hibernateNewsDao" class="com.shestakam.news.dao.HibernateNewsDao"/>
-
-    <bean id="jdbcTagsDao" class="com.shestakam.news.tags.dao.JdbcTagsDao"/>
-    <bean id="hibernateTagsDao" class="com.shestakam.news.tags.dao.HibernateTagsDao"/>
-
-    <bean id="jdbcCommentsDao" class="com.shestakam.news.comments.dao.JdbcCommentsDao"/>
-    <bean id="hibernateCommentsDao" class="com.shestakam.news.comments.dao.HibernateCommentsDao"/>
-
-    <bean id="jdbcUsersDao" class="com.shestakam.user.dao.JdbcUserDao"/>
-    <bean id="hibernateUsersDao" class="com.shestakam.user.dao.HibernateUserDao"/>
-    <bean class="com.shestakam.user.authorization.SpringAuthorizationController" id="springAuthorizationController">
-        <property name="userDao" ref="hibernateUsersDao"/>
-        <property name="newsDao" ref="hibernateNewsDao"/>
-    </bean>
 
 </beans>

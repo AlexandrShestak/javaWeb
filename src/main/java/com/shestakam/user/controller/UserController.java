@@ -108,7 +108,7 @@ public class UserController extends HttpServlet {
         String password = request.getParameter("password");
         String email = request.getParameter("email");
         User user = new User();
-        user.setLogin(login);
+        user.setUsername(login);
         user.setPassword(password);
         user.setEmail(email);
         userDao.update(user);
@@ -123,7 +123,7 @@ public class UserController extends HttpServlet {
         String password = request.getParameter("password");
         String email = request.getParameter("email");
         User user = new User();
-        user.setLogin(login);
+        user.setUsername(login);
         user.setPassword(password);
         user.setEmail(email);
         userDao.save(user);

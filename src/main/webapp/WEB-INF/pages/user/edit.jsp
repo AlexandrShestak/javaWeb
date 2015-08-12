@@ -32,8 +32,8 @@
           <fmt:message key="login"/>
         </td>
         <td>
-          <input type="hidden" name="login" value="${user.login}">
-          <input type="text" name="login" value="${user.login}" disabled="disabled">
+          <input type="hidden" name="login" value="${user.username}">
+          <input type="text" name="login" value="${user.username}" disabled="disabled">
         </td>
       </tr>
       <tr>

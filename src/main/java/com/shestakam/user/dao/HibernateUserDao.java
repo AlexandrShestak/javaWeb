@@ -23,7 +23,7 @@ public class HibernateUserDao implements UserDao {
         session.beginTransaction();
         session.save(user);
         session.getTransaction().commit();
-        return user.getLogin();
+        return user.getUsername();
     }
 
     @Override
@@ -60,7 +60,7 @@ public class HibernateUserDao implements UserDao {
 
     @Override
     public void update(User user) {
-        logger.debug("update user with username: "+user.getLogin() );
+        logger.debug("update user with username: "+user.getUsername() );
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         session.update(user);

@@ -4,6 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+
+
     <bean id="jdbcNewsDao" class="com.shestakam.news.dao.JdbcNewsDao"/>
     <bean id="hibernateNewsDao" class="com.shestakam.news.dao.HibernateNewsDao"/>
 
@@ -15,9 +17,14 @@
 
     <bean id="jdbcUsersDao" class="com.shestakam.user.dao.JdbcUserDao"/>
     <bean id="hibernateUsersDao" class="com.shestakam.user.dao.HibernateUserDao"/>
+
     <bean class="com.shestakam.user.authorization.SpringAuthorizationController" id="springAuthorizationController">
         <property name="userDao" ref="hibernateUsersDao"/>
         <property name="newsDao" ref="hibernateNewsDao"/>
+    </bean>
+
+    <bean class="com.shestakam.user.authorization.SpringRegistrationController" id="springRegistrationController">
+        <property name="userDao" ref="hibernateUsersDao"/>
     </bean>
 
 

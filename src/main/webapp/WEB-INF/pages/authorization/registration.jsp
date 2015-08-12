@@ -39,7 +39,7 @@
       <!-- Username -->
       <label class="control-label"  for="username"><fmt:message key="login"/></label>
       <div class="controls">
-        <input type="text" id="username" name="login"  class="input-xlarge">
+        <input type="text" id="username" name="username"  class="input-xlarge">
         <p class="help-block">Username can contain any letters or numbers, without spaces</p>
       </div>
     </div>

@@ -45,7 +45,7 @@ public class SpringAuthorizationController {
         return START_PAGE;
     }
 
-    @RequestMapping(path = "/login" , method = RequestMethod.GET)
+    @RequestMapping(value = "/login" , method = RequestMethod.GET)
     public ModelAndView getNewsIfLogin(HttpSession session){
         logger.debug("get News If Login");
         String login = (String) session.getAttribute("login");
@@ -70,7 +70,7 @@ public class SpringAuthorizationController {
         }
     }
 
-    @RequestMapping(path = "/login" , method = RequestMethod.POST)
+    @RequestMapping(value = "/login" , method = RequestMethod.POST)
     public ModelAndView login(HttpSession session ,HttpServletRequest request){
         logger.debug("login");
         String login = request.getParameter("login");

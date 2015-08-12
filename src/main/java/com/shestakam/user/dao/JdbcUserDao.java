@@ -30,7 +30,7 @@ public class JdbcUserDao implements UserDao {
             PreparedStatement  preparedStatement =
                     connection.prepareStatement("insert into users (username,password,email) VALUES (?,?,?)")) {
             // Parameters start with 1
-            preparedStatement.setString(1, user.getLogin());
+            preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.executeUpdate();
@@ -40,7 +40,7 @@ public class JdbcUserDao implements UserDao {
             e.printStackTrace();
             logger.error("save user error", e);
         }
-        return user.getLogin();
+        return user.getUsername();
     }
 
     public void delete(String login) {
@@ -64,9 +64,9 @@ public class JdbcUserDao implements UserDao {
             // Parameters start with 1
             preparedStatement.setString(1, user.getPassword());
             preparedStatement.setString(2, user.getEmail());
-            preparedStatement.setString(3, user.getLogin());
+            preparedStatement.setString(3, user.getUsername());
             preparedStatement.executeUpdate();
-            logger.debug("edit user with login :"+user.getLogin());
+            logger.debug("edit user with login :"+user.getUsername());
         } catch (SQLException e) {
             e.printStackTrace();
             logger.error("edit user error",e);
@@ -81,7 +81,7 @@ public class JdbcUserDao implements UserDao {
             preparedStatement.setString(1, login);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                user.setLogin(rs.getString("username"));
+                user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
             }
@@ -89,7 +89,7 @@ public class JdbcUserDao implements UserDao {
             e.printStackTrace();
             logger.error("get user error", e);
         }
-        logger.debug("get user with login :"+user.getLogin());
+        logger.debug("get user with login :"+user.getUsername());
         return user;
     }
 
@@ -101,7 +101,7 @@ public class JdbcUserDao implements UserDao {
             ResultSet rs = statement.executeQuery("select * from users");
             while (rs.next()) {
                 User user = new User();
-                user.setLogin(rs.getString("username"));
+                user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
                 users.add(user);

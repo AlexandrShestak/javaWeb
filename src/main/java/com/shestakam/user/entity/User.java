@@ -18,7 +18,7 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User {
-    private String login;
+    private String username;
     private String password;
     private String email;
     private Set<News> newsSet = new HashSet<>(0);
@@ -30,7 +30,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "login='" + login + '\'' +
+                "login='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 '}';
@@ -38,12 +38,12 @@ public class User {
 
     @Id
     @Column(name="username",unique = true ,nullable = false)
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String login) {
+        this.username = login;
     }
 
     @Column(name = "password" , nullable = false, length = 20)

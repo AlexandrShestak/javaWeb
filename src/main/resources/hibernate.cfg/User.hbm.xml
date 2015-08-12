@@ -5,7 +5,7 @@
 
 <hibernate-mapping package="com.shestakam.user.entity">
     <class name="User" table="users">
-        <id name="login"  type="java.lang.String">
+        <id name="username"  type="java.lang.String">
             <column name="username" unique="true" not-null="true"/>
         </id>
         <property name="password" type="java.lang.String">
