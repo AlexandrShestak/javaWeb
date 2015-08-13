@@ -2,10 +2,11 @@
  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
-<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
-         version="2.4">
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+             version="3.0">
   <display-name>Archetype Created Web Application</display-name>
 
     <!--<servlet>
@@ -116,7 +117,7 @@
     </filter-mapping>-->
 
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>/login</welcome-file>
     </welcome-file-list>
 
     <servlet>
@@ -133,6 +134,7 @@
         <servlet-name>dispatcherServlet</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
+
 
     <servlet-mapping>
         <servlet-name>dispatcherServlet</servlet-name>
@@ -151,7 +153,8 @@
 
 
 
-    <!--<filter>
+
+    <filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
     </filter>
@@ -160,18 +163,14 @@
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
--->
+
+
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/daoContext.xml</param-value>
+        <param-value>/WEB-INF/daoContext.xml /WEB-INF/spring-security-config.xml</param-value>
     </context-param>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-    <listener>
-        <listener-class>
-            org.springframework.web.context.request.RequestContextListener
-        </listener-class>
     </listener>
 </web-app>

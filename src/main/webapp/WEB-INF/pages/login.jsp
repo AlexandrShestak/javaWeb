@@ -25,13 +25,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/styles/tables.css"/>
-    <link href="bootstrap-3.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="styles/signin.css" rel="stylesheet">
+    <link href="../../bootstrap-3.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../styles/signin.css" rel="stylesheet">
 </header>
 <body>
 
 <jsp:include page="/WEB-INF/pages/language.jsp"/>
-<%-- <jsp:include page="pages/hello.jsp"/>  --%>
+<%-- <jsp:include page="pages/hello.jsp"/login>  --%>
 
 
 <form class="form-signin" action="/j_spring_security_check" method="post">
@@ -39,7 +39,7 @@
         <tr>
 
             <td> <fmt:message key="enterLogin"/></td>
-            <td><input  id="inputLogin" type="text" name="login" class="form-control" > </td>
+            <td><input  id="inputLogin" type="text" name="username" class="form-control" > </td>
         </tr>
 
         <tr>
@@ -61,8 +61,8 @@
             </td>
         </tr>
     </table>
-
 </form>
+
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
         <form action="registration">

@@ -39,7 +39,7 @@
     <tr>
 
       <td> <fmt:message key="enterLogin"/></td>
-      <td><input  id="inputLogin" type="text" name="login" class="form-control" > </td>
+      <td><input  id="inputLogin" type="text" name="username" class="form-control" > </td>
     </tr>
 
     <tr>

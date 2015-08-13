@@ -1,20 +1,14 @@
 package com.shestakam.user.authorization;
 
 import com.shestakam.news.dao.NewsDao;
-import com.shestakam.news.entity.News;
-import com.shestakam.news.tags.entity.Tag;
 import com.shestakam.user.dao.UserDao;
-import com.shestakam.user.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  * Created by alexandr on 11.8.15.
@@ -24,6 +18,7 @@ public class SpringAuthorizationController {
 
     private  final static Logger logger = LogManager.getLogger(SpringAuthorizationController.class);
     private static final String START_PAGE = "index";
+    private static final String LOGIN_PAGE = "login";
     private static final String NEWS_LIST = "news/list";
 
     private UserDao userDao;
@@ -37,21 +32,25 @@ public class SpringAuthorizationController {
         this.newsDao = newsDao;
     }
 
-    @RequestMapping(value = "/logout")
+   /* @RequestMapping(value = "/logout")
     public String logout(HttpSession session) {
         logger.debug("logout");
         session.removeAttribute("login");
         session.invalidate();
         return START_PAGE;
+    }*/
+    @RequestMapping(value = "/")
+    public String getLoginForm(){
+        return LOGIN_PAGE;
     }
 
-    @RequestMapping(value = "/login" , method = RequestMethod.GET)
+  /*  @RequestMapping(value = "/login" , method = RequestMethod.GET)
     public ModelAndView getNewsIfLogin(HttpSession session){
         logger.debug("get News If Login");
         String login = (String) session.getAttribute("login");
         if( login == null){
             ModelAndView mav = new ModelAndView();
-            mav.setViewName(START_PAGE);
+            mav.setViewName(LOGIN_PAGE);
             return mav;
         }else {
             List<News> newsList = newsDao.getAll();
@@ -68,41 +67,21 @@ public class SpringAuthorizationController {
             mav.addObject("news",newsList);
             return mav;
         }
-    }
+    }*/
 
-    @RequestMapping(value = "/login" , method = RequestMethod.POST)
-    public ModelAndView login(HttpSession session ,HttpServletRequest request){
-        logger.debug("login");
-        String login = request.getParameter("login");
-       // login = new String(login.getBytes("iso-8859-1"), "UTF-8");
-        String password = request.getParameter("password");
-        User user = userDao.get(login);
-        if (user==null){
-            ModelAndView mav = new ModelAndView();
-            mav.setViewName(START_PAGE);
-            mav.addObject("errorMessage","Incorrect login or password");
-            return mav;
+    @RequestMapping(value = "/login" , method = RequestMethod.GET)
+    public ModelAndView login(@RequestParam(value = "error", required = false) String error,
+                              @RequestParam(value = "logout", required = false) String logout) {
+
+        ModelAndView model = new ModelAndView();
+        if (error != null) {
+            model.addObject("errorMessage", "Invalid username and password!");
         }
-        if (password.equals(user.getPassword())) {
-            session.setAttribute("login",login);
-            List<News> newsList = newsDao.getAll();
-            for (News elem: newsList){
-                List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
-                String tagString = new String();
-                for(Tag tag: tagList){
-                    tagString+= "#"+tag.getTagName();
-                }
-                elem.setTagsString(tagString);
-            }
-            ModelAndView mav = new ModelAndView();
-            mav.setViewName(NEWS_LIST);
-            mav.addObject("news",newsList);
-            return mav;
-        } else{
-            ModelAndView mav = new ModelAndView();
-            mav.setViewName(START_PAGE);
-            mav.addObject("errorMessage", "Incorrect login or password");
-            return mav;
+        if (logout != null) {
+            model.addObject("errorMessage", "You've been logged out successfully.");
         }
+        model.setViewName(LOGIN_PAGE);
+
+        return model;
     }
 }

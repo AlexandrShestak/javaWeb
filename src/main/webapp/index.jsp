@@ -39,7 +39,7 @@
     <tr>
 
       <td> <fmt:message key="enterLogin"/></td>
-      <td><input  id="inputLogin" type="text" name="login" class="form-control" > </td>
+      <td><input  id="inputLogin" type="text" name="username" class="form-control" > </td>
     </tr>
 
     <tr>
@@ -55,7 +55,7 @@
     </c:if>
     <tr>
       <td colspan="2" align="center">
-        <button type="submit" name="action"  class="btn btn-lg btn-primary btn-block" type="submit"><fmt:message key="login"/> </button>
+        <button type="submit"  class="btn btn-lg btn-primary btn-block" type="submit"><fmt:message key="login"/> </button>
       </td>
     </tr>
   </table>
