@@ -218,15 +218,17 @@ public class NewsController extends HttpServlet {
         String[] tags  = request.getParameter("tags").split(";");
         for(String tagName : tags) {
             logger.debug("add tag");
-            Long tagId = tagDao.getTagByName(tagName).getTagId();
-            if (tagId == null) {
+            Tag tag = tagDao.getTagByName(tagName);
+            if (tag == null) {
+                Long tagId = tag.getTagId();
                 logger.debug("new tag");
-                Tag tag = new Tag();
-                tag.setTagName(tagName);
-                tagId = Long.valueOf(tagDao.save(tag));
+                Tag tempTag = new Tag();
+                tempTag.setTagName(tagName);
+                tagId = Long.valueOf(tagDao.save(tempTag));
                 newsDao.addTagToNews(Long.valueOf(newsId), tagId);
             } else {
                 logger.debug("old tag");
+                Long tagId = tag.getTagId();
                 newsDao.addTagToNews(Long.valueOf(newsId), tagId);
             }
         }

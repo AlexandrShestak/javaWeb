@@ -10,6 +10,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="helloTag" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page isELIgnored="false" %>
 
 <%@page buffer="50kb" autoFlush="false" %>
@@ -31,6 +32,7 @@
   <title></title>
 </head>
 <body>
+<sec:authentication var="user" property="principal" />
 
 <jsp:include page="../language.jsp"/>
 <helloTag:myHelloTag />
@@ -64,7 +66,7 @@
             <i class="glyphicon glyphicon-user"></i> by <c:out value="${news.creatorUsername}" />
             | <i class="glyphicon glyphicon-calendar"></i> <c:out value="${news.creationDate}" />
             | <i class="glyphicon glyphicon-comment"></i> <a href="/comments?action=getForm&newsId=${news.newsId}"><fmt:message key="comments"/></a>
-          <c:if test="${news.creatorUsername eq sessionScope.login}">
+          <c:if test="${news.creatorUsername eq user.username}">
             | <i class="glyphicon glyphicon-edit"></i><a href="/news?action=edit&newsId=${news.newsId}"><fmt:message key="edit"/></a>
             | <i class="glyphicon glyphicon-trash"></i><a  href="/news?action=delete&newsId=${news.newsId}"><fmt:message key="delete"/></a>
           </c:if>

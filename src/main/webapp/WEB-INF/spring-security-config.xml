@@ -17,13 +17,15 @@
     <http pattern="/bootstrap-3.3.5/**" security="none" />
     <http pattern="/styles/**" security="none" />
     <http pattern="/login*"  security="none" />
+    <http pattern="/registration*"  security="none" />
 
-    <http auto-config="true">
+    <http auto-config="true" use-expressions="true">
 
         <intercept-url pattern="/*" access="hasRole('USER')" />
         <form-login
                 login-page='/login'
                 login-processing-url="/j_spring_security_check"
+                always-use-default-target="true"
                 default-target-url="/news"
                 username-parameter="username"
                 password-parameter="password"
@@ -32,6 +34,12 @@
         <logout logout-success-url="/login?logout"/>
         <csrf disabled="true"/>
     </http>
+
+    <authentication-manager>
+        <authentication-provider user-service-ref="myUserDetailsService" >
+
+        </authentication-provider>
+    </authentication-manager>
 
     <!--<http use-expressions="false">
         <intercept-url pattern="/**" access="ROLE_USER" />
@@ -43,7 +51,7 @@
         <csrf disabled="true"/>
     </http>-->
 
-    <authentication-manager>
+    <!--<authentication-manager>
         <authentication-provider>
             <user-service>
                 <user name="jimi" password="jimispassword" authorities="ROLE_USER, ROLE_ADMIN" />
@@ -51,6 +59,6 @@
                 <user name="admin" password="1234" authorities="ROLE_USER" />
             </user-service>
         </authentication-provider>
-    </authentication-manager>
+    </authentication-manager>-->
 
 </beans:beans>

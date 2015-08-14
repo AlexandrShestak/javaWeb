@@ -50,7 +50,7 @@
         <url-pattern>/registration</url-pattern>
     </servlet-mapping>-->
 
-    <servlet>
+    <!--<servlet>
         <servlet-name>newsServlet</servlet-name>
         <servlet-class>com.shestakam.news.controller.NewsController</servlet-class>
     </servlet>
@@ -58,7 +58,7 @@
     <servlet-mapping>
         <servlet-name>newsServlet</servlet-name>
         <url-pattern>/news</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
 
     <servlet>
         <servlet-name>languageServlet</servlet-name>
@@ -149,6 +149,11 @@
     <servlet-mapping>
         <servlet-name>dispatcherServlet</servlet-name>
         <url-pattern>/user</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>dispatcherServlet</servlet-name>
+        <url-pattern>/news</url-pattern>
     </servlet-mapping>
 
 
