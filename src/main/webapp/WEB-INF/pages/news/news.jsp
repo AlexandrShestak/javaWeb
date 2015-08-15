@@ -9,6 +9,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="helloTag" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <sec:authentication var="user" property="principal" />
 
@@ -75,12 +76,12 @@
                   <div class="col-md-2">
                     <input type="hidden" name="action" value="edit">
                     <input type="hidden" name="commentId" value="${comments.commentId}"/>
-                    <button class="editComment"><fmt:message key="edit"/> </button>
+                    <button class="editComment"> <spring:message code="edit"/></button>
                   </div>
                   <div class="col-md-2">
                     <input type="hidden" name="action" value="delete">
                     <input type="hidden" name="commentId"  value="${comments.commentId}"/>
-                    <button class="deleteComment"><fmt:message key="delete"/></button>
+                    <button class="deleteComment"> <spring:message code="delete"/></button>
                   </div>
                 </c:if>
               </div>
@@ -98,8 +99,8 @@
         <input type="hidden" name="newsId" id="newsIdToAjax" value="${news.newsId}"/>
         <input type="hidden" name="action" id="actionToAjax" value="add"/>
       </div>
-      <button id="deleteAjax" style="display: none;"><fmt:message key="delete"/></button>
-      <button id="editAjax"style="display: none;"><fmt:message key="edit"/></button>
+      <button id="deleteAjax" style="display: none;"> <spring:message code="delete"/></button>
+      <button id="editAjax"style="display: none;"> <spring:message code="edit"/></button>
       <button  id="addComment" class="btn btn-primary">Submit</button>
       <%-- </form>--%>
     </div>

@@ -8,6 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page isELIgnored="false" %>
 
 <fmt:setLocale value="${sessionScope.language}" />
@@ -29,7 +30,7 @@
     <table class="user">
       <tr>
         <td>
-          <fmt:message key="login"/>
+          <spring:message code="login"/>
         </td>
         <td>
           <input type="hidden" name="username" value="${user.username}">
@@ -38,7 +39,7 @@
       </tr>
       <tr>
         <td>
-          <fmt:message key="userPassword"/>
+          <spring:message code="userPassword"/>
         </td>
         <td>
           <input type="text" name="password" value="${user.password}" >
@@ -46,7 +47,7 @@
       </tr>
       <tr>
         <td>
-          <fmt:message key="email"/>
+          <spring:message code="email"/>
         </td>
         <td>
           <input type="text" name="email" value="${user.email}" >

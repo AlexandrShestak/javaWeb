@@ -9,6 +9,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page isELIgnored="false" %>
 <sec:authentication var="user" property="principal" />
 
@@ -35,20 +36,20 @@
       </c:if>
 
       <form action="/news" method="get" class="navbar-form navbar-left" role="menu">
-        <button type="submit" class="btn btn-default"><fmt:message key="toNews"/> </button>
+        <button type="submit" class="btn btn-default">  <spring:message code="toNews"/> </button>
       </form>
 
       <form action="/news" method="get" class="navbar-form navbar-left" role="search">
         <input type="hidden" name="action" value="search">
-        <fmt:message key="tag"/>
+        <spring:message code="tag"/>
         <div class="form-group">
           <input type="text" class="form-control" name="tag">
         </div>
-        <fmt:message key="user"/>
+        <spring:message code="user"/>
         <div class="form-group">
           <input type="text" class="form-control" name="username">
         </div>
-        <button type="submit" class="btn btn-default"><fmt:message key="search"/></button>
+        <button type="submit" class="btn btn-default"><spring:message code="search"/></button>
       </form>
     </div>
   </div>

@@ -11,15 +11,18 @@
     <title></title>
 </head>
 <body>
-<form method="get" action="/language">
+<%--<form method="get" action="/language">--%>
   <table align="right" width="30%">
-
     <tr>
-      <button type="submit" name="language" value="en">EN</button>
-      <button type="submit" name="language" value="ru">RU</button>
+      <a href="?language=en">
+        <button type="submit"  name="language" value="en">EN</button>
+      </a>
+      <a href="?language=ru">
+        <button type="submit" name="language" value="ru">RU</button>
+      </a>
     </tr>
   </table>
-</form>
+<%--</form>--%>
 <br>
 <br>
 </body>

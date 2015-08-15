@@ -8,6 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="helloTag" tagdir="/WEB-INF/tags" %>
 <%@ page isELIgnored="false" %>
 
@@ -40,7 +41,7 @@
         <form action="/user" method="get">
           <input type="hidden" name="action" value="edit">
           <input type="hidden" name="username" value="${user.username}"/>
-          <button type="submit"<%-- name="action" value="edit"--%>><fmt:message key="edit"/> </button>
+          <button type="submit"<%-- name="action" value="edit"--%>><spring:message code="edit"/> </button>
        </form>
       </td>
 
@@ -48,7 +49,7 @@
         <form action="/user" method="get">
           <input type="hidden" name="action" value="delete">
           <input type="hidden" name="username" value="${user.username}"/>
-          <button type="submit" <%--name="action" value="delete"--%>><fmt:message key="delete"/> </button>
+          <button type="submit" <%--name="action" value="delete"--%>><spring:message code="delete"/> </button>
        </form>
       </td>
     </tr>
@@ -57,7 +58,7 @@
   <td>
     <form action="/user" method="get">
       <input type="hidden" name="action" value="add">
-      <button type="submit"><fmt:message key="add"/> </button>
+      <button type="submit"><spring:message code="add"/> </button>
     </form>
   </td>
 </tr>

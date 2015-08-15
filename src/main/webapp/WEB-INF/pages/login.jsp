@@ -7,6 +7,7 @@
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page isELIgnored="false" %>
 
 <%--
@@ -38,18 +39,27 @@
     <table class="table">
         <tr>
 
-            <td> <fmt:message key="enterLogin"/></td>
+            <td> <spring:message code="enterLogin"/></td>
             <td><input  id="inputLogin" type="text" name="username" class="form-control" > </td>
         </tr>
 
         <tr>
-            <td><fmt:message key="enterPassword"/> </td>
+            <td> <spring:message code="enterPassword"/>  </td>
             <td><input type="password" name="password" id="inputPassword" class="form-control"  required> </td>
         </tr>
+        <c:if test="${not empty logoutMessage}">
+            <tr>
+                <td colspan="2">
+
+                    <div class="alert alert-warning" role="alert">${logoutMessage}</div>
+                </td>
+            </tr>
+        </c:if>
         <c:if test="${not empty errorMessage}">
             <tr>
                 <td colspan="2">
-                    <div class="alert alert-warning" role="alert"><fmt:message key="incorrectData"/></div>
+
+                    <div class="alert alert-warning" role="alert"> <spring:message code="incorrectData"/></div>
                 </td>
             </tr>
         </c:if>
@@ -57,7 +67,7 @@
             <td colspan="2" align="center">
                 <input type="hidden" name="${_csrf.parameterName}"
                        value="${_csrf.token}" />
-                <button type="submit" name="action"  class="btn btn-lg btn-primary btn-block" type="submit"><fmt:message key="login"/> </button>
+                <button type="submit" name="action"  class="btn btn-lg btn-primary btn-block" type="submit"><spring:message code="login"/></button>
             </td>
         </tr>
     </table>
@@ -68,9 +78,9 @@
         <form action="registration">
             <table class="table">
                 <tr>
-                    <td><fmt:message key="registr"/> </td>
+                    <td><spring:message code="registr"/></td>
                     <td>
-                        <button type="submit" name="action" value="registration" class="btn btn-warning"><fmt:message key="registration"/> </button>
+                        <button type="submit" name="action" value="registration" class="btn btn-warning"><spring:message code="registration"/></button>
                     </td>
                 </tr>
             </table>

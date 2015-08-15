@@ -8,6 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page isELIgnored="false" %>
 
 <fmt:setLocale value="${sessionScope.language}" />
@@ -33,11 +34,11 @@
 <form class="form-horizontal col-md-6 col-md-offset-4" action="/registration" method="POST">
   <fieldset>
     <div id="legend">
-      <legend class=""><fmt:message key="registration"/> </legend>
+      <legend class=""> <spring:message code="registration"/> </legend>
     </div>
     <div class="control-group">
       <!-- Username -->
-      <label class="control-label"  for="username"><fmt:message key="login"/></label>
+      <label class="control-label"  for="username"> <spring:message code="login"/></label>
       <div class="controls">
         <input type="text" id="username" name="username"  class="input-xlarge">
         <p class="help-block">Username can contain any letters or numbers, without spaces</p>
@@ -46,7 +47,7 @@
 
     <div class="control-group">
       <!-- E-mail -->
-      <label class="control-label" for="email"><fmt:message key="email"/> </label>
+      <label class="control-label" for="email"> <spring:message code="email"/></label>
       <div class="controls">
         <input type="email" id="email" name="email" class="input-xlarge">
         <p class="help-block">Please provide your E-mail</p>
@@ -55,7 +56,7 @@
 
     <div class="control-group">
       <!-- Password-->
-      <label class="control-label" for="password"><fmt:message key="userPassword"/></label>
+      <label class="control-label" for="password"> <spring:message code="userPassword"/></label>
       <div class="controls">
         <input type="hidden" name="action" value="registration">
         <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
@@ -72,7 +73,7 @@
     <div class="control-group">
       <!-- Button -->
       <div class="controls">
-        <button class="btn btn-success"><fmt:message key="registration"/> </button>
+        <button class="btn btn-success"> <spring:message code="registration"/></button>
       </div>
     </div>
   </fieldset>

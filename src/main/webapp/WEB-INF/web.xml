@@ -60,7 +60,7 @@
         <url-pattern>/news</url-pattern>
     </servlet-mapping>-->
 
-    <servlet>
+   <!-- <servlet>
         <servlet-name>languageServlet</servlet-name>
         <servlet-class>com.shestakam.language.LanguageController</servlet-class>
     </servlet>
@@ -68,7 +68,7 @@
     <servlet-mapping>
         <servlet-name>languageServlet</servlet-name>
         <url-pattern>/language</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
 
     <!-- <servlet>
          <servlet-name>commentsServlet</servlet-name>

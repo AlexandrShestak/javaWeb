@@ -8,6 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page isELIgnored="false" %>
 
 <fmt:setLocale value="${sessionScope.language}" />
@@ -32,7 +33,7 @@
       <form action="/news" method="post">
         <tr>
           <td>
-            <fmt:message key="messageText"/>
+            <spring:message code="messageText"/>
           </td>
         </tr>
         <tr>
@@ -44,7 +45,7 @@
           <td>
             <input type="hidden" name="newsId" value="${news.newsId}"/>
             <input type="hidden" name="action" value="edit">
-            <button type="submit"><fmt:message key="edit"/></button>
+            <button type="submit"> <spring:message code="edit"/></button>
           </td>
         </tr>
       </form>
@@ -58,7 +59,7 @@
           <form method="post" action="/tags">
             <input type="hidden" name="newsId" value="${news.newsId}"/>
             <input type="hidden" name="action" value="add">
-            <button type="submit"><fmt:message key="addTag"/></button>
+            <button type="submit"><spring:message code="addTag"/></button>
             <input type="text" name="tagName">
           </form>
         </td>
@@ -69,7 +70,7 @@
           <form method="post" action="/tags">
             <input type="hidden" name="newsId" value="${news.newsId}"/>
             <input type="hidden" name="action" value="delete">
-            <button type="submit"><fmt:message key="deleteTag"/></button>
+            <button type="submit"> <spring:message code="deleteTag"/></button>
             <input type="text" name="tagName">
           </form>
         </td>

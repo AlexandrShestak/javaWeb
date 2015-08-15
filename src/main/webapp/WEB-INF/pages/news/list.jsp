@@ -10,6 +10,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="helloTag" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page isELIgnored="false" %>
 
@@ -34,7 +35,6 @@
 </head>
 <body>
 
-<jsp:include page="../language.jsp"/>
 <helloTag:myHelloTag />
 <jsp:include page="../menu.jsp"/>
 
@@ -43,7 +43,7 @@
 <br>
 <br>
 <div class="col-md 1 col-md-offset-5">
-<h2>         <fmt:message key="problems"/> </h2>
+<h2>          <spring:message code="problems"/></h2>
 </div>
 <br>
 <div class="container">
@@ -65,10 +65,10 @@
           <p>
             <i class="glyphicon glyphicon-user"></i> by <c:out value="${news.creatorUsername}" />
             | <i class="glyphicon glyphicon-calendar"></i> <c:out value="${news.creationDate}" />
-            | <i class="glyphicon glyphicon-comment"></i> <a href="/comments?action=getForm&newsId=${news.newsId}"><fmt:message key="comments"/></a>
+            | <i class="glyphicon glyphicon-comment"></i> <a href="/comments?action=getForm&newsId=${news.newsId}"> <spring:message code="comments"/></a>
           <c:if test="${news.creatorUsername eq user.username}">
-            | <i class="glyphicon glyphicon-edit"></i><a href="/news?action=edit&newsId=${news.newsId}"><fmt:message key="edit"/></a>
-            | <i class="glyphicon glyphicon-trash"></i><a  href="/news?action=delete&newsId=${news.newsId}"><fmt:message key="delete"/></a>
+            | <i class="glyphicon glyphicon-edit"></i><a href="/news?action=edit&newsId=${news.newsId}"> <spring:message code="edit"/></a>
+            | <i class="glyphicon glyphicon-trash"></i><a  href="/news?action=delete&newsId=${news.newsId}"> <spring:message code="delete"/></a>
           </c:if>
             |<i class="glyphicon glyphicon-tag"></i> Tags : <span class="label label-info">${news.tagsString}</span>
            <%-- <c:forEach items="${news.tagSet}" var="tag">
@@ -89,7 +89,7 @@
     <div class="span8">
       <form action="/news" method="get">
         <input type="hidden" name="action" value="add">
-        <button class="btn btn-warning" type="submit"><fmt:message key="addNews"/> </button>
+        <button class="btn btn-warning" type="submit"> <spring:message code="addNews"/> </button>
       </form>
     </div>
   </div>

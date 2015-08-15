@@ -9,6 +9,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <fmt:setLocale value="${sessionScope.language}" />
 <fmt:setBundle basename="messages/hello"/>
 <sec:authentication var="user" property="principal" />
@@ -16,7 +17,7 @@
     <table width="100%">
         <tr>
             <td>
-                <h4><fmt:message key="welcome"/> ${user.username}</h4>
+                <h4>  <spring:message code="welcome"/> ${user.username}</h4>
             </td>
             <td>
                 ${SPRING_SECURITY_LAST_USERNAME}
@@ -30,7 +31,7 @@
             }
             --%>
             <td>
-                <button type="submit" name="action" value="logout"><fmt:message key="out"/> </button>
+                <button type="submit" name="action" value="logout"> <spring:message code="out"/> </button>
             </td>
         </tr>
     </table>
