@@ -40,6 +40,11 @@
         <property name="tagDao" ref="hibernateTagsDao"/>
     </bean>
 
+    <bean class="com.shestakam.news.tags.controller.SpringTagController" id="springTagController">
+        <property name="newsDao" ref="hibernateNewsDao"/>
+        <property name="tagDao" ref="hibernateTagsDao"/>
+    </bean>
+
 
     <!--  <bean id="newsController" class="com.shestakam.news.controller.NewsController">
           <property name="newsDao" ref="hibernateNewsDao"/>
