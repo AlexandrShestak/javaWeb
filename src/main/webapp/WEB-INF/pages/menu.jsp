@@ -10,6 +10,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page isELIgnored="false" %>
+<sec:authentication var="user" property="principal" />
 
 <fmt:setLocale value="${sessionScope.language}" />
 <fmt:setBundle   basename="messages/news"/>
@@ -27,7 +28,7 @@
 <nav class="navbar navbar-default col-md-10 col-md-offset-1">
   <div class="container-fluid">
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <c:if test="${sessionScope.login eq 'admin'}">
+      <c:if test="${user.username eq 'admin'}">
         <form  method="get" action="/user"  class="navbar-form navbar-left" role="menu">
           <input type="submit" value="Users"  class="form-control" >
         </form>

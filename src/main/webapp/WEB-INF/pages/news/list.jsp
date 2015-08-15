@@ -17,6 +17,7 @@
 
 <fmt:setLocale value="${sessionScope.language}" />
 <fmt:setBundle   basename="messages/news"/>
+<sec:authentication var="user" property="principal" />
 
 <%@ page isELIgnored="false" %>
 
@@ -32,7 +33,6 @@
   <title></title>
 </head>
 <body>
-<sec:authentication var="user" property="principal" />
 
 <jsp:include page="../language.jsp"/>
 <helloTag:myHelloTag />

@@ -9,6 +9,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="helloTag" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication var="user" property="principal" />
+
+
 <%@ page isELIgnored="false" %>
 
 <fmt:setLocale value="${sessionScope.language}" />
@@ -67,7 +71,7 @@
                 <div class="col-md-2">
                   <small><c:out value="${comments.creationDate}"/></small>
                 </div>
-                <c:if test="${comments.commentatorUsername eq sessionScope.login}">
+                <c:if test="${comments.commentatorUsername eq user.username}">
                   <div class="col-md-2">
                     <input type="hidden" name="action" value="edit">
                     <input type="hidden" name="commentId" value="${comments.commentId}"/>

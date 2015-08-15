@@ -63,12 +63,11 @@ public class TagController extends HttpServlet {
         String tagName  = request.getParameter("tagName");
         String newsId = request.getParameter("newsId");
         List<Tag> tagListForNews = newsDao.getTagsForNews(Long.valueOf(newsId));
-        Tag tempTag =  tagDao.get(String.valueOf(tagDao.getTagByName(tagName).getTagId()));
+        Tag tempTag =  tagDao.getTagByName(tagName);
         if (tagListForNews.contains(tempTag)) {
             newsDao.deleteTagFromNews(Long.valueOf(newsId), tagDao.getTagByName(tagName).getTagId());
         }
         News news = newsDao.get(newsId);
-        request.setAttribute("news",news);
         List<Tag> tagList = newsDao.getTagsForNews(news.getNewsId());
         String tagString = "";
         for(Tag tag: tagList){
@@ -83,23 +82,24 @@ public class TagController extends HttpServlet {
         String tagName  = request.getParameter("tagName");
         String newsId = request.getParameter("newsId");
         logger.debug("add tag");
-        Long tagId = tagDao.getTagByName(tagName).getTagId();
-        if (tagId == null) {
+        Tag tag = tagDao.getTagByName(tagName);
+        if (tag == null) {
             logger.debug("new tag");
-            Tag tag = new Tag();
-            tag.setTagName(tagName);
-            tagId = Long.valueOf(tagDao.save(tag));
+            Tag tempTag = new Tag();
+            tempTag.setTagName(tagName);
+            Long tagId = Long.valueOf(tagDao.save(tempTag));
             newsDao.addTagToNews(Long.valueOf(newsId), tagId);
         } else {
             logger.debug("old tag");
+            Long tagId = tag.getTagId();
             newsDao.addTagToNews(Long.valueOf(newsId), tagId);
         }
         News news = newsDao.get(newsId);
         request.setAttribute("news",news);
         List<Tag> tagList = newsDao.getTagsForNews(news.getNewsId());
         String tagString = "";
-        for(Tag tag: tagList){
-            tagString+= "#"+tag.getTagName();
+        for(Tag elemTag: tagList){
+            tagString+= "#"+elemTag.getTagName();
         }
         news.setTagsString(tagString);
         RequestDispatcher view = request.getRequestDispatcher(EDIT_NEWS);
@@ -109,7 +109,7 @@ public class TagController extends HttpServlet {
     //TODO: fix get method to tag
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        logger.debug("i");
+        logger.debug("get news from");
         List<News> newsList = newsDao.getAll();
         request.setAttribute("news", newsList);
         for (News elem: newsList){

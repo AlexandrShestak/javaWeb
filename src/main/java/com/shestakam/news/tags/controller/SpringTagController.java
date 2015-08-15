@@ -37,7 +37,7 @@ public class SpringTagController {
     }
 
 
-    @RequestMapping(value = "tags" ,params = "action=add", method = RequestMethod.POST)
+    @RequestMapping(value = "/tags" ,params = "action=add", method = RequestMethod.POST)
     public ModelAndView addTag(@RequestParam String tagName,@RequestParam String newsId){
         logger.debug("add tag");
         Tag tag = tagDao.getTagByName(tagName);
@@ -64,7 +64,7 @@ public class SpringTagController {
         return mav;
     }
 
-    @RequestMapping(value = "tags" ,params = "action=delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/tags" ,params = "action=delete", method = RequestMethod.POST)
     public ModelAndView deleteTag(@RequestParam String tagName,@RequestParam String newsId){
         logger.debug("delete tag");
         List<Tag> tagListForNews = newsDao.getTagsForNews(Long.valueOf(newsId));
@@ -85,9 +85,9 @@ public class SpringTagController {
         return mav;
     }
 
-    @RequestMapping(value = "tags",method = RequestMethod.GET)
+    @RequestMapping(value = "/tags",method = RequestMethod.GET)
     public ModelAndView getForm(){
-        logger.debug("i");
+        logger.debug("get new form");
         List<News> newsList = newsDao.getAll();
         for (News elem: newsList){
             List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
