@@ -34,7 +34,7 @@
   <title></title>
 </head>
 <body>
-
+<jsp:include page="../language.jsp"/>
 <helloTag:myHelloTag />
 <jsp:include page="../menu.jsp"/>
 

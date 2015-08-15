@@ -29,7 +29,7 @@
   <title></title>
 </head>
 <body>
-<jsp:include page="../language.jsp"/>
+
 <helloTag:myHelloTag />
 <jsp:include page="../menu.jsp"/>
 <div class="container col-md-8 col-md-offset-2">

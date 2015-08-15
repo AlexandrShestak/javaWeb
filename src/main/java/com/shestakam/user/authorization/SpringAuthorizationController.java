@@ -75,10 +75,10 @@ public class SpringAuthorizationController {
 
         ModelAndView model = new ModelAndView();
         if (error != null) {
-            model.addObject("logoutMessage", "Invalid username and password!");
+            model.addObject("errorMessage", "Invalid username and password!");
         }
         if (logout != null) {
-            model.addObject("errorMessage", "You've been logged out successfully.");
+            model.addObject("logoutMessage", "You've been logged out successfully.");
         }
         model.setViewName(LOGIN_PAGE);
 
