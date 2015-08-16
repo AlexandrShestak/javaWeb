@@ -116,12 +116,57 @@ public class SpringNewsController {
 
     @RequestMapping(value = "/news" , params = "action=search", method = RequestMethod.GET)
     public ModelAndView searchNews(@RequestParam(value = "tag",required = false)String tagName,@RequestParam(required = false) String username){
-        List<News> newsList = newsDao.searchNewsByCreatorAndTag(username,tagName);
-        for (News elem : newsList) {
+        if(!tagName.equals("")&&username.equals("")) {
+            List<News> newsList = newsDao.searchNewsByTag(tagName);
+            for (News elem : newsList) {
+                List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
+                String tagString = "";
+                for (Tag tag : tagList) {
+                    tagString += "#" + tag.getTagName();
+                }
+                elem.setTagsString(tagString);
+            }
+            ModelAndView mav = new ModelAndView();
+            mav.setViewName(NEWS_LIST);
+            mav.addObject("news",newsList);
+            return mav;
+        }else if (tagName.equals("")&&!username.equals("")){
+            List<News> newsList = newsDao.searchNewsByCreator(username);
+            for (News elem : newsList) {
+                List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
+                String tagString = "";
+                for (Tag tag : tagList) {
+                    tagString += "#" + tag.getTagName();
+                }
+                elem.setTagsString(tagString);
+            }
+            ModelAndView mav = new ModelAndView();
+            mav.setViewName(NEWS_LIST);
+            mav.addObject("news",newsList);
+            return mav;
+        }else if (!tagName.equals("")&&!username.equals("")){
+            List<News> newsList = newsDao.searchNewsByCreatorAndTag(username,tagName);
+            for (News elem : newsList) {
+                List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
+                String tagString = "";
+                for (Tag tag : tagList) {
+                    tagString += "#" + tag.getTagName();
+                }
+                elem.setTagsString(tagString);
+                ModelAndView mav = new ModelAndView();
+                mav.setViewName(NEWS_LIST);
+                mav.addObject("news",newsList);
+                return mav;
+            }
+        }else {
+            logger.error("error with search news");
+        }
+        List<News> newsList = newsDao.getAll();
+        for (News elem: newsList){
             List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
-            String tagString = "";
-            for (Tag tag : tagList) {
-                tagString += "#" + tag.getTagName();
+            String tagString = new String();
+            for(Tag tag: tagList){
+                tagString+= "#"+tag.getTagName();
             }
             elem.setTagsString(tagString);
         }
@@ -132,7 +177,7 @@ public class SpringNewsController {
     }
 
     @RequestMapping(value = "/news" , method = RequestMethod.GET)
-    public ModelAndView geNewsForm(){
+    public ModelAndView getNewsForm(){
         List<News> newsList = newsDao.getAll();
         for (News elem: newsList){
             List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());

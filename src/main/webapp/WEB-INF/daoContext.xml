@@ -7,16 +7,24 @@
 
 
     <bean id="jdbcNewsDao" class="com.shestakam.news.dao.JdbcNewsDao"/>
-    <bean id="hibernateNewsDao" class="com.shestakam.news.dao.HibernateNewsDao"/>
+    <bean id="hibernateNewsDao" class="com.shestakam.news.dao.HibernateNewsDao">
+        <property name="sessionFactory" ref="mySessionFactory"/>
+    </bean>
 
     <bean id="jdbcTagsDao" class="com.shestakam.news.tags.dao.JdbcTagsDao"/>
-    <bean id="hibernateTagsDao" class="com.shestakam.news.tags.dao.HibernateTagsDao"/>
+    <bean id="hibernateTagsDao" class="com.shestakam.news.tags.dao.HibernateTagsDao">
+        <property name="sessionFactory" ref="mySessionFactory"/>
+    </bean>
 
     <bean id="jdbcCommentsDao" class="com.shestakam.news.comments.dao.JdbcCommentsDao"/>
-    <bean id="hibernateCommentsDao" class="com.shestakam.news.comments.dao.HibernateCommentsDao"/>
+    <bean id="hibernateCommentsDao" class="com.shestakam.news.comments.dao.HibernateCommentsDao">
+        <property name="sessionFactory" ref="mySessionFactory"/>
+    </bean>
 
     <bean id="jdbcUsersDao" class="com.shestakam.user.dao.JdbcUserDao"/>
-    <bean id="hibernateUsersDao" class="com.shestakam.user.dao.HibernateUserDao"/>
+    <bean id="hibernateUsersDao" class="com.shestakam.user.dao.HibernateUserDao">
+        <property name="sessionFactory" ref="mySessionFactory"/>
+    </bean>
 
     <bean class="com.shestakam.user.authorization.SpringAuthorizationController" id="springAuthorizationController">
         <property name="userDao" ref="hibernateUsersDao"/>
@@ -49,6 +57,32 @@
         <property name="newsDao" ref="hibernateNewsDao"/>
         <property name="commentsDao" ref="hibernateCommentsDao"/>
     </bean>
+
+    <bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/helpBlog"/>
+        <property name="username" value="root"/>
+        <property name="password" value="12345678"/>
+    </bean>
+
+    <bean id="mySessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="myDataSource"/>
+        <property name="mappingResources">
+            <list>
+                <value>hibernate.cfg/Comments.hbm.xml</value>
+                <value>hibernate.cfg/News.hbm.xml</value>
+                <value>hibernate.cfg/Tag.hbm.xml</value>
+                <value>hibernate.cfg/User.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <value>
+                hibernate.dialect=org.hibernate.dialect.HSQLDialect
+            </value>
+        </property>
+    </bean>
+
+
 
 
     <!--  <bean id="newsController" class="com.shestakam.news.controller.NewsController">
