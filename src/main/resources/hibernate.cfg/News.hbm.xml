@@ -19,7 +19,7 @@
         </property>
         <many-to-one name="creator"
                 column="creator_username" insert="false" update="false"/>
-        <set name="tagSet" table="news_tags" inverse="false" order-by="tag_id" >
+        <set name="tagSet" table="news_tags" inverse="false" order-by="tag_id" lazy="false" fetch="select"  >
             <key column="news_id"/>
             <many-to-many column="tag_id"  class="com.shestakam.news.tags.entity.Tag"/>
         </set>

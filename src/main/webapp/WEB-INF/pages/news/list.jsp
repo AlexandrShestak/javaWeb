@@ -70,10 +70,9 @@
             | <i class="glyphicon glyphicon-edit"></i><a href="/news?action=edit&newsId=${news.newsId}"> <spring:message code="edit"/></a>
             | <i class="glyphicon glyphicon-trash"></i><a  href="/news?action=delete&newsId=${news.newsId}"> <spring:message code="delete"/></a>
           </c:if>
-            |<i class="glyphicon glyphicon-tag"></i> Tags : <span class="label label-info">${news.tagsString}</span>
-           <%-- <c:forEach items="${news.tagSet}" var="tag">
-              |<i class="glyphicon glyphicon-tag"></i> Tags : <span class="label label-info">${tag.tagName}</span>
-            </c:forEach>--%>
+           <%-- |<i class="glyphicon glyphicon-tag"></i> Tags : <span class="label label-info">${news.tagsString}</span>
+         --%>
+              |<i class="glyphicon glyphicon-tag"></i> Tags : <c:forEach items="${news.tagSet}" var="tag"><span class="label label-info">#${tag.tagName}</span>  </c:forEach>
           </p>
         </div>
       </div>
