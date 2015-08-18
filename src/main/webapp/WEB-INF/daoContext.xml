@@ -52,6 +52,7 @@
         <property name="newsDao" ref="hibernateNewsDao"/>
         <property name="tagDao" ref="hibernateTagsDao"/>
     </bean>
+    <bean class="com.shestakam.language.SpringLanguage"/>
 
     <bean class="com.shestakam.news.comments.controller.SpringCommentsController" id="springCommentsController">
         <property name="newsDao" ref="hibernateNewsDao"/>

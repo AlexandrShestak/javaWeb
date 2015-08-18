@@ -17,6 +17,7 @@
     <http pattern="/bootstrap-3.3.5/**" security="none" />
     <http pattern="/styles/**" security="none" />
     <http pattern="/login*"  security="none" />
+    <http pattern="/language*"  security="none" />
     <http pattern="/registration*"  security="none" />
 
     <http auto-config="true" use-expressions="true">

@@ -6,23 +6,20 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title></title>
+  <title></title>
 </head>
 <body>
-<%--<form method="get" action="/language">--%>
+<form method="get" action="/language">
   <table align="right" width="30%">
     <tr>
-      <a href="?language=en">
-        <button type="submit"  name="language" value="en">EN</button>
-      </a>
-      <a href="?language=ru">
-        <button type="submit" name="language" value="ru">RU</button>
-      </a>
+      <button type="submit" name="language" value="en">EN</button>
+      <button type="submit" name="language" value="ru">RU</button>
     </tr>
   </table>
-<%--</form>--%>
+</form>
 <br>
 <br>
 </body>

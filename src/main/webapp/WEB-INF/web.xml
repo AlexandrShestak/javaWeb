@@ -166,6 +166,11 @@
         <url-pattern>/comments</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>dispatcherServlet</servlet-name>
+        <url-pattern>/language</url-pattern>
+    </servlet-mapping>
+
 
 
 
