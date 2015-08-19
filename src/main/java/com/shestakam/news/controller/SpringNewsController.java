@@ -195,7 +195,7 @@ public class SpringNewsController {
 
     @RequestMapping(value = "/news" , params = "action=add", method = RequestMethod.POST)
     public ModelAndView addNews(@RequestParam String newsText,
-                                @RequestParam(value = "tags")String tagStr){
+                                @RequestParam(value = "tags")String tagStr) throws UnsupportedEncodingException {
         logger.debug("save news");
         Timestamp newsCreationDate = new Timestamp(System.currentTimeMillis());
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -211,6 +211,7 @@ public class SpringNewsController {
         News news = new News();
         news.setCreatorUsername(newsCommentator);
         news.setCreationDate(newsCreationDate);
+        newsText = new String(newsText.getBytes("iso-8859-1"), "UTF-8");
         news.setNewsText(newsText);
         String newsId = newsDao.save(news);
         String[] tags  = tagStr.split(";");
