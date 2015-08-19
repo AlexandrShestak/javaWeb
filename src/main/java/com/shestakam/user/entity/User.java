@@ -23,6 +23,8 @@ public class User {
     private String email;
     private Set<News> newsSet = new HashSet<>(0);
     private Set<Comments> commentsSet = new HashSet<>(0);
+    private Set<Role> roleSet = new HashSet<>(0);
+
 
     public User() {
     }
@@ -83,5 +85,13 @@ public class User {
 
     public void setCommentsSet(Set<Comments> commentsSet) {
         this.commentsSet = commentsSet;
+    }
+
+    public Set<Role> getRoleSet() {
+        return roleSet;
+    }
+
+    public void setRoleSet(Set<Role> roleSet) {
+        this.roleSet = roleSet;
     }
 }

@@ -38,6 +38,7 @@
         <mapping resource="hibernate.cfg/User.hbm.xml"/>
         <mapping resource="hibernate.cfg/Tag.hbm.xml"/>
         <mapping resource="hibernate.cfg/Comments.hbm.xml"/>
+        <mapping resource="hibernate.cfg/Role.hbm.xml"/>
         <!--<mapping class="com.shestakam.user.entity.User"/>
         <mapping class="com.shestakam.news.entity.News"/>
         <mapping class="com.shestakam.news.tags.entity.Tag"/>

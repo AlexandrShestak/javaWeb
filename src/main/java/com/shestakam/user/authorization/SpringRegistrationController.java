@@ -19,7 +19,7 @@ public class SpringRegistrationController {
     private  final static Logger logger = LogManager.getLogger(SpringRegistrationController.class);
     private static final String NEWS_LIST = "news/list";
     private static final String REGISTRATION_PAGE= "authorization/registration";
-    private static final String START_PAGE = "index";
+    private static final String START_PAGE = "/login";
 
     private UserDao userDao;
     public void setUserDao(UserDao userDao) {
@@ -42,6 +42,7 @@ public class SpringRegistrationController {
             return mav;
         }else {
             userDao.save(user);
+            userDao.addRole(login,"ROLE_USER");
             ModelAndView mav = new ModelAndView(START_PAGE);
             return mav;
         }

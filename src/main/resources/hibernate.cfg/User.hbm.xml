@@ -24,6 +24,11 @@
             <key column="creator_username"></key>
             <one-to-many class="com.shestakam.news.entity.News"/>
         </set>
+
+        <set name="roleSet" table="user_roles" inverse="false"  lazy="false" fetch="select"  >
+            <key column="username"/>
+            <many-to-many column="role_id"  class="com.shestakam.user.entity.Role"/>
+        </set>
     </class>
 
 </hibernate-mapping>

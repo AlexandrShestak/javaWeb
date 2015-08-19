@@ -1,6 +1,7 @@
 package com.shestakam.user.dao;
 
 import com.shestakam.db.JdbcConnection;
+import com.shestakam.user.entity.Role;
 import com.shestakam.user.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,7 +12,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by alexandr on 17.7.15.
@@ -112,5 +115,41 @@ public class JdbcUserDao implements UserDao {
         }
         logger.debug("get all users");
         return users;
+    }
+
+    @Override
+    public Set<Role> getRoles(String username) {
+        Set<Role> roles = new HashSet<>();
+        try (Connection connection = JdbcConnection.getConnection();
+             PreparedStatement psToFindRolesId =
+                     connection.prepareStatement("select * from user_roles where username=?");
+             PreparedStatement psToFindRoles =
+                     connection.prepareStatement("select * from roles where id=?")){
+
+            psToFindRolesId.setString(1, username);
+            ResultSet rs = psToFindRolesId.executeQuery();
+
+            while (rs.next()) {
+                psToFindRoles.setLong(1, rs.getLong("role_id"));
+                ResultSet rsWithRoles = psToFindRoles.executeQuery();
+                while(rsWithRoles.next()){
+                    Role role = new Role();
+                    role.setId(rsWithRoles.getLong("id"));
+                    role.setRole(rsWithRoles.getString("role"));
+                    roles.add(role);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            logger.error("get role for "+ username,e);
+        }
+        logger.debug("get roles for "+ username);
+        return roles;
+    }
+
+    @Override
+    public void addRole(String username, String role) {
+        // not implemented
+       return;
     }
 }

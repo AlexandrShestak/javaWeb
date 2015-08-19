@@ -74,6 +74,7 @@
                 <value>hibernate.cfg/News.hbm.xml</value>
                 <value>hibernate.cfg/Tag.hbm.xml</value>
                 <value>hibernate.cfg/User.hbm.xml</value>
+                <value>hibernate.cfg/Role.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">

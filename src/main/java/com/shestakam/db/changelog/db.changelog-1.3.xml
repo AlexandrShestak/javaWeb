@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="add roles to spring security" author="alexandr">
+        <createTable tableName="roles">
+            <column name="id" type="int" autoIncrement="true" incrementBy="1" startWith="1">
+                <constraints  primaryKey="true" nullable="false"/>
+            </column>
+           <column name="role" type="varchar(20)">
+               <constraints nullable="false"/>
+           </column>
+        </createTable>
+
+        <createTable tableName="user_roles">
+            <column name="id" type="int" autoIncrement="true" incrementBy="1" startWith="1">
+                <constraints  primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <loadData catalogName="helpBlog"
+                  encoding="UTF-8"
+                  file="src/main/java/com/shestakam/db/changelog/roles.csv"
+                  tableName="roles">
+            <column name="role" type="STRING"/>
+        </loadData>
+    </changeSet>
+
+</databaseChangeLog>

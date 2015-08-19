@@ -1,5 +1,6 @@
 package com.shestakam.user.dao;
 
+import com.shestakam.user.entity.Role;
 import com.shestakam.user.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -7,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by alexandr on 30.7.15.
@@ -76,5 +78,33 @@ public class HibernateUserDao implements UserDao {
         session.update(user);
         session.getTransaction().commit();
         session.close();
+    }
+
+    @Override
+    public Set<Role> getRoles(String username) {
+        logger.debug("get roles  for "+ username );
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        User user = (User) session.get(User.class,username);
+        Set<Role> roles = user.getRoleSet();
+        session.getTransaction().commit();
+        session.close();
+        return roles;
+    }
+
+    @Override
+    public void addRole(String username, String roleName) {
+        logger.debug("add role  for "+ username );
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        User user = (User) session.get(User.class,username);
+        Role role = (Role) session.createQuery("from Role where role=?")
+                .setParameter(0, roleName)
+                .list()
+                .get(0);
+        user.getRoleSet().add(role);
+        session.getTransaction().commit();
+        session.close();
+        return ;
     }
 }
