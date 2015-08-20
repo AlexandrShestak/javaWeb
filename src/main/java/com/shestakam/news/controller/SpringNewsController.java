@@ -28,7 +28,6 @@ public class SpringNewsController {
     private static final String NEWS_LIST = "news/list";
     private static final String EDIT_NEWS = "news/edit";
     private static final String ADD_NEWS = "news/add";
-    private static final String ADD_TAGS = "tags/add";
 
     private  final static Logger logger = LogManager.getLogger(SpringNewsController.class);
     private NewsDao newsDao;
@@ -205,8 +204,6 @@ public class SpringNewsController {
         } else {
             username = principal.toString();
         }
-
-       /* String newsCommentator = (String) request.getSession().getAttribute("login");*/
         String newsCommentator = username;
         News news = new News();
         news.setCreatorUsername(newsCommentator);

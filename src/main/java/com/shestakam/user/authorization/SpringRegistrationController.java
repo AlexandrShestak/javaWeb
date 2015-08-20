@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class SpringRegistrationController {
 
     private  final static Logger logger = LogManager.getLogger(SpringRegistrationController.class);
-    private static final String NEWS_LIST = "news/list";
     private static final String REGISTRATION_PAGE= "authorization/registration";
     private static final String START_PAGE = "/login";
 

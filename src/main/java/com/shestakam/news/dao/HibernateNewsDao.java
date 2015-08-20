@@ -95,7 +95,8 @@ public class HibernateNewsDao implements NewsDao {
 
     @Override
     public List<News> searchNewsByTag(String tagName) {
-        Session session = sessionFactory.openSession();
+        return searchNewsByCreatorAndTag(null,tagName);
+        /*Session session = sessionFactory.openSession();
         session.beginTransaction();
         Tag tag = (Tag) session.createQuery("from Tag where tagName=?")
                 .setParameter(0,tagName)
@@ -106,23 +107,45 @@ public class HibernateNewsDao implements NewsDao {
         newsList.addAll(tag.getNewsSet());
         session.getTransaction().commit();
         session.close();
-        return newsList;
+        return newsList;*/
     }
 
     @Override
     public List<News> searchNewsByCreator(String creator) {
-        Session session = sessionFactory.openSession();
+        return searchNewsByCreatorAndTag(creator,null);
+        /*Session session = sessionFactory.openSession();
         session.beginTransaction();
         List<News> newsList =  session.createQuery("from News where creatorUsername=?")
                 .setParameter(0, creator)
                 .list();
         session.getTransaction().commit();
         session.close();
-        return newsList;
+        return newsList;*/
     }
 
     @Override
     public List<News> searchNewsByCreatorAndTag(String creator, String tagName) {
+        if (tagName == null){
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            List<News> newsList= session.createCriteria(News.class)
+                    .add(Restrictions.like("creatorUsername", creator))
+                    .list();
+            session.getTransaction().commit();
+            session.close();
+            return newsList;
+        }
+        if (creator == null){
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            List<News> newsList= session.createCriteria(News.class)
+                    .createCriteria("tagSet")
+                    .add(Restrictions.like("tagName",tagName))
+                    .list();
+            session.getTransaction().commit();
+            session.close();
+            return newsList;
+        }
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         List<News> newsList= session.createCriteria(News.class)

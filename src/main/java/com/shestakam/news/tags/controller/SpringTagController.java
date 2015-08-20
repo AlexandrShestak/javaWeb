@@ -97,7 +97,6 @@ public class SpringTagController {
             }
             elem.setTagsString(tagString);
         }
-
         ModelAndView mav = new ModelAndView(NEWS_LIST);
         mav.addObject("news",newsList);
         return mav;
