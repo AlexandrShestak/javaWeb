@@ -15,7 +15,7 @@
 <%@ page isELIgnored="false" %>
 <html>
 <head>
-  <link href="${pageContext.servletContext.contextPath}/bootstrap-3.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="${pageContext.servletContext.contextPath}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <title></title>
 </head>
 <body>
