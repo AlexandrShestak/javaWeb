@@ -25,7 +25,7 @@
   <title></title>
 </head>
 <body>
-
+<div class="container">
 <table class="tags">
   <tr>
     <td>
@@ -43,5 +43,6 @@
 <form action="/news" method="get">
   <button type="submit"><fmt:message key="toNews"/> </button>
 </form>
+</div>
 </body>
 </html>

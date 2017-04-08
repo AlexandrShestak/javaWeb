@@ -30,7 +30,7 @@
     <link href="../../styles/signin.css" rel="stylesheet">
 </header>
 <body>
-
+<div class="container">
 <jsp:include page="/WEB-INF/pages/language.jsp"/>
 <%-- <jsp:include page="pages/hello.jsp"/login>  --%>
 
@@ -86,6 +86,7 @@
             </table>
         </form>
     </div>
+</div>
 </div>
 </body>
 </html>

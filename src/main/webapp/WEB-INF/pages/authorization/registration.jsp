@@ -18,7 +18,6 @@
 
 
 <html>
-<html>
 <head>
   <script type="text/javascript" src="${pageContext.servletContext.contextPath}/javascript/jquery-2.1.4.js"></script>
   <script type="text/javascript" src="${pageContext.servletContext.contextPath}/javascript/jQueryScript.js"></script>
@@ -29,6 +28,7 @@
   <title></title>
 </head>
 <body>
+<div class="container">
 <jsp:include page="../language.jsp"/>
 
 <form class="form-horizontal col-md-6 col-md-offset-4" action="/registration" method="POST">
@@ -78,5 +78,6 @@
     </div>
   </fieldset>
 </form>
+</div>
 </body>
 </html>

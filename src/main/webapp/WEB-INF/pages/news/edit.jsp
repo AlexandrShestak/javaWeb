@@ -24,6 +24,7 @@
 </head>
 <body>
 
+<div class="container">
 <jsp:include page="../language.jsp"/>
 <jsp:include page="../menu.jsp"/>
 
@@ -75,10 +76,7 @@
           </form>
         </td>
       </tr>
-
     </table>
-
-
-
+</div>
 </body>
 </html>

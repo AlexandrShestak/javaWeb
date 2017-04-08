@@ -19,6 +19,7 @@
   <title></title>
 </head>
 <body>
+<div class="container">
 <form action="/logout" method="post">
   <table width="100%">
     <tr>
@@ -29,9 +30,8 @@
         <button type="submit" class="btn" name="action" value="logout"><fmt:message key="out"/> </button>
       </td>
     </tr>
-
   </table>
-
 </form>
+</div>
 </body>
 </html>
