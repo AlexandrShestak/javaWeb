@@ -26,6 +26,7 @@
   <title></title>
 </head>
 <body>
+<div class="container">
 <jsp:include page="../language.jsp"/>
 <helloTag:myHelloTag />
 <jsp:include page="../menu.jsp"/>
@@ -63,6 +64,6 @@
   </td>
 </tr>
 </table>
-
+</div>
 </body>
 </html>

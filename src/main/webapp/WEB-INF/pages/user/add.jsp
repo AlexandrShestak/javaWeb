@@ -24,6 +24,7 @@
   <title></title>
 </head>
 <body>
+<div class="container">
 <jsp:include page="../language.jsp"/>
 
   <form action="/user" method="post">
@@ -62,5 +63,6 @@
 
     </table>
   </form>
+</div>
 </body>
 </html>
