@@ -28,7 +28,7 @@
             </column>
         </createTable>
 
-        <loadData catalogName="helpBlog"
+        <loadData catalogName="javaWeb"
                   encoding="UTF-8"
                   file="src/main/java/com/shestakam/db/changelog/roles.csv"
                   tableName="roles">

@@ -8,7 +8,7 @@
 
 
     <changeSet author="alexandr" id="addAutoIncrement-example">
-        <addAutoIncrement catalogName="helpBlog"
+        <addAutoIncrement catalogName="javaWeb"
                           columnDataType="int"
                           columnName="news_id"
                           incrementBy="1"
@@ -16,7 +16,7 @@
                           startWith="1"
                           tableName="news"/>
 
-        <addAutoIncrement catalogName="helpBlog"
+        <addAutoIncrement catalogName="javaWeb"
                           columnDataType="int"
                           columnName="tag_id"
                           incrementBy="1"
@@ -24,7 +24,7 @@
                           startWith="1"
                           tableName="tags"/>
 
-        <addAutoIncrement catalogName="helpBlog"
+        <addAutoIncrement catalogName="javaWeb"
                           columnDataType="int"
                           columnName="news_tags_id"
                           incrementBy="1"
@@ -32,7 +32,7 @@
                           startWith="1"
                           tableName="news_tags"/>
 
-        <addAutoIncrement catalogName="helpBlog"
+        <addAutoIncrement catalogName="javaWeb"
                           columnDataType="int"
                           columnName="comment_id"
                           incrementBy="1"
