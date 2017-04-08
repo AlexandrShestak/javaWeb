@@ -5,9 +5,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * Created by alexandr on 18.8.15.
- */
 @Controller
 public class SpringLanguage {
 
@@ -15,14 +12,16 @@ public class SpringLanguage {
     public String changeLanguage(HttpServletRequest request){
         String language = request.getParameter("language");
         String referer = request.getHeader("referer");
-        if (referer.contains("language")){
-            referer.replace("ru",language);
-            referer.replace("en",language);
+        if (referer.contains("language=ru")){
+            referer = referer.replace("ru", language);
+            return "redirect:"+ referer;
+        } else if (referer.contains("language=en")) {
+            referer = referer.replace("en", language);
             return "redirect:"+ referer;
         }
-        if (referer.contains("?")){
+        if (referer.contains("?")) {
             referer+="&language="+language;
-        }else{
+        } else {
             referer+="?language="+language;
         }
         return "redirect:"+ referer;
