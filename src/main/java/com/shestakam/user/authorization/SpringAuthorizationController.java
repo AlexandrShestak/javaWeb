@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-/**
- * Created by alexandr on 11.8.15.
- */
 @Controller
 public class SpringAuthorizationController {
 

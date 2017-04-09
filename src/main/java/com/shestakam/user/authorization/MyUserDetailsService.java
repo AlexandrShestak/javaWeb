@@ -26,13 +26,13 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = userDao.get(s);
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        List<GrantedAuthority> authorities = new ArrayList();
 
         for (Role role : userDao.getRoles(s)) {
             authorities.add(new SimpleGrantedAuthority(role.getRole()));
         }
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(), authorities);
-        }
+    }
 }
 

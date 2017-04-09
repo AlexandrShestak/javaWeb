@@ -11,7 +11,7 @@
             <column name="username" type="varchar(20)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="password" type="varchar(20)">
+            <column name="password" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
             <column name="email" type="varchar(20)">

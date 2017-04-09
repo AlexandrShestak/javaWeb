@@ -38,9 +38,20 @@
 
     <authentication-manager>
         <authentication-provider user-service-ref="myUserDetailsService" >
-
+            <password-encoder hash="bcrypt" base64="true"/>
         </authentication-provider>
     </authentication-manager>
+
+    <beans:bean id="encoder"
+                class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <beans:constructor-arg name="strength" value="10" />
+    </beans:bean>
+
+    <beans:bean id="authProvider"
+          class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <beans:property name="userDetailsService" ref="myUserDetailsService"/>
+        <beans:property name="passwordEncoder" ref="encoder" />
+    </beans:bean>
 
     <!--<http use-expressions="false">
         <intercept-url pattern="/**" access="ROLE_USER" />

@@ -48,7 +48,7 @@ public class User {
         this.username = login;
     }
 
-    @Column(name = "password" , nullable = false, length = 20)
+    @Column(name = "password" , nullable = false, length = 100)
     public String getPassword() {
         return password;
     }

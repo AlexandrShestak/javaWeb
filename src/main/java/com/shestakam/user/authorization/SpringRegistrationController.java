@@ -4,6 +4,7 @@ import com.shestakam.user.dao.UserDao;
 import com.shestakam.user.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,11 +36,12 @@ public class SpringRegistrationController {
     public ModelAndView registration(@ModelAttribute User user){
         logger.debug("user registration");
         String login = user.getUsername();
-        if(userDao.get(login)!=null){
+        if(userDao.get(login) != null){
             ModelAndView mav = new ModelAndView(REGISTRATION_PAGE);
             mav.addObject("errorMessage","Пользователь с таким именем уже существует");
             return mav;
-        }else {
+        } else {
+            user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
             userDao.save(user);
             userDao.addRole(login,"ROLE_USER");
             ModelAndView mav = new ModelAndView(START_PAGE);

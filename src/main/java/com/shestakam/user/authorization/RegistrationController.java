@@ -15,9 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Created by alexandr on 20.7.15.
- */
 public class RegistrationController extends HttpServlet {
 
     private static final String REGISTRATION_PAGE= "/WEB-INF/pages/authorization/registration.jsp";
@@ -29,6 +26,7 @@ public class RegistrationController extends HttpServlet {
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
