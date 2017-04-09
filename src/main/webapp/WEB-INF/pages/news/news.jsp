@@ -30,7 +30,6 @@
 </head>
 <body>
 
-<helloTag:myHelloTag />
 <jsp:include page="../menu.jsp"/>
 <div class="container">
   <div class="panel panel-default">

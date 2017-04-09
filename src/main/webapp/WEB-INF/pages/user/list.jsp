@@ -27,8 +27,7 @@
 </head>
 <body>
 <div class="container">
-<jsp:include page="../language.jsp"/>
-<helloTag:myHelloTag />
+<jsp:include page="../nabigation.jsp"/>
 <jsp:include page="../menu.jsp"/>
 <table class="user">
   <c:forEach items="${users}" var="user">

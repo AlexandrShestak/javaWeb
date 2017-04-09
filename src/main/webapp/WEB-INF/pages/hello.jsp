@@ -27,7 +27,7 @@
         <h4><fmt:message key="welcome"/> ${sessionScope.login}</h4>
       </td>
       <td>
-        <button type="submit" class="btn" name="action" value="logout"><fmt:message key="out"/> </button>
+        <button type="submit" class="btn" name="action" value="logout"><fmt:message key="logout"/> </button>
       </td>
     </tr>
   </table>

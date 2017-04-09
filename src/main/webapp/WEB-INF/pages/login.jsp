@@ -11,7 +11,7 @@
 <%@ page isELIgnored="false" %>
 
 <%--
-<jsp:include page="/WEB-INF/pages/language.jsp"/>
+<jsp:include page="/WEB-INF/pages/nabigation.jsp"/>
 --%>
 
 
@@ -31,7 +31,7 @@
 </header>
 <body>
 <div class="container">
-<jsp:include page="/WEB-INF/pages/language.jsp"/>
+<jsp:include page="/WEB-INF/pages/nabigation.jsp"/>
 <%-- <jsp:include page="pages/hello.jsp"/login>  --%>
 
 

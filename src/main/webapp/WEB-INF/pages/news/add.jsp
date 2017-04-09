@@ -27,7 +27,7 @@
   <title></title>
 </head>
 <body>
-<jsp:include page="../language.jsp"/>
+<jsp:include page="../nabigation.jsp"/>
 <jsp:include page="../menu.jsp"/>
 <div class="container">
   <form action="/news" method="post">
