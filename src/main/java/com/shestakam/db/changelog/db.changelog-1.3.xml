@@ -30,10 +30,17 @@
 
         <loadData catalogName="javaWeb"
                   encoding="UTF-8"
-                  file="src/main/java/com/shestakam/db/changelog/roles.csv"
+                  file="src/main/java/com/shestakam/db/data/roles.csv"
                   tableName="roles">
             <column name="role" type="STRING"/>
         </loadData>
+
+        <loadData catalogName="javaWeb"
+                  encoding="UTF-8"
+                  file="src/main/java/com/shestakam/db/data/user_roles.csv"
+                  tableName="user_roles">
+        </loadData>
+
     </changeSet>
 
 </databaseChangeLog>

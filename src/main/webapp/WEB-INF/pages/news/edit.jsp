@@ -25,11 +25,7 @@
 <body>
 
 <div class="container">
-<jsp:include page="../nabigation.jsp"/>
-<jsp:include page="../menu.jsp"/>
-
-
-
+<jsp:include page="../navigation.jsp"/>
     <table class="news">
       <form action="/news" method="post">
         <tr>

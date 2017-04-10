@@ -29,7 +29,7 @@
 </head>
 <body>
 <div class="container">
-<jsp:include page="../nabigation.jsp"/>
+<jsp:include page="../navigation.jsp"/>
 
 <form class="form-horizontal col-md-6 col-md-offset-4" action="/registration" method="POST">
   <fieldset>

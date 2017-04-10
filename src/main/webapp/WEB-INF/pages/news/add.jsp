@@ -27,45 +27,45 @@
   <title></title>
 </head>
 <body>
-<jsp:include page="../nabigation.jsp"/>
-<jsp:include page="../menu.jsp"/>
+<jsp:include page="../navigation.jsp"/>
+<div class="page-header text-center">
+  <h2>
+    <spring:message code="messageText"/>
+  </h2>
+</div>
 <div class="container">
   <form action="/news" method="post">
     <table class="table ">
       <tr>
         <td>
-          <spring:message code="messageText"/>
-        </td>
-        </tr>
-      <tr>
-      <tr>
-        <td>
-          <textarea class="form-control" name="newsText"></textarea>
+          <div class="form-group">
+            <textarea class="form-control" rows="7" name="newsText"></textarea>
+          </div>
         </td>
       </tr>
       <tr>
         <td>
-          <input type="hidden" name="action" value="add">
-          <input type="hidden" name="tags" id="tagsToAddWithNews">
-          <button type="submit"> <spring:message code="addNews"/></button>
+          <div class="form-group">
+            <div class="col-xs-2">
+              <label><spring:message code="addTag"/></label>
+            </div>
+            <div class="col-xs-2">
+              <input type="hidden" name="newsId" value="${newsId}" id="newsIdToAddTag">
+              <input type="text" id="addTagName">
+            </div>
+            <div class="col-xs-1">
+              <button id="addTag" type="button"> <spring:message code="add"/> </button>
+            </div>
+            <div class="col-md-offset-5 col-xs-2">
+              <input type="hidden" name="action" value="add">
+              <input type="hidden" name="tags" id="tagsToAddWithNews">
+              <button type="submit"> <spring:message code="addNews"/></button>
+            </div>
+          </div>
         </td>
       </tr>
     </table>
   </form>
-  <table class="table">
-    <tr>
-      <td>
-        <spring:message code="addTag"/>
-      </td>
-      <td>
-        <input type="hidden" name="newsId" value="${newsId}" id="newsIdToAddTag">
-        <input type="text" id="addTagName">
-      </td>
-      <td>
-        <button id="addTag" > <spring:message code="add"/> </button>
-      </td>
-    </tr>
-  </table>
 </div>
 </body>
 </html>
