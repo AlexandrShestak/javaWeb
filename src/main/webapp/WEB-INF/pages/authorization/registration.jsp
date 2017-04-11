@@ -56,7 +56,7 @@
 
     <div class="control-group">
       <!-- Password-->
-      <label class="control-label" for="password"> <spring:message code="userPassword"/></label>
+      <label class="control-label" for="password"> <spring:message code="password"/></label>
       <div class="controls">
         <input type="hidden" name="action" value="registration">
         <input type="password" id="password" name="password" placeholder="" class="input-xlarge">

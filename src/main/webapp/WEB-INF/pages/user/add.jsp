@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: alexandr
-  Date: 18.7.15
-  Time: 13.52
-  To change this template use File | Settings | File Templates.
---%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -15,13 +8,11 @@
 <fmt:setBundle   basename="messages/user"/>
 <%@ page isELIgnored="false" %>
 
-
-<html>
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/styles/tables.css"/>
-
-  <title></title>
+  <link href="${pageContext.servletContext.contextPath}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="${pageContext.servletContext.contextPath}/styles/main.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -40,7 +31,7 @@
       </tr>
       <tr>
         <td>
-          <spring:message code="userPassword"/>
+          <spring:message code="password"/>
         </td>
         <td>
           <input type="text" name="password" >
