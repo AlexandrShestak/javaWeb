@@ -1,9 +1,9 @@
 
 $(document).ready(
-    $(document).on("click", $('.deleteComment'), functionDelete())
+    $(document).on("click", $('.deleteComment'), functionDelete)
 );
 $(document).ready(
-    $(document).on("click", $('.editComment'), editComment())
+    $(document).on("click", $('.editComment'), editComment)
 );
 /*ajax method to save comments*/
 $(document).ready(function(){
@@ -79,10 +79,10 @@ $(document).ready(function(){
                 '</div>'*/
                 $('#commentsTable').html(str2);
                 $(document).ready(
-                    $(document).on("click", $('.deleteComment'), functionDelete())
+                    $(document).on("click", $('.deleteComment'), functionDelete)
                 );
                 $(document).ready(
-                    $(document).on("click", $('.editComment'), editComment())
+                    $(document).on("click", $('.editComment'), editComment)
                 );
                 /* $('#commentsTable')
                  .append('<tr><td align="left">'+obj.creationDate+'</td><td align="right">'+obj.commentatorUsername+'</td><td><input type="hidden" name="action" value="edit"><input type="hidden" name="commentId" value='+obj.commentId+'><button type="submit">'+$('#editAjax').text()+'</button></td><td><input type="hidden" name="action" value="delete"><input type="hidden" name="commentId" value='+obj.commentId+'><button type="submit">'+$('#deleteAjax').text()+'</button></td></tr>')
