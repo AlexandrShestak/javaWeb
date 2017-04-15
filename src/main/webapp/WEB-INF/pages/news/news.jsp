@@ -38,16 +38,11 @@
       <p><c:out value="${news.newsText}"/> </p>
     </div>
     <div class="panel-footer">
-      <p>
         <i class="glyphicon glyphicon-user"></i> by <c:out value="${news.creatorUsername}" />
         | <i class="glyphicon glyphicon-calendar"></i> <c:out value="${news.creationDate}" />
-        | <i class="glyphicon glyphicon-tag"></i> Tags : <span class="label label-info"><c:forEach items="${newsTags}" var="tags">
-        #${tags.tagName}
-      </c:forEach></span>
-        <%-- <c:forEach items="${news.tagSet}" var="tag">
-           |<i class="glyphicon glyphicon-tag"></i> Tags : <span class="label label-info">${tag.tagName}</span>
-         </c:forEach>--%>
-      </p>
+        | <i class="glyphicon glyphicon-tag"></i> Tags : <c:forEach items="${newsTags}" var="tags">
+        <span class="label label-info">${tags.tagName}</span>
+      </c:forEach>
     </div>
   </div>
   <hr>

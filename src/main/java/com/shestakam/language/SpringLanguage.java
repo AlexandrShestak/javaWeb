@@ -13,10 +13,10 @@ public class SpringLanguage {
         String language = request.getParameter("language");
         String referer = request.getHeader("referer");
         if (referer.contains("language=ru")){
-            referer = referer.replace("ru", language);
+            referer = referer.replaceAll("ru$", language);
             return "redirect:"+ referer;
         } else if (referer.contains("language=en")) {
-            referer = referer.replace("en", language);
+            referer = referer.replaceAll("en$", language);
             return "redirect:"+ referer;
         }
         if (referer.contains("?")) {
