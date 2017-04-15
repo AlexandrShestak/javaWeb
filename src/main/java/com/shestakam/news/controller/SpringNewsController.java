@@ -6,6 +6,8 @@ import com.shestakam.news.tags.dao.TagDao;
 import com.shestakam.news.tags.entity.Tag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -30,17 +32,14 @@ public class SpringNewsController {
     private static final String ADD_NEWS = "news/add";
 
     private  final static Logger logger = LogManager.getLogger(SpringNewsController.class);
+
+    @Autowired
+    @Qualifier("hibernateNewsDao")
     private NewsDao newsDao;
+
+    @Autowired
+    @Qualifier("hibernateTagsDao")
     private TagDao tagDao;
-
-
-    public void setTagDao(TagDao tagDao) {
-        this.tagDao = tagDao;
-    }
-
-    public void setNewsDao(NewsDao newsDao) {
-        this.newsDao = newsDao;
-    }
 
     @RequestMapping(value = "/news" , params = "action=add", method = RequestMethod.GET)
     public String getAddNewsForm(HttpServletRequest request){

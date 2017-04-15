@@ -4,6 +4,8 @@ import com.shestakam.user.dao.UserDao;
 import com.shestakam.user.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,11 +24,10 @@ public class SpringUserController {
     private static final String EDIT_USER_PAGE = "user/edit";
 
     private  final static Logger logger = LogManager.getLogger(SpringUserController.class);
-    private UserDao userDao;
 
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
+    @Autowired
+    @Qualifier("hibernateUserDao")
+    private UserDao userDao;
 
     @RequestMapping(value = "user" ,params = "action=add",method = RequestMethod.GET)
     public String getAddUserForm(){

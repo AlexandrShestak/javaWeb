@@ -1,7 +1,5 @@
 package com.shestakam.user.authorization;
 
-import com.shestakam.news.dao.NewsDao;
-import com.shestakam.user.dao.UserDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -15,17 +13,6 @@ public class SpringAuthorizationController {
 
     private  final static Logger logger = LogManager.getLogger(SpringAuthorizationController.class);
     private static final String LOGIN_PAGE = "login";
-
-    private UserDao userDao;
-    private NewsDao newsDao;
-
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
-    public void setNewsDao(NewsDao newsDao) {
-        this.newsDao = newsDao;
-    }
 
     @RequestMapping(value = "/")
     public String getLoginForm(){

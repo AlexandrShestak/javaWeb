@@ -6,6 +6,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Set;
@@ -14,9 +16,12 @@ import java.util.Set;
  * Created by alexandr on 30.7.15.
  */
 
+@Repository
 public class HibernateUserDao implements UserDao {
 
     private  final static Logger logger = LogManager.getLogger(HibernateUserDao.class);
+
+    @Autowired
     private SessionFactory sessionFactory;
 
     public void setSessionFactory(SessionFactory sessionFactory) {

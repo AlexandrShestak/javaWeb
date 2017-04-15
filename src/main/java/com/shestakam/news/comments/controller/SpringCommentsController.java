@@ -6,6 +6,8 @@ import com.shestakam.news.dao.NewsDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -26,16 +28,13 @@ public class SpringCommentsController {
 
     private static final String NEWS_WITH_COMMENTS = "news/news";
 
+    @Qualifier("hibernateCommentsDao")
+    @Autowired
     private CommentsDao commentsDao;
+
+    @Qualifier("hibernateNewsDao")
+    @Autowired
     private NewsDao newsDao;
-
-    public void setCommentsDao(CommentsDao commentsDao) {
-        this.commentsDao = commentsDao;
-    }
-
-    public void setNewsDao(NewsDao newsDao) {
-        this.newsDao = newsDao;
-    }
 
     @RequestMapping(value = "/comments",params = "action=add",method = RequestMethod.POST,produces="application/json")
     @ResponseBody

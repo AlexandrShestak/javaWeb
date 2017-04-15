@@ -4,6 +4,8 @@ import com.shestakam.user.dao.UserDao;
 import com.shestakam.user.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,10 +23,9 @@ public class SpringRegistrationController {
     private static final String REGISTRATION_PAGE= "authorization/registration";
     private static final String START_PAGE = "/login";
 
+    @Autowired
+    @Qualifier("hibernateUserDao")
     private UserDao userDao;
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
 
     @RequestMapping(value = "/registration",method = RequestMethod.GET)
     public String getFrom(){

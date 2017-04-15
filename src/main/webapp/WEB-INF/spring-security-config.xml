@@ -6,13 +6,7 @@
 		http://www.springframework.org/schema/security
 		http://www.springframework.org/schema/security/spring-security.xsd">
 
-
-   <!-- <http pattern="/bootstrap/**" security="none"/>
-    <http pattern="/styles/**" security="none"/>
-    <http pattern="/" security="none"/>
-
-    <http pattern="/login*" security="none"/>
-    <http pattern="/WEB-INF/pages/login.jsp" security="none"/>-->
+    <beans:import resource="dispatcherServlet-servlet.xml"/>
 
     <http pattern="/bootstrap/**" security="none" />
     <http pattern="/styles/**" security="none" />
