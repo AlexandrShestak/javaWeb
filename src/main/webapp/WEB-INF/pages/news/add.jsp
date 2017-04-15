@@ -34,7 +34,7 @@
   </h2>
 </div>
 <div class="container">
-  <form action="/news" method="post">
+  <form action="/news" method="post" id="newsForm">
     <table class="table ">
       <tr>
         <td>
@@ -46,20 +46,19 @@
       <tr>
         <td>
           <div class="form-group">
-            <div class="col-xs-2">
+            <div class="col-xs-1">
               <label><spring:message code="addTag"/></label>
             </div>
             <div class="col-xs-2">
               <input type="hidden" name="newsId" value="${newsId}" id="newsIdToAddTag">
-              <input type="text" id="addTagName">
+              <input type="text" class="form-control" id="addTagName" autocomplete="off">
             </div>
-            <div class="col-xs-1">
-              <button id="addTag" type="button"> <spring:message code="add"/> </button>
+            <div class="col-xs-1" id="tags">
             </div>
-            <div class="col-md-offset-5 col-xs-2">
+            <div class="col-md-offset-7 col-xs-2">
               <input type="hidden" name="action" value="add">
               <input type="hidden" name="tags" id="tagsToAddWithNews">
-              <button type="submit"> <spring:message code="addNews"/></button>
+              <button type="submit" class="btn btn-default"> <spring:message code="addNews"/></button>
             </div>
           </div>
         </td>

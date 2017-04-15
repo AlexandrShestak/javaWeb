@@ -185,18 +185,32 @@ function editComment() {
     })
 }
 
-/*method tp add tag*/
+/*method to add tag*/
 $(document).ready(function(){
-    $('#addTag').click(function(){
-        var tagNameText = $(this).parent().parent().children().children("input#addTagName").val()
-        var tagsTable = $(this).parent().parent().parent()
-        tagsTable.append('<tr><td><input type="text" readonly value='+tagNameText+'></td></tr>')
-        if($("#tagsToAddWithNews").val()==""){
-            $("#tagsToAddWithNews").val(tagNameText)
-        }else
-            $('#tagsToAddWithNews').val($('#tagsToAddWithNews').val()+';'+tagNameText)
-    })
-})
+    $('#newsForm').keypress(function(e) {
+        if(e.keyCode == 13) {
+            event.preventDefault();
+            return false;
+        }
+    });
+    $('#addTagName').keypress(function(e) {
+            if(e.which == 13) {
+                var addTagNameSelector = $("input#addTagName");
+                if (addTagNameSelector.val() != "") {
+                    var tagNameText = addTagNameSelector.val();
+                    $('#tags').append('<span class="label label-info">#' + tagNameText + '</span>');
+                    addTagNameSelector.val('');
+                    var tagsToAddWithNewsSelector = $("#tagsToAddWithNews");
+                    if (tagsToAddWithNewsSelector.val() === "") {
+                        tagsToAddWithNewsSelector.val(tagNameText);
+                    } else {
+                        tagsToAddWithNewsSelector.val(tagsToAddWithNewsSelector.val() + ';' + tagNameText);
+                    }
+                }
+            }
+        }
+    );
+});
 
 $(document).ready(function(){
     $('textarea').autoResize()
