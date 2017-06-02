@@ -1,8 +1,18 @@
+/*group = 'javaWeb'
+version = '1.0-SNAPSHOT'*/
+
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+plugins {
+    id 'net.eikehirsch.react' version '0.4.1'
+}
 apply plugin: 'java'
 apply plugin: 'war'
-
-group = 'javaWeb'
-version = '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -11,6 +21,7 @@ repositories {
     mavenLocal()
     mavenCentral()
 }
+
 dependencies {
     compile group: 'mysql', name: 'mysql-connector-java', version:'5.1.6'
     compile group: 'com.h2database', name: 'h2', version:'1.4.187'
@@ -29,18 +40,26 @@ dependencies {
     compile group: 'org.hibernate', name: 'hibernate-core', version:'4.3.10.Final'
     compile group: 'org.hibernate', name: 'hibernate-entitymanager', version:'4.3.10.Final'
     compile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
-    compile group: 'org.springframework', name: 'spring-web', version:'4.3.7.RELEASE'
-    compile group: 'org.springframework', name: 'spring-context', version:'4.3.7.RELEASE'
-    compile group: 'org.springframework', name: 'spring-webmvc', version:'4.3.7.RELEASE'
+    compile group: 'org.springframework', name: 'spring-web', version:'4.3.8.RELEASE'
+    compile group: 'org.springframework', name: 'spring-context', version:'4.3.8.RELEASE'
+    compile group: 'org.springframework', name: 'spring-webmvc', version:'4.3.8.RELEASE'
     compile group: 'org.springframework.security', name: 'spring-security-core', version:'4.2.2.RELEASE'
     compile group: 'org.springframework.security', name: 'spring-security-web', version:'4.2.2.RELEASE'
     compile group: 'org.springframework.security', name: 'spring-security-config', version:'4.2.2.RELEASE'
     compile group: 'org.springframework.security', name: 'spring-security-taglibs', version:'4.2.2.RELEASE'
-    compile group: 'org.springframework', name: 'spring-orm', version:'4.3.7.RELEASE'
+    compile group: 'org.springframework', name: 'spring-orm', version:'4.3.8.RELEASE'
 
+    compile("org.webjars:react:0.13.1")
 
     testCompile group: 'junit', name: 'junit', version:'4.12'
-    testCompile group: 'org.springframework', name: 'spring-test', version:'4.3.7.RELEASE'
+    testCompile group: 'org.springframework', name: 'spring-test', version:'4.3.8.RELEASE'
 
     providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version:'3.0.1'
 }
+
+jsx {
+    sourcesDir = 'src/main/resources/static/jsx'
+    destDir    = 'src/main/resources/static/output'
+}
+
+processResources.dependsOn('jsx')
