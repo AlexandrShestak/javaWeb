@@ -19,6 +19,7 @@ import java.io.IOException;
 /**
  * Created by alexandr on 18.7.15.
  */
+@Deprecated
 public class UserController extends HttpServlet {
 
     private static final String USERS_LIST = "/WEB-INF/pages/user/list.jsp";

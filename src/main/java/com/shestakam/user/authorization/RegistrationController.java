@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Deprecated
 public class RegistrationController extends HttpServlet {
 
     private static final String REGISTRATION_PAGE= "/WEB-INF/pages/authorization/registration.jsp";

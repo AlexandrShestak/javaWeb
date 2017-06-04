@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Timestamp;
 
-
+@Deprecated
 public class CommentsController extends HttpServlet {
 
     private  final static Logger logger = LogManager.getLogger(CommentsController.class);

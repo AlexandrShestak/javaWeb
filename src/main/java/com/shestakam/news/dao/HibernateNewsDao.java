@@ -10,6 +10,9 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -150,6 +153,23 @@ public class HibernateNewsDao implements NewsDao {
                 .createCriteria("tagSet")
                 .add(Restrictions.like("tagName",tagName))
                 .list();
+        session.getTransaction().commit();
+        session.close();
+        return newsList;
+    }
+
+    @Override
+    public List<News> findNewsByIds(List ids) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<News> query = criteriaBuilder.createQuery(News.class);
+        Root<News> news = query.from(News.class);
+        CriteriaQuery<News> newsQuery = query.select(news)
+                .where(news.get("newsId").in(ids));
+        List<News> newsList = session.createQuery(newsQuery).getResultList();
+
         session.getTransaction().commit();
         session.close();
         return newsList;

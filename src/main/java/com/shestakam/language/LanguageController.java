@@ -9,6 +9,7 @@ import java.io.IOException;
 /**
  * Created by alexandr on 21.7.15.
  */
+@Deprecated
 public class LanguageController extends HttpServlet {
 
     @Override

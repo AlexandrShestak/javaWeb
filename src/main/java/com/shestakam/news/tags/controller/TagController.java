@@ -21,6 +21,7 @@ import java.util.List;
 /**
  * Created by alexandr on 4.8.15.
  */
+@Deprecated
 public class TagController extends HttpServlet {
 
     private static final String EDIT_NEWS = "/WEB-INF/pages/news/edit.jsp";

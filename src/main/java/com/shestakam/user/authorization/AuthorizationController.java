@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Created by alexandr on 17.7.15.
  */
-
+@Deprecated
 public class AuthorizationController extends HttpServlet {
 
     private  final static Logger logger = LogManager.getLogger(AuthorizationController.class);

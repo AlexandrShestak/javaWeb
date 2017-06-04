@@ -22,6 +22,7 @@ import java.util.List;
 /**
  * Created by alexandr on 21.7.15.
  */
+@Deprecated
 public class NewsController extends HttpServlet {
 
     private static final String NEWS_LIST = "/WEB-INF/pages/news/list.jsp";

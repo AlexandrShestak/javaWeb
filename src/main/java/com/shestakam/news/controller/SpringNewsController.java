@@ -2,12 +2,14 @@ package com.shestakam.news.controller;
 
 import com.shestakam.news.dao.NewsDao;
 import com.shestakam.news.entity.News;
+import com.shestakam.news.search.Searcher;
 import com.shestakam.news.tags.dao.TagDao;
 import com.shestakam.news.tags.entity.Tag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.method.P;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,6 +43,9 @@ public class SpringNewsController {
     @Autowired
     @Qualifier("hibernateTagsDao")
     private TagDao tagDao;
+
+    @Autowired
+    private Searcher searcher;
 
     @RequestMapping(value = "/news" , params = "action=add", method = RequestMethod.GET)
     public String getAddNewsForm(HttpServletRequest request){
@@ -207,7 +213,6 @@ public class SpringNewsController {
         News news = new News();
         news.setCreatorUsername(newsCommentator);
         news.setCreationDate(newsCreationDate);
-        newsText = new String(newsText.getBytes("iso-8859-1"), "UTF-8");
         news.setNewsText(newsText);
         String newsId = newsDao.save(news);
         String[] tags  = tagStr.split(";");
@@ -276,6 +281,20 @@ public class SpringNewsController {
         }
         ModelAndView mav = new ModelAndView();
         mav.setViewName(NEWS_LIST);
+        mav.addObject("news", newsList);
+        return mav;
+    }
+
+    @RequestMapping(value = "/fullTextSearch", method = RequestMethod.POST)
+    public ModelAndView searchNews(@RequestParam(value = "query") String query) {
+        List<Long> newsIds = searcher.search(query);
+
+        ModelAndView mav = new ModelAndView(NEWS_LIST);
+        if (newsIds.size() == 0) {
+            mav.addObject("news", new ArrayList<>());
+            return mav;
+        }
+        List<News> newsList = newsDao.findNewsByIds(newsIds);
         mav.addObject("news", newsList);
         return mav;
     }

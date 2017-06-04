@@ -6,11 +6,27 @@ buildscript {
         mavenLocal()
         mavenCentral()
     }
+    dependencies {
+        classpath ('mysql:mysql-connector-java:5.1.16')
+    }
 }
 
 plugins {
     id 'net.eikehirsch.react' version '0.4.1'
+    id 'org.liquibase.gradle' version '1.2.4'
 }
+
+liquibase {
+    activities {
+        main {
+            changeLogFile 'src/main/java/com/shestakam/db/changelog/changelog-master.xml'
+            url 'jdbc:mysql://localhost:3306/javaWeb'
+            username 'root'
+            password '12345678'
+        }
+    }
+}
+
 apply plugin: 'java'
 apply plugin: 'war'
 
@@ -37,8 +53,10 @@ dependencies {
     compile group: 'org.liquibase', name: 'liquibase-core', version:'3.4.0'
     compile group: 'com.googlecode.json-simple', name: 'json-simple', version:'1.1.1'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version:'2.6.1'
-    compile group: 'org.hibernate', name: 'hibernate-core', version:'4.3.10.Final'
-    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version:'4.3.10.Final'
+
+    compile ("org.hibernate:hibernate-core:${hibernateVersion}")
+    compile ("org.hibernate:hibernate-entitymanager:${hibernateVersion}")
+
     compile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
     compile group: 'org.springframework', name: 'spring-web', version:'4.3.8.RELEASE'
     compile group: 'org.springframework', name: 'spring-context', version:'4.3.8.RELEASE'
@@ -50,6 +68,10 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-orm', version:'4.3.8.RELEASE'
 
     compile("org.webjars:react:0.13.1")
+
+    compile ("org.apache.lucene:lucene-core:${luceneVersion}")
+    compile ("org.apache.lucene:lucene-queryparser:${luceneVersion}")
+    compile ("org.apache.lucene:lucene-analyzers-common:${luceneVersion}")
 
     testCompile group: 'junit', name: 'junit', version:'4.12'
     testCompile group: 'org.springframework', name: 'spring-test', version:'4.3.8.RELEASE'

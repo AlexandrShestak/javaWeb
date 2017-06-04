@@ -1,11 +1,10 @@
 package com.shestakam.configuration;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.*;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -17,6 +16,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
+import javax.servlet.Filter;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -24,6 +24,7 @@ import java.util.Properties;
 @Configuration
 @ComponentScan({ "com.shestakam.*" })
 @Import({ WebSecurityConfig.class })
+@PropertySource("classpath:configuration.properties")
 public class AppConfig extends WebMvcConfigurerAdapter {
 
     @Override
@@ -99,5 +100,11 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
+    }
+
+    //need to enable @Value annotation for property injection
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
     }
 }

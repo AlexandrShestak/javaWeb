@@ -18,6 +18,7 @@ import java.util.List;
 /**
  * Created by alexandr on 20.7.15.
  */
+@Deprecated
 public class JdbcNewsDao implements NewsDao {
 
     private  final static Logger logger = LogManager.getLogger(JdbcNewsDao.class);
@@ -249,6 +250,11 @@ public class JdbcNewsDao implements NewsDao {
 
         logger.debug("get all news with tag: "+ tagName);
         return newsList;
+    }
+
+    @Override
+    public List<News> findNewsByIds(List ids) {
+        throw new UnsupportedOperationException();
     }
 
     @Override

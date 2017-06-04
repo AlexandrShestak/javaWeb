@@ -2,6 +2,7 @@ package com.shestakam.user.authorization;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,7 +16,11 @@ public class SpringAuthorizationController {
     private static final String LOGIN_PAGE = "login";
 
     @RequestMapping(value = "/")
-    public String getLoginForm(){
+    public String getLoginForm() {
+        if (SecurityContextHolder.getContext().getAuthentication() != null &&
+                SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+            return "redirect:/news";
+        }
         return LOGIN_PAGE;
     }
 
