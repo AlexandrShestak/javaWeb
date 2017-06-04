@@ -1,0 +1,82 @@
+news_text,creator_username
+"Amazon Alexa Skill Smart Home c Open Source платформой для Домашней Автоматизации ioBroker
+Сначала немного о том, что же такое ioBroker?
+И о том, кто же является разработчиком ioBroker?
+ioBroker это OpenSource проект, который разрабатывается сообществом информатиков. Каждый, кто интересуется темой Smart Home, может присоединиться к проекту и под лицензией MIT на Github, начать разрабатывать приложения. Дополнительно имеется обширный форум для конечных пользователей, в котором активно обсуждаются новые идеи, проблемы и пожелания клиентов. Опытные разработчики, некоторые из которых имеют 17 лет опыта работы в промышленной автоматизации на ведущих немецких фирмах Bosch и Siemens, консультируют по вопросам автоматизации дома, и её внедрения. Проверенные и отработанные идеи размещаются на так называемом Trello-Whiteboard, это доска с текущими, актуальными заданиями, таким образом любой может на неё заглянуть и быть в курсе происходящего.", admin
+
+"За что мы любим лето? Горячее солнце, велосипеды, длинные вечера в приятной компании, ну и конечно Рок за Бобров.
+ Бруто, Чайф, Каста, Сплин, Naviband, Anacondaz, Дай Дарогу! Легендарное музыкальное событие уже близко - 22 июля, аэродром "Боровая"!
+ Купить билеты можно на сайте: rock.bobrov.by или в кассах Ticketpro.", alex
+
+"Как наука о данных помогает развитию медицины. Лекция в Яндексе
+ Постепенная информатизация медицины связана со сбором очень разных данных. Они добываются совершенно непохожими способами и почти всегда имеют уникальную структуру. Откуда, как и зачем их стоит собирать? В своём докладе руководитель разработки сервиса Яндекс.Здоровье Михаил Tomcat Пайсон рассказывает об основных путях развития современной медицины и о технологических проблемах, которые перед ней стоят.
+ Под катом — расшифровка доклада и слайды.
+ Читать дальше → https://goo.gl/Ow2yt4", mike
+
+"Loads data from a CSV file into an existing table. A value of NULL in a cell will be converted to a database NULL rather than the string ‘NULL’
+Date/Time values included in the CSV file should be in ISO format in order to be parsed correctly by Liquibase. Liquibase will initially set the date format to be ‘yyyy-MM-dd’T’HH:mm:ss’ and then it checks for two special cases which will override the data format string.
+If the string representing the date/time includes a ‘.’, then the date format is changed to ‘yyyy-MM-dd’T’HH:mm:ss.SSS’ If the string representing the date/time includes a space, then the date format is changed to ‘yyyy-MM-dd HH:mm:ss’ Once the date format string is set, Liquibase will then call the SimpleDateFormat.parse() method attempting to parse the input string so that it can return a Date/Time. If problems occur, then a ParseException is thrown and the input string is treated as a String for the INSERT command to be generated.", liquibase
+
+"If you are using Spring 3.1.x. You can look at using consumes, produces attributes of @RequestMapping annotation. Here is the Spring blog post on the improvements:
+ http://spring.io/blog/2011/06/13/spring-3-1-m2-spring-mvc-enhancements/
+ Snippet from the doc above:
+ @RequestMapping(value="/pets", headers="Content-Type=application/json")
+ public void addPet(@RequestBody Pet pet, Model model) {
+     // ...
+ }
+ is replaced by:", stackowerflow
+
+"1. Overview
+This article describes how to implement content negotiation in a Spring MVC project.
+Generally, there are three options to determine the media type of a request:
+Using URL suffixes (extensions) in the request (eg .xml/.json)
+Using URL parameter in the request (eg ?format=json)
+Using Accept header in the request
+By default, this is the order in which the Spring content negotiation manager will try to use these three strategies. And if none of these are enabled, we can specify a fallback to a default content type.", spring
+
+"Let’s go over the details.
+First, we’re enabling the path extensions strategy.
+Then, we’re disabling the URL parameter strategy as well as the Accept header strategy – because we want to only rely on the path extension way of determining the type of the content.
+We’re then turning off the Java Activation Framework; JAF can be used as a fallback mechanism to select the output format if the incoming request is not matching any of the strategies we configured. We’re disabling it because we’re going to configure JSON as the default content type.
+And finally – we are setting up JSON to be the default. That means if none of the two strategies are matched, all incoming request will be mapped to a controller method that serves JSON.",spring
+
+"Amazon Alexa Skill Smart Home c Open Source платформой для Домашней Автоматизации ioBroker
+Сначала немного о том, что же такое ioBroker?
+И о том, кто же является разработчиком ioBroker?
+ioBroker это OpenSource проект, который разрабатывается сообществом информатиков. Каждый, кто интересуется темой Smart Home, может присоединиться к проекту и под лицензией MIT на Github, начать разрабатывать приложения. Дополнительно имеется обширный форум для конечных пользователей, в котором активно обсуждаются новые идеи, проблемы и пожелания клиентов. Опытные разработчики, некоторые из которых имеют 17 лет опыта работы в промышленной автоматизации на ведущих немецких фирмах Bosch и Siemens, консультируют по вопросам автоматизации дома, и её внедрения. Проверенные и отработанные идеи размещаются на так называемом Trello-Whiteboard, это доска с текущими, актуальными заданиями, таким образом любой может на неё заглянуть и быть в курсе происходящего.", admin
+
+"За что мы любим лето? Горячее солнце, велосипеды, длинные вечера в приятной компании, ну и конечно Рок за Бобров.
+ Бруто, Чайф, Каста, Сплин, Naviband, Anacondaz, Дай Дарогу! Легендарное музыкальное событие уже близко - 22 июля, аэродром "Боровая"!
+ Купить билеты можно на сайте: rock.bobrov.by или в кассах Ticketpro.", alex
+
+"Как наука о данных помогает развитию медицины. Лекция в Яндексе
+ Постепенная информатизация медицины связана со сбором очень разных данных. Они добываются совершенно непохожими способами и почти всегда имеют уникальную структуру. Откуда, как и зачем их стоит собирать? В своём докладе руководитель разработки сервиса Яндекс.Здоровье Михаил Tomcat Пайсон рассказывает об основных путях развития современной медицины и о технологических проблемах, которые перед ней стоят.
+ Под катом — расшифровка доклада и слайды.
+ Читать дальше → https://goo.gl/Ow2yt4", mike
+
+"Loads data from a CSV file into an existing table. A value of NULL in a cell will be converted to a database NULL rather than the string ‘NULL’
+Date/Time values included in the CSV file should be in ISO format in order to be parsed correctly by Liquibase. Liquibase will initially set the date format to be ‘yyyy-MM-dd’T’HH:mm:ss’ and then it checks for two special cases which will override the data format string.
+If the string representing the date/time includes a ‘.’, then the date format is changed to ‘yyyy-MM-dd’T’HH:mm:ss.SSS’ If the string representing the date/time includes a space, then the date format is changed to ‘yyyy-MM-dd HH:mm:ss’ Once the date format string is set, Liquibase will then call the SimpleDateFormat.parse() method attempting to parse the input string so that it can return a Date/Time. If problems occur, then a ParseException is thrown and the input string is treated as a String for the INSERT command to be generated.", liquibase
+
+"If you are using Spring 3.1.x. You can look at using consumes, produces attributes of @RequestMapping annotation. Here is the Spring blog post on the improvements:
+ http://spring.io/blog/2011/06/13/spring-3-1-m2-spring-mvc-enhancements/
+ Snippet from the doc above:
+ @RequestMapping(value="/pets", headers="Content-Type=application/json")
+ public void addPet(@RequestBody Pet pet, Model model) {
+     // ...
+ }
+ is replaced by:", stackowerflow
+
+"1. Overview
+This article describes how to implement content negotiation in a Spring MVC project.
+Generally, there are three options to determine the media type of a request:
+Using URL suffixes (extensions) in the request (eg .xml/.json)
+Using URL parameter in the request (eg ?format=json)
+Using Accept header in the request
+By default, this is the order in which the Spring content negotiation manager will try to use these three strategies. And if none of these are enabled, we can specify a fallback to a default content type.", spring
+
+"Let’s go over the details.
+First, we’re enabling the path extensions strategy.
+Then, we’re disabling the URL parameter strategy as well as the Accept header strategy – because we want to only rely on the path extension way of determining the type of the content.
+We’re then turning off the Java Activation Framework; JAF can be used as a fallback mechanism to select the output format if the incoming request is not matching any of the strategies we configured. We’re disabling it because we’re going to configure JSON as the default content type.
+And finally – we are setting up JSON to be the default. That means if none of the two strategies are matched, all incoming request will be mapped to a controller method that serves JSON.",spring
