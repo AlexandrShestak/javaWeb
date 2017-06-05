@@ -75,7 +75,7 @@
             | <i class="glyphicon glyphicon-comment"></i> <a href="/comments?action=getForm&newsId=${news.newsId}"> <spring:message code="comments"/></a>
             <c:if test="${news.creatorUsername eq user.username}">
               | <i class="glyphicon glyphicon-edit"></i><a href="/newsEdit?newsId=${news.newsId}"> <spring:message code="edit"/></a>
-              | <i class="glyphicon glyphicon-trash"></i><a  href="/newsDelete?&newsId=${news.newsId}"> <spring:message code="delete"/></a>
+              | <i class="glyphicon glyphicon-trash"></i><a  href="/newsDelete?newsId=${news.newsId}"> <spring:message code="delete"/></a>
             </c:if>
               <%-- |<i class="glyphicon glyphicon-tag"></i> Tags : <span class="label label-info">${news.tagsString}</span>
             --%>
