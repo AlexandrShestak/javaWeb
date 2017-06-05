@@ -27,8 +27,7 @@
                         </form>
                     </li>
                     <li>
-                        <form action="/news" method="get" class="navbar-form" role="search">
-                            <input type="hidden" name="action" value="search">
+                        <form action="/newsSearch" method="get" class="navbar-form" role="search">
                             <spring:message code="tag"/>
                             <div class="form-group">
                                 <input type="text" class="form-control" name="tag">

@@ -2,230 +2,158 @@ package com.shestakam.news.controller;
 
 import com.shestakam.news.dao.NewsDao;
 import com.shestakam.news.entity.News;
+import com.shestakam.news.search.Searcher;
 import com.shestakam.news.tags.dao.TagDao;
 import com.shestakam.news.tags.entity.Tag;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.WebApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * Created by alexandr on 21.7.15.
+ * Created by alexandr on 14.8.15.
  */
-@Deprecated
-public class NewsController extends HttpServlet {
+@Controller
+public class NewsController {
 
-    private static final String NEWS_LIST = "/WEB-INF/pages/news/list.jsp";
-    private static final String EDIT_NEWS = "/WEB-INF/pages/news/edit.jsp";
-    private static final String ADD_NEWS = "/WEB-INF/pages/news/add.jsp";
-    private static final String ADD_TAGS = "/WEB-INF/pages/tags/add.jsp";
+    private static final String NEWS_LIST = "news/list";
+    private static final String EDIT_NEWS = "news/edit";
+    private static final String ADD_NEWS = "news/add";
 
     private  final static Logger logger = LogManager.getLogger(NewsController.class);
+
+    @Autowired
+    @Qualifier("hibernateNewsDao")
     private NewsDao newsDao;
+
+    @Autowired
+    @Qualifier("hibernateTagsDao")
     private TagDao tagDao;
 
+    @Autowired
+    private Searcher searcher;
 
-    public void setTagDao(TagDao tagDao) {
-        this.tagDao = tagDao;
+    @RequestMapping(value = "/newsForm", method = RequestMethod.GET)
+    public String getAddNewsForm() {
+        logger.debug("Get add news form");
+        return ADD_NEWS;
     }
 
-    public void setNewsDao(NewsDao newsDao) {
-        this.newsDao = newsDao;
+    @RequestMapping(value = "/newsEdit", method = RequestMethod.GET)
+    public ModelAndView getEditNewsForm(@RequestParam String newsId){
+        logger.debug("Get news edit form");
+
+        ModelAndView mav = new ModelAndView(EDIT_NEWS);
+
+        News news = newsDao.get(newsId);
+        List<Tag> tagList = newsDao.getTagsForNews(news.getNewsId());
+        news.setTagsString(tagList.stream().map(Tag::getTagName).collect(Collectors.joining("#")));
+        mav.addObject("news", news);
+
+        return mav;
     }
 
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        ApplicationContext ac = (ApplicationContext) config.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
-        tagDao = (TagDao) ac.getBean("hibernateTagsDao");
-        newsDao = (NewsDao) ac.getBean("hibernateNewsDao");
-    }
-   /* public NewsController() {
-        this.newsDao= new HibernateNewsDao();
-        this.tagDao = new HibernateTagsDao();
-    }*/
-
-    @Override
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
-        if ("add".equals(action)){
-            getAddNewsForm(request, response);
-        }else if("edit".equals(action)){
-            getNewsFormToEdit(request,response);
-        }else if("delete".equals(action)){
-            deleteNews(request,response);
-        }else if("search".equals(action)){
-            searchNews(request,response);
-        }else if(action == null){
-            getNewsForm(request,response);
-        }
-    }
-
-    private void getNewsForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        logger.debug("get news");
+    @RequestMapping(value = "/news", method = RequestMethod.GET)
+    public ModelAndView getAllNews() {
         List<News> newsList = newsDao.getAll();
-        request.setAttribute("news", newsList);
         for (News elem: newsList){
             List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
-            String tagString = "";
-            for(Tag tag: tagList){
-                tagString+= "#"+tag.getTagName();
-            }
-            elem.setTagsString(tagString);
+            elem.setTagsString(tagList.stream().map(Tag::getTagName).collect(Collectors.joining("#")));
         }
-        RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
-        view.forward(request, response);
+        ModelAndView mav = new ModelAndView(NEWS_LIST);
+        mav.addObject("news",newsList);
+        return mav;
     }
 
-    private void searchNews(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        logger.debug("search news by tag");
-        String tagName = request.getParameter("tag");
-        String username = request.getParameter("username");
-        if(!tagName.equals("")&&username.equals("")) {
+    @RequestMapping(value = "/newsDelete", method = RequestMethod.GET)
+    public ModelAndView deleteNews(@RequestParam String newsId){
+        logger.debug("Delete news with id: " + newsId);
+        newsDao.delete(newsId);
+
+        List<News> newsList = newsDao.getAll();
+        for (News elem: newsList){
+            List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
+            elem.setTagsString(tagList.stream().map(Tag::getTagName).collect(Collectors.joining("#")));
+        }
+        ModelAndView mav = new ModelAndView(NEWS_LIST);
+        mav.addObject("news",newsList);
+        return mav;
+    }
+
+    @RequestMapping(value = "/newsSearch", method = RequestMethod.GET)
+    public ModelAndView searchNews(@RequestParam(value = "tag",required = false)String tagName,
+                                   @RequestParam(required = false) String username){
+        if (!StringUtils.isEmpty(tagName) && StringUtils.isEmpty(username)) {
             List<News> newsList = newsDao.searchNewsByTag(tagName);
-            request.setAttribute("news", newsList);
             for (News elem : newsList) {
                 List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
-                String tagString = "";
-                for (Tag tag : tagList) {
-                    tagString += "#" + tag.getTagName();
-                }
-                elem.setTagsString(tagString);
+                elem.setTagsString(tagList.stream().map(Tag::getTagName).collect(Collectors.joining("#")));
             }
-        }else if (tagName.equals("")&&!username.equals("")){
+            ModelAndView mav = new ModelAndView(NEWS_LIST);
+            mav.addObject("news",newsList);
+            return mav;
+        } else if (StringUtils.isEmpty(tagName) && !StringUtils.isEmpty(username)) {
             List<News> newsList = newsDao.searchNewsByCreator(username);
-            request.setAttribute("news", newsList);
             for (News elem : newsList) {
                 List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
-                String tagString = "";
-                for (Tag tag : tagList) {
-                    tagString += "#" + tag.getTagName();
-                }
-                elem.setTagsString(tagString);
+                elem.setTagsString(tagList.stream().map(Tag::getTagName).collect(Collectors.joining("#")));
             }
-        }else if (!tagName.equals("")&&!username.equals("")){
+            ModelAndView mav = new ModelAndView(NEWS_LIST);
+            mav.addObject("news",newsList);
+            return mav;
+        } else {
             List<News> newsList = newsDao.searchNewsByCreatorAndTag(username,tagName);
-            request.setAttribute("news", newsList);
             for (News elem : newsList) {
                 List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
-                String tagString = "";
-                for (Tag tag : tagList) {
-                    tagString += "#" + tag.getTagName();
-                }
-                elem.setTagsString(tagString);
+                elem.setTagsString(tagList.stream().map(Tag::getTagName).collect(Collectors.joining("#")));
             }
-        }else {
-            logger.error("error with search news");
-        }
-
-        RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
-        view.forward(request, response);
-    }
-
-    private void deleteNews(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        logger.debug("delete news");
-        String newsId = request.getParameter("newsId");
-        if(newsId!=null){
-            newsDao.delete(newsId);
-            List<News> newsList = newsDao.getAll();
-            request.setAttribute("news", newsList);
-            for (News elem: newsList){
-                List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
-                String tagString = "";
-                for(Tag tag: tagList){
-                    tagString+= "#"+tag.getTagName();
-                }
-                elem.setTagsString(tagString);
-            }
-            RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
-            view.forward(request, response);
+            ModelAndView mav = new ModelAndView(NEWS_LIST);
+            mav.addObject("news",newsList);
+            return mav;
         }
     }
 
-    private void getNewsFormToEdit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        logger.debug("get news form to edit");
-        String newsId = request.getParameter("newsId");
-        if(newsId!=null){
-            News news = newsDao.get(newsId);
-            request.setAttribute("news",news);
-            List<Tag> tagList = newsDao.getTagsForNews(news.getNewsId());
-            String tagString = "";
-            for(Tag tag: tagList){
-                tagString+= "#"+tag.getTagName();
-            }
-            news.setTagsString(tagString);
-            RequestDispatcher view = request.getRequestDispatcher(EDIT_NEWS);
-            view.forward(request, response);
-        }
-    }
-
-    private void getAddNewsForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        logger.debug("get news form to save");
-        RequestDispatcher view = request.getRequestDispatcher(ADD_NEWS);
-        view.forward(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
-        if ("add".equals(action)){
-           addNews(request, response);
-        }else if("edit".equals(action)){
-            editNews(request,response);
-        }
-    }
-
-    private void editNews(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        logger.debug("edit news");
-        String newsId = request.getParameter("newsId");
-        String newsText = request.getParameter("newsText");
-        newsText = new String(newsText.getBytes("iso-8859-1"), "UTF-8");
+    @RequestMapping(value = "/news", method = RequestMethod.POST)
+    public ModelAndView addNews(@RequestParam String newsText,
+                                @RequestParam(value = "tags")String tagStr) throws UnsupportedEncodingException {
+        logger.debug("Add news");
         Timestamp newsCreationDate = new Timestamp(System.currentTimeMillis());
-        String newsCommentator = (String) request.getSession().getAttribute("login");
-        News news = new News();
-        news.setNewsId(Long.valueOf(newsId));
-        news.setCreatorUsername(newsCommentator);
-        news.setCreationDate(newsCreationDate);
-        news.setNewsText(newsText);
-        newsDao.update(news);
-        request.setAttribute("news",newsDao.getAll());
-        RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
-        view.forward(request, response);
-    }
-
-    private void addNews(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        logger.debug("save news");
-        String newsText = request.getParameter("newsText");
-        newsText = new String(newsText.getBytes("iso-8859-1"), "UTF-8");
-        Timestamp newsCreationDate = new Timestamp(System.currentTimeMillis());
-        String newsCommentator = (String) request.getSession().getAttribute("login");
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        String newsCommentator = username;
         News news = new News();
         news.setCreatorUsername(newsCommentator);
         news.setCreationDate(newsCreationDate);
         news.setNewsText(newsText);
         String newsId = newsDao.save(news);
-        String[] tags  = request.getParameter("tags").split(";");
+        String[] tags  = tagStr.split(";");
         for(String tagName : tags) {
             logger.debug("add tag");
             Tag tag = tagDao.getTagByName(tagName);
             if (tag == null) {
-                Long tagId = tag.getTagId();
                 logger.debug("new tag");
                 Tag tempTag = new Tag();
                 tempTag.setTagName(tagName);
-                tagId = Long.valueOf(tagDao.save(tempTag));
+                Long tagId = Long.valueOf(tagDao.save(tempTag));
                 newsDao.addTagToNews(Long.valueOf(newsId), tagId);
             } else {
                 logger.debug("old tag");
@@ -234,16 +162,59 @@ public class NewsController extends HttpServlet {
             }
         }
         List<News> newsList = newsDao.getAll();
-        request.setAttribute("news", newsList);
+
         for (News elem: newsList){
             List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
-            String tagString = "";
-            for(Tag tag: tagList){
-                tagString+= "#"+tag.getTagName();
-            }
-            elem.setTagsString(tagString);
+            elem.setTagsString(tagList.stream().map(Tag::getTagName).collect(Collectors.joining("#")));
         }
-        RequestDispatcher view = request.getRequestDispatcher(NEWS_LIST);
-        view.forward(request, response);
+        ModelAndView mav = new ModelAndView(NEWS_LIST);
+        mav.addObject("news", newsList);
+        return mav;
+    }
+
+    @RequestMapping(value = "/news" , params = "action=edit", method = RequestMethod.POST)
+    public ModelAndView editNews(@RequestParam String newsText,@RequestParam String newsId) throws UnsupportedEncodingException {
+        logger.debug("edit news");
+        newsText = new String(newsText.getBytes("iso-8859-1"), "UTF-8");
+        Timestamp newsCreationDate = new Timestamp(System.currentTimeMillis());
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+        String newsCommentator = username;
+        News news = new News();
+        news.setNewsId(Long.valueOf(newsId));
+        news.setCreatorUsername(newsCommentator);
+        news.setCreationDate(newsCreationDate);
+        news.setNewsText(newsText);
+        newsDao.update(news);
+        List<News> newsList = newsDao.getAll();
+
+        for (News elem: newsList){
+            List<Tag> tagList = newsDao.getTagsForNews(elem.getNewsId());
+            elem.setTagsString(tagList.stream().map(Tag::getTagName).collect(Collectors.joining("#")));
+        }
+        ModelAndView mav = new ModelAndView(NEWS_LIST);
+        mav.addObject("news", newsList);
+        return mav;
+    }
+
+    @RequestMapping(value = "/fullTextSearch", method = RequestMethod.POST)
+    public ModelAndView searchNews(@RequestParam(value = "query") String query) {
+        List<Long> newsIds = searcher.search(query);
+
+        ModelAndView mav = new ModelAndView(NEWS_LIST);
+        if (newsIds.size() == 0) {
+            mav.addObject("news", new ArrayList<>());
+            return mav;
+        }
+        List<News> newsList = newsDao.findNewsByIds(newsIds);
+        mav.addObject("news", newsList);
+        return mav;
     }
 }

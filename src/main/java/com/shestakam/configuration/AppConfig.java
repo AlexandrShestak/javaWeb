@@ -33,6 +33,9 @@ public class AppConfig extends WebMvcConfigurerAdapter {
                 .addResourceHandler("/bootstrap/**")
                 .addResourceLocations("/bootstrap/");
         registry
+                .addResourceHandler("/javascript/**")
+                .addResourceLocations("/javascript/");
+        registry
                 .addResourceHandler("/styles/**")
                 .addResourceLocations("/styles/");
         registry

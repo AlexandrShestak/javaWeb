@@ -74,8 +74,8 @@
             | <i class="glyphicon glyphicon-calendar"></i> <c:out value="${news.creationDate}" />
             | <i class="glyphicon glyphicon-comment"></i> <a href="/comments?action=getForm&newsId=${news.newsId}"> <spring:message code="comments"/></a>
             <c:if test="${news.creatorUsername eq user.username}">
-              | <i class="glyphicon glyphicon-edit"></i><a href="/news?action=edit&newsId=${news.newsId}"> <spring:message code="edit"/></a>
-              | <i class="glyphicon glyphicon-trash"></i><a  href="/news?action=delete&newsId=${news.newsId}"> <spring:message code="delete"/></a>
+              | <i class="glyphicon glyphicon-edit"></i><a href="/newsEdit?newsId=${news.newsId}"> <spring:message code="edit"/></a>
+              | <i class="glyphicon glyphicon-trash"></i><a  href="/newsDelete?&newsId=${news.newsId}"> <spring:message code="delete"/></a>
             </c:if>
               <%-- |<i class="glyphicon glyphicon-tag"></i> Tags : <span class="label label-info">${news.tagsString}</span>
             --%>
@@ -93,8 +93,7 @@
   <div class="span8">
     <div class="row">
       <div class="span8">
-        <form action="/news" method="get">
-          <input type="hidden" name="action" value="add">
+        <form action="/newsForm" method="get">
           <button class="btn btn-warning" type="submit"> <spring:message code="addNews"/> </button>
         </form>
       </div>

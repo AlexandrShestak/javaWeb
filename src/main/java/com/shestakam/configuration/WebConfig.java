@@ -7,6 +7,9 @@ import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
+/**
+ * Used instead web.xml
+ */
 public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override

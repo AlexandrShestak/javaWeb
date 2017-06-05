@@ -46,7 +46,6 @@
             <div class="col-xs-1" id="tags">
             </div>
             <div class="col-md-offset-7 col-xs-2">
-              <input type="hidden" name="action" value="add">
               <input type="hidden" name="tags" id="tagsToAddWithNews">
               <button type="submit" class="btn btn-default"> <spring:message code="addNews"/></button>
             </div>
