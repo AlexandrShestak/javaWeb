@@ -1,39 +1,30 @@
 package com.shestakam.language;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
-/**
- * Created by alexandr on 21.7.15.
- */
-@Deprecated
-public class LanguageController extends HttpServlet {
+@Controller
+public class LanguageController {
 
-    @Override
-    protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response) throws ServletException, IOException {
+    @RequestMapping(value = "/language")
+    public String changeLanguage(HttpServletRequest request){
         String language = request.getParameter("language");
-        if ("en".equalsIgnoreCase(language)){
-            request.getSession().setAttribute("language","en");
-        }else  if ("ru".equalsIgnoreCase(language)){
-            request.getSession().setAttribute("language","ru");
+        String referer = request.getHeader("referer");
+        if (referer.contains("language=ru")){
+            referer = referer.replaceAll("ru$", language);
+            return "redirect:"+ referer;
+        } else if (referer.contains("language=en")) {
+            referer = referer.replaceAll("en$", language);
+            return "redirect:"+ referer;
         }
-        response.sendRedirect( request.getHeader("referer"));
+        if (referer.contains("?")) {
+            referer+="&language="+language;
+        } else {
+            referer+="?language="+language;
+        }
+        return "redirect:"+ referer;
     }
 
-    @Override
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response) throws ServletException, IOException {
-        String language = request.getParameter("language");
-        if ("en".equalsIgnoreCase(language)){
-            request.getSession().setAttribute("language","en");
-        }else  if ("ru".equalsIgnoreCase(language)){
-            request.getSession().setAttribute("language","ru");
-        }
-        response.sendRedirect( request.getHeader("referer"));
-
-    }
 }

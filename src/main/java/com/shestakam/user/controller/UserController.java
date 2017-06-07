@@ -4,129 +4,79 @@ import com.shestakam.user.dao.UserDao;
 import com.shestakam.user.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.WebApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
 
 /**
- * Created by alexandr on 18.7.15.
+ * Created by alexandr on 12.8.15.
  */
-@Deprecated
-public class UserController extends HttpServlet {
-
-    private static final String USERS_LIST = "/WEB-INF/pages/user/list.jsp";
-    private static final String ADD_USER_PAGE = "/WEB-INF/pages/user/add.jsp";
-    private static final String EDIT_USER_PAGE = "/WEB-INF/pages/user/edit.jsp";
+@Controller
+public class UserController {
+    private static final String USERS_LIST = "user/list";
+    private static final String ADD_USER_PAGE = "user/add";
+    private static final String EDIT_USER_PAGE = "user/edit";
 
     private  final static Logger logger = LogManager.getLogger(UserController.class);
+
+    @Autowired
+    @Qualifier("hibernateUserDao")
     private UserDao userDao;
 
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
-
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        ApplicationContext ac = (ApplicationContext) config.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
-        userDao = (UserDao) ac.getBean("hibernateUsersDao");
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
-        String login =  request.getParameter("username");
-
-        if("add".equals(action)){
-            getAddUserForm(request,response);
-        }else if("delete".equals(action) && login!=null){
-           deleteUser(request,response);
-
-        }else if("edit".equals(action) && login!=null){
-           getEditUserForm(request, response);
-        }else if(action == null){
-          getAllUsers(request,response);
-        }
-    }
-
-    private void getAllUsers(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher view = request.getRequestDispatcher(USERS_LIST);
-        request.setAttribute("users", userDao.getAll());
-        view.forward(request, response);
-    }
-
-    private void getEditUserForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        logger.debug("return edit user form");
-        String login =  request.getParameter("username");
-        User user  = userDao.get(login);
-        request.setAttribute("user",user);
-        RequestDispatcher view = request.getRequestDispatcher(EDIT_USER_PAGE);
-        view.forward(request, response);
-    }
-
-    private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        logger.debug("delete user");
-        String login =  request.getParameter("username");
-        userDao.delete(login);
-        RequestDispatcher view = request.getRequestDispatcher(USERS_LIST);
-        request.setAttribute("users", userDao.getAll());
-        view.forward(request, response);
-    }
-
-    private void getAddUserForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @RequestMapping(value = "user" ,params = "action=add",method = RequestMethod.GET)
+    public String getAddUserForm(){
         logger.debug("get user form");
-        RequestDispatcher view = request.getRequestDispatcher(ADD_USER_PAGE);
-        view.forward(request, response);
+        return ADD_USER_PAGE;
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
-        if ("add".equalsIgnoreCase(action)) {
-           addUser(request, response);
-        } else if ("edit".equals(action)) {
-            editUser(request,response);
-        }
+    @RequestMapping(value = "user" ,params = "action=edit", method = RequestMethod.GET)
+    public ModelAndView getEditUserForm(HttpServletRequest request){
+        logger.debug("return edit user form");
+        String username = request.getParameter("username");
+        ModelAndView mav = new ModelAndView(EDIT_USER_PAGE);
+        User user  = userDao.get(username);
+        mav.addObject("user",user);
+        return mav;
     }
 
-    private void editUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        logger.debug("edit user");
-        String login = request.getParameter("username");
-        String password = request.getParameter("password");
-        String email = request.getParameter("email");
-        User user = new User();
-        user.setUsername(login);
-        user.setPassword(password);
-        user.setEmail(email);
-        userDao.update(user);
-        RequestDispatcher view = request.getRequestDispatcher(USERS_LIST);
-        request.setAttribute("users", userDao.getAll());
-        view.forward(request, response);
+    @RequestMapping(value = "user" , params = "action=delete", method = RequestMethod.GET)
+    public ModelAndView deleteUser(HttpServletRequest request){
+        logger.debug("delete user");
+        String username = request.getParameter("username");
+        userDao.delete(username);
+        ModelAndView mav = new ModelAndView(USERS_LIST);
+        mav.addObject("users", userDao.getAll());
+        return  mav;
     }
 
-    private void addUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @RequestMapping(value = "user" , method = RequestMethod.GET)
+    public ModelAndView getUsers(){
+        ModelAndView mav = new ModelAndView(USERS_LIST);
+        mav.addObject("users", userDao.getAll());
+        return  mav;
+    }
+
+    @RequestMapping(value = "user" ,params = "action=add", method = RequestMethod.POST)
+    public ModelAndView addUser(@ModelAttribute User user){
         logger.debug("add user");
-        String login = request.getParameter("username");
-        String password = request.getParameter("password");
-        String email = request.getParameter("email");
-        User user = new User();
-        user.setUsername(login);
-        user.setPassword(password);
-        user.setEmail(email);
         userDao.save(user);
-        RequestDispatcher view = request.getRequestDispatcher(USERS_LIST);
-        request.setAttribute("users", userDao.getAll());
-        view.forward(request, response);
+        ModelAndView mav = new ModelAndView(USERS_LIST);
+        mav.addObject("users", userDao.getAll());
+        return  mav;
     }
+    @RequestMapping(value = "user" ,params = "action=edit", method = RequestMethod.POST)
+    public ModelAndView editUser(@ModelAttribute User user){
+        logger.debug("edit user");
+        userDao.update(user);
+        ModelAndView mav = new ModelAndView(USERS_LIST);
+        mav.addObject("users", userDao.getAll());
+        return  mav;
+    }
+
 }

@@ -175,7 +175,6 @@ public class NewsController {
     @RequestMapping(value = "/news" , params = "action=edit", method = RequestMethod.POST)
     public ModelAndView editNews(@RequestParam String newsText,@RequestParam String newsId) throws UnsupportedEncodingException {
         logger.debug("edit news");
-        newsText = new String(newsText.getBytes("iso-8859-1"), "UTF-8");
         Timestamp newsCreationDate = new Timestamp(System.currentTimeMillis());
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
